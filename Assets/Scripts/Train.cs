@@ -42,14 +42,14 @@ public class Train : MonoBehaviour
     void Run()
     {
         //这里放模型的输出的指令
-        //player1.GetComponent<PlayerMove>().Shoot();
+        player1.GetComponent<PlayerMove>().StartShoot();
 
     }
 
     bool Next()
     {
         //如果接收到模型的下一帧请求，就进行下一帧
-        if(Input.GetKeyDown(KeyCode.N))
+        if(Input.GetKey(KeyCode.N))
         {
             return true;
         }

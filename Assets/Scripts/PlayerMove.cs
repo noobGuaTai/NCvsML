@@ -26,16 +26,6 @@ public class PlayerMove : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetButtonDown("Fire1") && shootTimer <= 0)
-        {
-            Shoot();
-            shootTimer = shootCooldown; // 重置射击计时器
-        }
-
-        if (shootTimer > 0)
-        {
-            shootTimer -= Time.deltaTime; // 更新射击计时器
-        }
     }
 
     void Move()
@@ -53,6 +43,20 @@ public class PlayerMove : MonoBehaviour
     void Jump()
     {
         rb.AddForce(new Vector2(0, attributes.jumpSpeed), ForceMode2D.Impulse);
+    }
+
+    public void StartShoot()
+    {
+        if (Input.GetButtonDown("Fire1") && shootTimer <= 0)
+        {
+            Shoot();
+            shootTimer = shootCooldown; // 重置射击计时器
+        }
+
+        if (shootTimer > 0)
+        {
+            shootTimer -= Time.deltaTime; // 更新射击计时器
+        }
     }
 
     public void Shoot()
