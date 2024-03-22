@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ManualFrameController : MonoBehaviour
+public class Train : MonoBehaviour
 {
     public GameObject player1;
 
@@ -41,11 +41,14 @@ public class ManualFrameController : MonoBehaviour
 
     void Run()
     {
-        player1.GetComponent<PlayerMove>().Shoot();
+        //这里放模型的输出的指令
+        //player1.GetComponent<PlayerMove>().Shoot();
+
     }
 
     bool Next()
     {
+        //如果接收到模型的下一帧请求，就进行下一帧
         if(Input.GetKeyDown(KeyCode.N))
         {
             return true;
