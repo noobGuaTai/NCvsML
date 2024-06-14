@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,23 +6,42 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    private GameObject Player1HP;
-    private GameObject Player2HP;
-    private GameObject Player1;
-    private GameObject Player2;
-    void Start()
-    {
-        Player1HP = GameObject.Find("Player1HP");
-        Player2HP = GameObject.Find("Player2HP");
-        Player1 = GameObject.Find("Player1");
-        Player2 = GameObject.Find("Player2");
-    }
+    public GameObject train;
+    public GameObject Infer;
+    public GameObject groundTime;
+    public GameObject Iteration;
+    public GameObject Generation;
+    public GameObject Manager;
+    public float time;
+    public GameObject gameOver;
+    public GameObject waitingConnect;
+
+    public GameObject Player1HP;
+    public GameObject Player2HP;
+    public GameObject Player1;
+    public GameObject Player2;
 
     void Update()
     {
         Player1HP.GetComponent<TextMeshProUGUI>().text = "Player1 HP:" + Player1.GetComponent<PlayerAttribute>().HP;
         Player2HP.GetComponent<TextMeshProUGUI>().text = "Player2 HP:" + Player2.GetComponent<PlayerAttribute>().HP;
+        groundTime.GetComponent<TextMeshProUGUI>().text = time.ToString();
+        Iteration.GetComponent<TextMeshProUGUI>().text = "Iteration:" + (train.GetComponent<Train2Manager>().iteration - 1).ToString();
+        Generation.GetComponent<TextMeshProUGUI>().text = "Generation:" + train.GetComponent<Train2Manager>().generation.ToString();
     }
 
+    public void TrainUI()
+    {
+        Iteration.SetActive(true);
+        Generation.SetActive(true);
+        groundTime.SetActive(true);
+    }
+
+    public void InferUI()
+    {
+        Iteration.SetActive(false);
+        Generation.SetActive(false);
+        groundTime.SetActive(true);
+    }
 
 }

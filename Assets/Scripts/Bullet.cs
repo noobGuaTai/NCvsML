@@ -8,20 +8,23 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        
+        Destroy(gameObject, 4f);
     }
 
     void Update()
     {
-        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(123);
-        if(collision.tag == "Player" && collision.gameObject != father)
+        if (collision.tag == "Player" && collision.gameObject != father && !collision.GetComponent<PlayerAttribute>().isInvincible)
         {
-            collision.GetComponent<PlayerAttribute>().ChangeHP(-1);
+            Vector2 knockBackDirection = (collision.transform.position - father.transform.position).normalized;
+            knockBackDirection.y = 0;
+            knockBackDirection = knockBackDirection.normalized;
+            collision.GetComponent<PlayerAttribute>().ChangeHP(-1, knockBackDirection);
+            collision.GetComponent<PlayerMove>().beShot = true;
+            father.GetComponent<PlayerMove>().isShot = true;
             Destroy(gameObject);
         }
     }
