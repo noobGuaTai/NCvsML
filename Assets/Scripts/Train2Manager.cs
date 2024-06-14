@@ -112,7 +112,7 @@ public class Train2Manager : MonoBehaviour
         info.time = groundTime;
     }
 
-    public void RunAction(int player, int[] action)
+    public void RunAction(int player, int[] action)// 封装一下
     {
         PlayerMove pm = player == 1 ? p1m : p2m;
 

@@ -4,14 +4,15 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System;
 
 public class Infer : MonoBehaviour
 {
     // 存储CSV文件数据的列表
     private List<float> geneData = new List<float>();
-    private int[] dims_list = { 15, 15, 3 };
+    private int[] dims_list;
     (List<float[,]>, List<float[,]>) decoded;
-    private float[] info = new float[15];
+    private float[] info;
     public GameObject player1;
     public GameObject player2;
 
@@ -51,7 +52,7 @@ public class Infer : MonoBehaviour
 
     public void OnUpdate()
     {
-        if (!p1m.isControl)
+        if (!p1m.isControl && geneData != null)
         {
             GetEnvInf(p1m, p2m, p1a, p2a, ref info);
             int[] output1 = Forward(info, decoded.Item1, decoded.Item2);
@@ -77,6 +78,15 @@ public class Infer : MonoBehaviour
                     Debug.LogError("Invalid float value in CSV: " + value);
                 }
             }
+
+            string[] dimsStrings = values.Skip(values.Length - 3).ToArray();
+            dims_list = new int[dimsStrings.Length];
+            for (int i = 0; i < dimsStrings.Length; i++)
+            {
+                dims_list[i] = (int)float.Parse(dimsStrings[i]);
+            }
+            
+            info = new float[dims_list[dims_list.Length - 2]];
         }
         else
         {

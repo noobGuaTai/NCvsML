@@ -87,7 +87,7 @@ public class Train2
         }
     }
 
-    public void RecvAndSend(object obj)
+    public void RecvAndSend(object obj)// TODO：收发超时会在UI提醒，并重置游戏
     {
         RAShandler = (Socket)obj;
         // action = recvInt(RAShandler);
@@ -102,13 +102,13 @@ public class Train2
 
                 train2Manager.RunAction(player, action);// 接受到信息，就执行操作
                 // Debug.Log(player + "received.");
-                //Debug.Log("player: " + player.ToString() + " action[0]: " + action[0] + " action[1]: " + action[1] + " action[2]: " + action[2]);
+                // Debug.Log("player: " + player.ToString() + " action[0]: " + action[0] + " action[1]: " + action[1] + " action[2]: " + action[2]);
                 recvFlag = false;
 
                 while (!sendFlag) ;// 操作执行完后
                 // if (!isRunning) break;
 
-                if (!hasSendEndInfo)
+                if (!hasSendEndInfo)// TODO:长时间不发，python没有发送开始下一场比赛的信息，报错
                 {
                     if (train2Manager.isEnd)
                     {
@@ -300,7 +300,7 @@ public class Train2
 
 }
 
-public struct EnvInfo
+public struct EnvInfo// TODO：转成枚举类型
 {
     public float direction;
     public float shootable;
