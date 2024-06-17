@@ -10,7 +10,6 @@ public class UI : MonoBehaviour
     public GameObject Infer;
     public GameObject groundTime;
     public GameObject Iteration;
-    public GameObject Generation;
     public GameObject Manager;
     public float time;
     public GameObject gameOver;
@@ -27,20 +26,17 @@ public class UI : MonoBehaviour
         Player2HP.GetComponent<TextMeshProUGUI>().text = "Player2 HP:" + Player2.GetComponent<PlayerAttribute>().HP;
         groundTime.GetComponent<TextMeshProUGUI>().text = time.ToString();
         Iteration.GetComponent<TextMeshProUGUI>().text = "Iteration:" + (train.GetComponent<Train2Manager>().iteration - 1).ToString();
-        Generation.GetComponent<TextMeshProUGUI>().text = "Generation:" + train.GetComponent<Train2Manager>().generation.ToString();
     }
 
     public void TrainUI()
     {
         Iteration.SetActive(true);
-        Generation.SetActive(true);
         groundTime.SetActive(true);
     }
 
     public void InferUI()
     {
         Iteration.SetActive(false);
-        Generation.SetActive(false);
         groundTime.SetActive(true);
     }
 

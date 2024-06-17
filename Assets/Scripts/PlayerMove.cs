@@ -66,20 +66,20 @@ public class PlayerMove : MonoBehaviour
             shootTimer -= Time.deltaTime;
         }
         UpdateBulletPosition();
-        if (train2Manager.s1 != null)
+        if (train2Manager.socket1 != null)
         {
-            train2Manager.s1.SetRecvFlag(true);
-            train2Manager.s1.SetSendFlag(true);
+            train2Manager.socket1.SetRecvFlag(true);
+            train2Manager.socket1.SetSendFlag(true);
         }
-        if (train2Manager.s2 != null)
+        if (train2Manager.socket2 != null)
         {
-            train2Manager.s2.SetRecvFlag(true);
-            train2Manager.s2.SetSendFlag(true);
+            train2Manager.socket2.SetRecvFlag(true);
+            train2Manager.socket2.SetSendFlag(true);
         }
-        if (train1Manager.train != null)
+        if (train1Manager.socket1 != null)
         {
-            train1Manager.train.SetRecvFlag(true);
-            train1Manager.train.SetSendFlag(true);
+            train1Manager.socket1.SetRecvFlag(true);
+            train1Manager.socket1.SetSendFlag(true);
         }
 
     }

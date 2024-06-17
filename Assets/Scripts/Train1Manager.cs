@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Train1Manager : MonoBehaviour
 {
-    public Train1 train;
+    public Train1 socket1;
     private Infer infer;
     public GameObject player1;
     public GameObject player2;
@@ -14,7 +14,6 @@ public class Train1Manager : MonoBehaviour
     public float timeSpeed = 1f;// 时间流速
     public float iterationStartTime;// 每场比赛开始时间
     public int iteration = 1;
-    public int generation = 1;
     public PlayerMove p1m;
     public PlayerMove p2m;
     public PlayerAttribute p1a;
@@ -32,8 +31,8 @@ public class Train1Manager : MonoBehaviour
 
     public void StartTrain()
     {
-        train = new Train1(this, 1);
-        train.Start(socket1Port);
+        socket1 = new Train1(this, 1);
+        socket1.Start(socket1Port);
 
         p1m = player1.GetComponent<PlayerMove>();
         p2m = player2.GetComponent<PlayerMove>();
@@ -64,14 +63,14 @@ public class Train1Manager : MonoBehaviour
         if (isStartTrain)
             groundTime = totalTime - (Time.time - iterationStartTime);
         UI.GetComponent<UI>().time = (int)groundTime;
-        generation = (iteration / 190) + 1;
+
         if (groundTime <= 0 || p1a.HP <= 0 || p2a.HP <= 0)
         {
             isEnd = true;
         }
         else
         {
-            train.SetEnvInfo(info);// 结束了就不再更新环境信息
+            socket1.SetEnvInfo(info);// 结束了就不再更新环境信息
         }
 
         if (isStart == 1)
@@ -80,7 +79,7 @@ public class Train1Manager : MonoBehaviour
             iteration++;
 
 
-            train.SendMessage(train.RAShandler, train.info);
+            socket1.SendMessage(socket1.RAShandler, socket1.info);
             print("restart");
             Time.timeScale = timeSpeed;
         }
@@ -169,7 +168,7 @@ public class Train1Manager : MonoBehaviour
         player2.transform.localScale = new Vector3(-1, 1, 1);
         isEnd = false;
         isStart = 0;
-        train.canRestart = true;
+        socket1.canRestart = true;
         print("reset");
     }
 

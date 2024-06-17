@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using System;
 
 [Serializable]
-public class TrainGA
+public class TrainpParameters
 {
     public TMP_InputField socket1PortInputField;
     public TMP_InputField socket2PortInputField;
@@ -21,17 +21,9 @@ public class TrainGA
 
 }
 
-[Serializable]
-public class TrainRL
-{
-    public TMP_InputField socket1PortInputField;
-    public TMP_InputField trainSpeed;
-    public TMP_Dropdown chooseAgentDropdown;
-    public GameObject chooseAgentGameObject;
-}
 
 [Serializable]
-public class InferGA
+public class InferParameters
 {
     public TMP_InputField socket1CSVPath;
     public TMP_InputField socket2CSVPath;
@@ -41,11 +33,6 @@ public class InferGA
     public TMP_Dropdown player2ControlModeDropdown;
 }
 
-[Serializable]
-public class InferRL
-{
-
-}
 
 public class Manager : MonoBehaviour
 {
@@ -58,12 +45,6 @@ public class Manager : MonoBehaviour
         Infer
     }
     public RunMode gameRunMode = RunMode.Train;
-    public enum TrainMode
-    {
-        GA,
-        RL
-    }
-    public TrainMode trainMode = TrainMode.GA;
     public GameObject settings;
     public TMP_Dropdown runModeDropDown;
     public GameObject UI;
@@ -71,26 +52,19 @@ public class Manager : MonoBehaviour
     public GameObject inferSettingsUI;
     public GameObject player1;
     public GameObject player2;
-    public GameObject trainGAUI;
-    public GameObject trainRLUI;
-    public GameObject inferGAUI;
-    public GameObject inferRLUI;
-    public TMP_Dropdown trainModeDropdown;
-    public TMP_Dropdown inferModeDropdown;
+    public GameObject trainUI;
+    public GameObject inferUI;
 
-    public TrainGA trainGAInstance;
-    public TrainRL trainRLInstance;
-    public InferGA inferGAInstance;
-    public InferRL inferRLInstance;
+    public TrainpParameters trainInstance;
+    public InferParameters inferInstance;
 
     void Start()
     {
         runModeDropDown.onValueChanged.AddListener(ChangeRunMode);
-        inferGAInstance.player1ControlModeDropdown.onValueChanged.AddListener(ChangePlayer1Mode);
-        inferGAInstance.player2ControlModeDropdown.onValueChanged.AddListener(ChangePlayer2Mode);
-        trainGAInstance.agentNumDropdown.onValueChanged.AddListener(ChangeGAAgentNum);
-        trainGAInstance.chooseAgentDropdown.onValueChanged.AddListener(ChangeChooseGAAgent);
-        trainModeDropdown.onValueChanged.AddListener(ChangeTrainMode);
+        inferInstance.player1ControlModeDropdown.onValueChanged.AddListener(ChangePlayer1Mode);
+        inferInstance.player2ControlModeDropdown.onValueChanged.AddListener(ChangePlayer2Mode);
+        trainInstance.agentNumDropdown.onValueChanged.AddListener(ChangeGAAgentNum);
+        trainInstance.chooseAgentDropdown.onValueChanged.AddListener(ChangeChooseGAAgent);
     }
 
     void Update()
@@ -131,71 +105,55 @@ public class Manager : MonoBehaviour
 
     public void ChangePlayer1Mode(int value)
     {
-        if (inferGAInstance.player1ControlModeDropdown.options[value].text == "You")
+        if (inferInstance.player1ControlModeDropdown.options[value].text == "You")
         {
-            inferGAInstance.isControlPlayer1 = true;
+            inferInstance.isControlPlayer1 = true;
         }
-        if (inferGAInstance.player1ControlModeDropdown.options[value].text == "Agent")
+        if (inferInstance.player1ControlModeDropdown.options[value].text == "Agent")
         {
-            inferGAInstance.isControlPlayer1 = false;
+            inferInstance.isControlPlayer1 = false;
         }
     }
 
     public void ChangePlayer2Mode(int value)
     {
-        if (inferGAInstance.player2ControlModeDropdown.options[value].text == "You")
+        if (inferInstance.player2ControlModeDropdown.options[value].text == "You")
         {
-            inferGAInstance.isControlPlayer2 = true;
+            inferInstance.isControlPlayer2 = true;
         }
-        if (inferGAInstance.player2ControlModeDropdown.options[value].text == "Agent")
+        if (inferInstance.player2ControlModeDropdown.options[value].text == "Agent")
         {
-            inferGAInstance.isControlPlayer2 = false;
-        }
-    }
-
-    public void ChangeTrainMode(int value)
-    {
-        if (trainModeDropdown.options[value].text == "GA")
-        {
-            trainGAUI.SetActive(true);
-            trainRLUI.SetActive(false);
-            trainMode = TrainMode.GA;
-        }
-        if (trainModeDropdown.options[value].text == "RL")
-        {
-            trainGAUI.SetActive(false);
-            trainRLUI.SetActive(true);
-            trainMode = TrainMode.RL;
+            inferInstance.isControlPlayer2 = false;
         }
     }
 
     public void ChangeGAAgentNum(int value)
     {
-        if (trainGAInstance.agentNumDropdown.options[value].text == "1")
+        if (trainInstance.agentNumDropdown.options[value].text == "1")
         {
-            trainGAInstance.chooseAgentGameObject.SetActive(true);
-            trainGAInstance.socket2PortGameObject.SetActive(false);
-            trainGAInstance.agentNum = 1;
+            trainInstance.chooseAgentGameObject.SetActive(true);
+            trainInstance.socket2PortGameObject.SetActive(false);
+            trainInstance.agentNum = 1;
         }
-        if (trainGAInstance.agentNumDropdown.options[value].text == "2")
+        if (trainInstance.agentNumDropdown.options[value].text == "2")
         {
-            trainGAInstance.chooseAgentGameObject.SetActive(false);
-            trainGAInstance.socket2PortGameObject.SetActive(true);
-            trainGAInstance.agentNum = 2;
+            trainInstance.chooseAgentGameObject.SetActive(false);
+            trainInstance.socket2PortGameObject.SetActive(true);
+            trainInstance.agentNum = 2;
         }
     }
 
     public void ChangeChooseGAAgent(int value)
     {
-        if (trainGAInstance.chooseAgentDropdown.options[value].text == "Decision Tree")
+        if (trainInstance.chooseAgentDropdown.options[value].text == "Decision Tree")
         {
 
         }
-        if (trainGAInstance.chooseAgentDropdown.options[value].text == "Junior Agent(GA)")
+        if (trainInstance.chooseAgentDropdown.options[value].text == "Junior Agent(GA)")
         {
 
         }
-        if (trainGAInstance.chooseAgentDropdown.options[value].text == "Senior Agent(GA)")
+        if (trainInstance.chooseAgentDropdown.options[value].text == "Senior Agent(GA)")
         {
 
         }
@@ -205,40 +163,28 @@ public class Manager : MonoBehaviour
     {
         if (gameRunMode == RunMode.Train)
         {
-            if (trainMode == TrainMode.GA)
+            if (trainInstance.agentNum == 1)
             {
-                if (trainGAInstance.agentNum == 1)
-                {
-                    train1Manager.GetComponent<Train1Manager>().socket1Port = int.Parse(trainGAInstance.socket1PortInputField.text);
-                    train1Manager.GetComponent<Train1Manager>().timeSpeed = int.Parse(trainGAInstance.trainSpeed.text);
-
-                    settings.SetActive(false);
-                    train1Manager.SetActive(true);
-                    UI.GetComponent<UI>().TrainUI();
-                    train1Manager.GetComponent<Train1Manager>().StartTrain();
-                }
-                if (trainGAInstance.agentNum == 2)
-                {
-                    train2Manager.GetComponent<Train2Manager>().socket1Port = int.Parse(trainGAInstance.socket1PortInputField.text);
-                    train2Manager.GetComponent<Train2Manager>().socket2Port = int.Parse(trainGAInstance.socket2PortInputField.text);
-                    train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainGAInstance.trainSpeed.text);
-
-                    settings.SetActive(false);
-                    train2Manager.SetActive(true);
-                    UI.GetComponent<UI>().TrainUI();
-                    train2Manager.GetComponent<Train2Manager>().StartTrain();
-                }
-            }
-            if (trainMode == TrainMode.RL)
-            {
-                train1Manager.GetComponent<Train1Manager>().socket1Port = int.Parse(trainRLInstance.socket1PortInputField.text);
-                train1Manager.GetComponent<Train1Manager>().timeSpeed = int.Parse(trainRLInstance.trainSpeed.text);
+                train1Manager.GetComponent<Train1Manager>().socket1Port = int.Parse(trainInstance.socket1PortInputField.text);
+                train1Manager.GetComponent<Train1Manager>().timeSpeed = int.Parse(trainInstance.trainSpeed.text);
 
                 settings.SetActive(false);
                 train1Manager.SetActive(true);
                 UI.GetComponent<UI>().TrainUI();
                 train1Manager.GetComponent<Train1Manager>().StartTrain();
             }
+            if (trainInstance.agentNum == 2)
+            {
+                train2Manager.GetComponent<Train2Manager>().socket1Port = int.Parse(trainInstance.socket1PortInputField.text);
+                train2Manager.GetComponent<Train2Manager>().socket2Port = int.Parse(trainInstance.socket2PortInputField.text);
+                train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainInstance.trainSpeed.text);
+
+                settings.SetActive(false);
+                train2Manager.SetActive(true);
+                UI.GetComponent<UI>().TrainUI();
+                train2Manager.GetComponent<Train2Manager>().StartTrain();
+            }
+
         }
         if (gameRunMode == RunMode.Infer)
         {
@@ -252,10 +198,10 @@ public class Manager : MonoBehaviour
             // infer.GetComponent<Infer>().groundStartTime = Time.time;
             // infer.SetActive(true);
             // infer.GetComponent<Infer>().StartInfer();
-            inferManager.GetComponent<InferManager>().path1 = inferGAInstance.socket1CSVPath.text;
-            inferManager.GetComponent<InferManager>().path2 = inferGAInstance.socket2CSVPath.text;
-            player1.GetComponent<PlayerMove>().isControl = inferGAInstance.isControlPlayer1;
-            player2.GetComponent<PlayerMove>().isControl = inferGAInstance.isControlPlayer2;
+            inferManager.GetComponent<InferManager>().path1 = inferInstance.socket1CSVPath.text;
+            inferManager.GetComponent<InferManager>().path2 = inferInstance.socket2CSVPath.text;
+            player1.GetComponent<PlayerMove>().isControl = inferInstance.isControlPlayer1;
+            player2.GetComponent<PlayerMove>().isControl = inferInstance.isControlPlayer2;
 
             settings.SetActive(false);
             UI.GetComponent<UI>().InferUI();
@@ -279,22 +225,35 @@ public class Manager : MonoBehaviour
 
     IEnumerator ResetTrainProcess()
     {
-        // train.GetComponent<Train>().s1.StopListen();
-        // train.GetComponent<Train>().s2.StopListen();
-        UI.GetComponent<UI>().waitingConnect.SetActive(false);
-        train2Manager.GetComponent<Train2Manager>().s1.isRunning = false;
-        train2Manager.GetComponent<Train2Manager>().s2.isRunning = false;
-        yield return new WaitForSeconds(0.2f);
-        train2Manager.GetComponent<Train2Manager>().s1.Shutdown();
-        train2Manager.GetComponent<Train2Manager>().s2.Shutdown();
-        train2Manager.GetComponent<Train2Manager>().Reset();
-        train2Manager.GetComponent<Train2Manager>().iteration = 1;
-        train2Manager.GetComponent<Train2Manager>().generation = 1;
-        train2Manager.GetComponent<Train2Manager>().isStartTrain = false;
-        UI.GetComponent<UI>().groundTime.SetActive(false);
-        UI.GetComponent<UI>().Iteration.SetActive(false);
-        UI.GetComponent<UI>().Generation.SetActive(false);
-        train2Manager.SetActive(false);
+        if (trainInstance.agentNum == 1)
+        {
+            UI.GetComponent<UI>().waitingConnect.SetActive(false);
+            train1Manager.GetComponent<Train1Manager>().socket1.isRunning = false;
+            yield return new WaitForSeconds(1f);
+            train1Manager.GetComponent<Train1Manager>().socket1.Shutdown();
+            train1Manager.GetComponent<Train1Manager>().Reset();
+            train1Manager.GetComponent<Train1Manager>().iteration = 1;
+            train1Manager.GetComponent<Train1Manager>().isStartTrain = false;
+            UI.GetComponent<UI>().groundTime.SetActive(false);
+            UI.GetComponent<UI>().Iteration.SetActive(false);
+            train1Manager.SetActive(false);
+        }
+        if (trainInstance.agentNum == 2)
+        {
+            UI.GetComponent<UI>().waitingConnect.SetActive(false);
+            train2Manager.GetComponent<Train2Manager>().socket1.isRunning = false;
+            train2Manager.GetComponent<Train2Manager>().socket2.isRunning = false;
+            yield return new WaitForSeconds(1f);
+            train2Manager.GetComponent<Train2Manager>().socket1.Shutdown();
+            train2Manager.GetComponent<Train2Manager>().socket2.Shutdown();
+            train2Manager.GetComponent<Train2Manager>().Reset();
+            train2Manager.GetComponent<Train2Manager>().iteration = 1;
+            train2Manager.GetComponent<Train2Manager>().isStartTrain = false;
+            UI.GetComponent<UI>().groundTime.SetActive(false);
+            UI.GetComponent<UI>().Iteration.SetActive(false);
+            train2Manager.SetActive(false);
+        }
+
     }
 
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Train2Manager : MonoBehaviour
 {
-    public Train2 s1;
-    public Train2 s2;
+    public Train2 socket1;
+    public Train2 socket2;
     public GameObject player1;
     public GameObject player2;
     public bool isEnd = false;// 一场比赛结束标志
@@ -14,7 +14,6 @@ public class Train2Manager : MonoBehaviour
     public float timeSpeed = 1f;// 时间流速
     public float iterationStartTime;// 每场比赛开始时间
     public int iteration = 1;
-    public int generation = 1;
     public PlayerMove p1m;
     public PlayerMove p2m;
     public PlayerAttribute p1a;
@@ -33,10 +32,10 @@ public class Train2Manager : MonoBehaviour
 
     public void StartTrain()
     {
-        s1 = new Train2(this, 1);
-        s1.Start(socket1Port);
-        s2 = new Train2(this, 2);
-        s2.Start(socket2Port);
+        socket1 = new Train2(this, 1);
+        socket1.Start(socket1Port);
+        socket2 = new Train2(this, 2);
+        socket2.Start(socket2Port);
         p1m = player1.GetComponent<PlayerMove>();
         p2m = player2.GetComponent<PlayerMove>();
         p1a = player1.GetComponent<PlayerAttribute>();
@@ -62,15 +61,15 @@ public class Train2Manager : MonoBehaviour
         if (isStartTrain)
             groundTime = totalTime - (Time.time - iterationStartTime);
         UI.GetComponent<UI>().time = (int)groundTime;
-        generation = (iteration / 190) + 1;
+
         if (groundTime <= 0 || p1a.HP <= 0 || p2a.HP <= 0)
         {
             isEnd = true;
         }
         else
         {
-            s1.SetEnvInfo(info1);// 结束了就不再更新环境信息
-            s2.SetEnvInfo(info2);
+            socket1.SetEnvInfo(info1);// 结束了就不再更新环境信息
+            socket2.SetEnvInfo(info2);
         }
 
         if (isStart == 2)
@@ -78,8 +77,8 @@ public class Train2Manager : MonoBehaviour
             Reset();
             iteration++;
 
-            s1.SendMessage(s1.RAShandler, s1.info);
-            s2.SendMessage(s2.RAShandler, s2.info);
+            socket1.SendMessage(socket1.RAShandler, socket1.info);
+            socket2.SendMessage(socket2.RAShandler, socket2.info);
             print("restart");
         }
 
@@ -169,8 +168,8 @@ public class Train2Manager : MonoBehaviour
         player2.transform.localScale = new Vector3(-1, 1, 1);
         isEnd = false;
         isStart = 0;
-        s1.hasSendEndInfo = false;
-        s2.hasSendEndInfo = false;
+        socket1.hasSendEndInfo = false;
+        socket2.hasSendEndInfo = false;
         print("reset");
     }
 
