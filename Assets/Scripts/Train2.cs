@@ -113,7 +113,7 @@ public class Train2
                 {
                     if (train2Manager.isEnd)
                     {
-                        Debug.Log("Ground" + (train2Manager.iteration - 1) + "End");
+                        // Debug.Log("Ground" + (train2Manager.iteration - 1) + "End");
                         // info.infoCode = (train2Instance.p1a.HP >= train2Instance.p2a.HP) && (player == 1) ? 1f : 2f;
                         if (player == PlayerType.player1)
                         {

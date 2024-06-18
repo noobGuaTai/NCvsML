@@ -80,7 +80,7 @@ public class Train2Manager : MonoBehaviour
 
             socket1.SendMessage(socket1.RAShandler, socket1.info);
             socket2.SendMessage(socket2.RAShandler, socket2.info);
-            print("restart");
+            // print("restart");
         }
 
     }
@@ -153,7 +153,7 @@ public class Train2Manager : MonoBehaviour
         isStart = 0;
         socket1.hasSendEndInfo = false;
         socket2.hasSendEndInfo = false;
-        print("reset");
+        // print("reset");
     }
 
 }
