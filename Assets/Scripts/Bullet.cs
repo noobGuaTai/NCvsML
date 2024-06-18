@@ -23,8 +23,8 @@ public class Bullet : MonoBehaviour
             knockBackDirection.y = 0;
             knockBackDirection = knockBackDirection.normalized;
             collision.GetComponent<PlayerAttribute>().ChangeHP(-1, knockBackDirection);
-            collision.GetComponent<PlayerMove>().beShot = true;
-            father.GetComponent<PlayerMove>().isShot = true;
+            collision.GetComponent<PlayerFSM>().parameters.beShot = true;
+            father.GetComponent<PlayerFSM>().parameters.isShot = true;
             Destroy(gameObject);
         }
     }

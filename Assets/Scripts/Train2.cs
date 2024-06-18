@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using UnityEngine;
+using PlayerEnum;
 
 public class Train2
 {
@@ -14,9 +15,9 @@ public class Train2
     public Socket accListener;
     public bool recvFlag = false;
     public bool sendFlag = false;
-    public int player;
+    public PlayerType player;
 
-    private int[] action;
+    private PlayerActionType[] action;
     public EnvInfo info;// 环境信息
     public bool hasSendEndInfo = false;
     public Socket RAShandler;
@@ -24,7 +25,7 @@ public class Train2
     public bool isRunning = true;
 
 
-    public Train2(Train2Manager trainManager, int player)
+    public Train2(Train2Manager trainManager, PlayerType player)
     {
         train2Manager = trainManager;
         this.player = player;
@@ -98,7 +99,7 @@ public class Train2
                 while (!recvFlag) ;
                 // if (!isRunning) break;
 
-                action = recvInt(RAShandler);
+                action = recvAction(RAShandler);
 
                 train2Manager.RunAction(player, action);// 接受到信息，就执行操作
                 // Debug.Log(player + "received.");
@@ -114,14 +115,14 @@ public class Train2
                     {
                         Debug.Log("Ground" + (train2Manager.iteration - 1) + "End");
                         // info.infoCode = (train2Instance.p1a.HP >= train2Instance.p2a.HP) && (player == 1) ? 1f : 2f;
-                        if (player == 1)
+                        if (player == PlayerType.player1)
                         {
                             info.infoCode = train2Manager.player1HP > train2Manager.player2HP ? 2f : -2f;
                             info.infoCode = train2Manager.player1HP == train2Manager.player2HP ? -2f : info.infoCode;
                             // Debug.Log("player:" + player + "train2Instance.p1a.HP:" + train2Instance.player1HP + "train2Instance.p2a.HP:" + train2Instance.player2HP + "info.infoCode:" + info.infoCode);
                         }
 
-                        if (player == 2)
+                        if (player == PlayerType.player2)
                         {
                             info.infoCode = train2Manager.player1HP > train2Manager.player2HP ? -2f : 2f;
                             info.infoCode = train2Manager.player1HP == train2Manager.player2HP ? -2f : info.infoCode;
@@ -132,10 +133,10 @@ public class Train2
                     }
                     else
                     {
-                        if (player == 1)
+                        if (player == PlayerType.player1)
                         {
-                            info.infoCode = train2Manager.p1m.beShot == true ? -1f : 0f;// -1被击中
-                            info.infoCode = train2Manager.p1m.isShot == true ? 1f : info.infoCode;// 1击中对方
+                            info.infoCode = train2Manager.player1FSM.parameters.beShot == true ? -1f : 0f;// -1被击中
+                            info.infoCode = train2Manager.player1FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
                             // info.infoCode = train2Instance.p1m.isShot == true && train2Instance.p1m.beShot == true ? 5f : info.infoCode;
                             // if (info.infoCode == 3 || info.infoCode == 4)
                             // {
@@ -145,13 +146,13 @@ public class Train2
                             SendMessage(RAShandler, info);
 
                             info.infoCode = 0f;
-                            train2Manager.p1m.beShot = false;
-                            train2Manager.p1m.isShot = false;
+                            train2Manager.player1FSM.parameters.beShot = false;
+                            train2Manager.player1FSM.parameters.isShot = false;
                         }
-                        if (player == 2)
+                        if (player == PlayerType.player2)
                         {
-                            info.infoCode = train2Manager.p2m.beShot == true ? -1f : 0f;// 4被击中
-                            info.infoCode = train2Manager.p2m.isShot == true ? 1f : info.infoCode;// 3击中对方
+                            info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// 4被击中
+                            info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 3击中对方
                             // info.infoCode = train2Instance.p2m.isShot == true && train2Instance.p2m.beShot == true ? 5f : info.infoCode;
                             // if (info.infoCode == 3 || info.infoCode == 4)
                             // {
@@ -161,8 +162,8 @@ public class Train2
                             SendMessage(RAShandler, info);
 
                             info.infoCode = 0f;
-                            train2Manager.p2m.beShot = false;
-                            train2Manager.p2m.isShot = false;
+                            train2Manager.player2FSM.parameters.beShot = false;
+                            train2Manager.player2FSM.parameters.isShot = false;
                         }
                     }
                 }
@@ -183,7 +184,7 @@ public class Train2
         }
     }
 
-    int[] recvInt(Socket handler)
+    PlayerActionType[] recvAction(Socket handler)
     {
         int len = 3;
         int[] intArray = new int[len];
@@ -196,7 +197,13 @@ public class Train2
 
         // 将字节转换为整数
         Buffer.BlockCopy(buffer, 0, intArray, 0, bytesRec);
-        return intArray;
+
+        PlayerActionType[] actionArray = new PlayerActionType[len];
+        actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
+        actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
+        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+
+        return actionArray;
     }
 
     public void SendMessage(Socket handler, EnvInfo info)

@@ -6,7 +6,7 @@ public class PlayerAttribute : MonoBehaviour
 {
     public int HP = 10;
     public int moveSpeed = 5;
-    public int jumpSpeed = 16;
+    public int jumpSpeed = 11;
     public bool hasWon = false;
 
     public bool isInvincible = false;

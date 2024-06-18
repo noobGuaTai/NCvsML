@@ -11,10 +11,10 @@ public class InferManager : MonoBehaviour
     public Infer infer2;
     public GameObject player1;
     public GameObject player2;
-    public PlayerMove p1m;
-    public PlayerMove p2m;
-    public PlayerAttribute p1a;
-    public PlayerAttribute p2a;
+    public PlayerFSM player1FSM;
+    public PlayerFSM player2FSM;
+    public PlayerAttribute player1Attribute;
+    public PlayerAttribute player2Attribute;
     public string path1 = "D:\\Code\\Programs\\Python\\智能体对战python\\gene.csv";
     public string path2 = "D:\\Code\\Programs\\Python\\智能体对战python\\gene.csv";
     public GameObject UI;
@@ -27,10 +27,10 @@ public class InferManager : MonoBehaviour
 
     void Start()
     {
-        p1m = player1.GetComponent<PlayerMove>();
-        p2m = player2.GetComponent<PlayerMove>();
-        p1a = player1.GetComponent<PlayerAttribute>();
-        p2a = player2.GetComponent<PlayerAttribute>();
+        player1FSM = player1.GetComponent<PlayerFSM>();
+        player2FSM = player2.GetComponent<PlayerFSM>();
+        player1Attribute = player1.GetComponent<PlayerAttribute>();
+        player2Attribute = player2.GetComponent<PlayerAttribute>();
     }
 
     public void StartInfer()
@@ -51,7 +51,7 @@ public class InferManager : MonoBehaviour
         infer2.OnUpdate();
         groundTime = totalTime - (Time.time - groundStartTime);
         UI.GetComponent<UI>().time = (int)groundTime;
-        if (p1a.HP <= 0 || p2a.HP <= 0 || groundTime <= 0)
+        if (player1Attribute.HP <= 0 || player2Attribute.HP <= 0 || groundTime <= 0)
         {
             Time.timeScale = 0f;
             UI.GetComponent<UI>().gameOver.SetActive(true);
@@ -61,18 +61,18 @@ public class InferManager : MonoBehaviour
     public void Reset()
     {
         UI.GetComponent<UI>().gameOver.SetActive(false);
-        p1m.transform.position = player1InitPos;
-        p2m.transform.position = player2InitPos;
+        player1FSM.transform.position = player1InitPos;
+        player2FSM.transform.position = player2InitPos;
         player1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player2.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        p1m.ClearBullets();
-        p2m.ClearBullets();
-        p1m.transform.localScale = new Vector3(1, 1, 1);
-        p2m.transform.localScale = new Vector3(-1, 1, 1);
+        player1FSM.ClearBullets();
+        player2FSM.ClearBullets();
+        player1FSM.transform.localScale = new Vector3(1, 1, 1);
+        player2FSM.transform.localScale = new Vector3(-1, 1, 1);
         groundStartTime = Time.time;
         groundTime = 30;
-        p1a.HP = 10;
-        p2a.HP = 10;
+        player1Attribute.HP = 10;
+        player2Attribute.HP = 10;
     }
 }
 

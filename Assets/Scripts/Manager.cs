@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using PlayerEnum;
 
 [Serializable]
 public class TrainpParameters
@@ -188,20 +189,10 @@ public class Manager : MonoBehaviour
         }
         if (gameRunMode == RunMode.Infer)
         {
-            // infer.GetComponent<Infer>().filePath = inferGAInstance.socket1CSVPath.text;
-            // infer.GetComponent<Infer>().filePath2 = inferGAInstance.socket2CSVPath.text;
-            // player1.GetComponent<PlayerMove>().isControl = inferGAInstance.isControlPlayer1;
-            // player2.GetComponent<PlayerMove>().isControl = inferGAInstance.isControlPlayer2;
-
-            // settings.SetActive(false);
-            // UI.GetComponent<UI>().InferUI();
-            // infer.GetComponent<Infer>().groundStartTime = Time.time;
-            // infer.SetActive(true);
-            // infer.GetComponent<Infer>().StartInfer();
             inferManager.GetComponent<InferManager>().path1 = inferInstance.socket1CSVPath.text;
             inferManager.GetComponent<InferManager>().path2 = inferInstance.socket2CSVPath.text;
-            player1.GetComponent<PlayerMove>().isControl = inferInstance.isControlPlayer1;
-            player2.GetComponent<PlayerMove>().isControl = inferInstance.isControlPlayer2;
+            player1.GetComponent<PlayerFSM>().parameters.isControl = inferInstance.isControlPlayer1;
+            player2.GetComponent<PlayerFSM>().parameters.isControl = inferInstance.isControlPlayer2;
 
             settings.SetActive(false);
             UI.GetComponent<UI>().InferUI();
@@ -213,10 +204,17 @@ public class Manager : MonoBehaviour
 
     public void ResetGame()
     {
-        if (gameRunMode == RunMode.Train && train2Manager != null)
+        player1.GetComponent<PlayerFSM>().parameters.playerAction[0] = PlayerActionType.None;
+        player1.GetComponent<PlayerFSM>().parameters.playerAction[1] = PlayerActionType.None;
+        player1.GetComponent<PlayerFSM>().parameters.playerAction[2] = PlayerActionType.None;
+        player2.GetComponent<PlayerFSM>().parameters.playerAction[0] = PlayerActionType.None;
+        player2.GetComponent<PlayerFSM>().parameters.playerAction[1] = PlayerActionType.None;
+        player2.GetComponent<PlayerFSM>().parameters.playerAction[2] = PlayerActionType.None;
+
+        if (gameRunMode == RunMode.Train)
             StartCoroutine(ResetTrainProcess());
 
-        if (gameRunMode == RunMode.Infer && inferManager != null)
+        if (gameRunMode == RunMode.Infer)
         {
             inferManager.GetComponent<InferManager>().Reset();
             inferManager.SetActive(false);

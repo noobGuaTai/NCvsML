@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerEnum;
 
 public class Train2Manager : MonoBehaviour
 {
@@ -14,10 +15,10 @@ public class Train2Manager : MonoBehaviour
     public float timeSpeed = 1f;// 时间流速
     public float iterationStartTime;// 每场比赛开始时间
     public int iteration = 1;
-    public PlayerMove p1m;
-    public PlayerMove p2m;
-    public PlayerAttribute p1a;
-    public PlayerAttribute p2a;
+    public PlayerFSM player1FSM;
+    public PlayerFSM player2FSM;
+    public PlayerAttribute player1attribute;
+    public PlayerAttribute player2attribute;
     public int player1HP;
     public int player2HP;
     public int isStart = 0;
@@ -32,16 +33,16 @@ public class Train2Manager : MonoBehaviour
 
     public void StartTrain()
     {
-        socket1 = new Train2(this, 1);
+        socket1 = new Train2(this, PlayerType.player1);
         socket1.Start(socket1Port);
-        socket2 = new Train2(this, 2);
+        socket2 = new Train2(this, PlayerType.player2);
         socket2.Start(socket2Port);
-        p1m = player1.GetComponent<PlayerMove>();
-        p2m = player2.GetComponent<PlayerMove>();
-        p1a = player1.GetComponent<PlayerAttribute>();
-        p2a = player2.GetComponent<PlayerAttribute>();
-        p1m.isControl = false;
-        p2m.isControl = false;
+        player1FSM = player1.GetComponent<PlayerFSM>();
+        player2FSM = player2.GetComponent<PlayerFSM>();
+        player1attribute = player1.GetComponent<PlayerAttribute>();
+        player2attribute = player2.GetComponent<PlayerAttribute>();
+        player1FSM.parameters.isControl = false;
+        player2FSM.parameters.isControl = false;
         info1 = new EnvInfo();
         info2 = new EnvInfo();
         // player1InitPos = player1.transform.position;
@@ -53,16 +54,16 @@ public class Train2Manager : MonoBehaviour
     void Update()
     {
         Time.timeScale = timeSpeed;
-        GetEnvInf(p1m, p2m, p1a, p2a, ref info1);
-        GetEnvInf(p2m, p1m, p1a, p2a, ref info2);
-        player1HP = p1a.HP;
-        player2HP = p2a.HP;
+        GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
+        GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);
+        player1HP = player1attribute.HP;
+        player2HP = player2attribute.HP;
 
         if (isStartTrain)
             groundTime = totalTime - (Time.time - iterationStartTime);
         UI.GetComponent<UI>().time = (int)groundTime;
 
-        if (groundTime <= 0 || p1a.HP <= 0 || p2a.HP <= 0)
+        if (groundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
         {
             isEnd = true;
         }
@@ -84,82 +85,64 @@ public class Train2Manager : MonoBehaviour
 
     }
 
-    public void GetEnvInf(PlayerMove pm1, PlayerMove pm2, PlayerAttribute pa1, PlayerAttribute pa2, ref EnvInfo info)
+    public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref EnvInfo info)
     {
-        info.direction = pm1.transform.localScale.x;
-        info.shootable = 2 - pm1.bullets.Count;// 有改动
-        info.jumpable = pm1.canJump ? 1 : 0;
-        info.leftWall_XD = pm1.transform.position.x - pm1.leftWall.transform.position.x;
-        info.rightWall_XD = pm1.rightWall.transform.position.x - pm1.transform.position.x;
-        info.E_XD = pm2.transform.position.x - pm1.transform.position.x;
-        info.E_YD = pm2.transform.position.y - pm1.transform.position.y;
-        info.E_Bullet0 = pm2.bullets.Count > 0 ? 1 : 0;
-        if (info.E_Bullet0 != 0 && pm2.bullets[0] != null)
+        info.direction = playerFSM1.transform.localScale.x;
+        info.shootable = 2 - playerFSM1.parameters.bullets.Count;// 有改动
+        info.jumpable = playerFSM1.parameters.canJump ? 1 : 0;
+        info.leftWall_XD = playerFSM1.transform.position.x - playerFSM1.parameters.leftWall.transform.position.x;
+        info.rightWall_XD = playerFSM1.parameters.rightWall.transform.position.x - playerFSM1.transform.position.x;
+        info.E_XD = playerFSM2.transform.position.x - playerFSM1.transform.position.x;
+        info.E_YD = playerFSM2.transform.position.y - playerFSM1.transform.position.y;
+        info.E_Bullet0 = playerFSM2.parameters.bullets.Count > 0 ? 1 : 0;
+        if (info.E_Bullet0 != 0 && playerFSM2.parameters.bullets[0] != null)
         {
-            info.E_Bullet0_XD = pm2.bullets[0].transform.position.x - pm1.transform.position.x;
-            info.E_Bullet0_YD = pm2.bullets[0].transform.position.y - pm1.transform.position.y;
+            info.E_Bullet0_XD = playerFSM2.parameters.bullets[0].transform.position.x - playerFSM1.transform.position.x;
+            info.E_Bullet0_YD = playerFSM2.parameters.bullets[0].transform.position.y - playerFSM1.transform.position.y;
         }
 
-        info.E_Bullet1 = pm2.bullets.Count > 1 ? 1 : 0;
-        if (info.E_Bullet1 != 0 && pm2.bullets[1] != null)
+        info.E_Bullet1 = playerFSM2.parameters.bullets.Count > 1 ? 1 : 0;
+        if (info.E_Bullet1 != 0 && playerFSM2.parameters.bullets[1] != null)
         {
-            info.E_Bullet1_XD = pm2.bullets[1].transform.position.x - pm1.transform.position.x;
-            info.E_Bullet1_YD = pm2.bullets[1].transform.position.y - pm1.transform.position.y;
+            info.E_Bullet1_XD = playerFSM2.parameters.bullets[1].transform.position.x - playerFSM1.transform.position.x;
+            info.E_Bullet1_YD = playerFSM2.parameters.bullets[1].transform.position.y - playerFSM1.transform.position.y;
         }
-        info.self_Invincible = pa1.isInvincible ? 1 : 0;
-        info.E_Invincible = pa2.isInvincible ? 1 : 0;
+        info.self_Invincible = playerAttribute1.isInvincible ? 1 : 0;
+        info.E_Invincible = playerAttribute2.isInvincible ? 1 : 0;
         info.time = groundTime;
     }
 
-    public void RunAction(int player, int[] action)// 封装一下
+    public void RunAction(PlayerType player, PlayerActionType[] action)
     {
-        PlayerMove pm = player == 1 ? p1m : p2m;
+        PlayerFSM playerFSM = player == PlayerType.player1 ? player1FSM : player2FSM;
 
         UnityMainThreadDispatcher.Enqueue(() =>
         {
-            if (action[0] == 2)
+            if (action[0] == PlayerActionType.StartNextGround)
             {
                 isStart += 1;
             }
-            if (pm.isControl)
+            if (playerFSM.parameters.isControl)
                 return;
-            if (action[0] == 1)
-            {
-                pm.Jump();
-            }
-            if (action[1] == 1)
-            {
-                pm.StartShoot();
-            }
-            if (action[2] == -1)
-            {
-                pm.MoveLeft();
-            }
-            if (action[2] == 1)
-            {
-                pm.MoveRight();
-            }
-            if (action[2] == 0)
-            {
-                pm.Idle();
-            }
+
+            playerFSM.parameters.playerAction = action;
         });
     }
 
     public void Reset()
     {
-        p1a.HP = 10;
-        p2a.HP = 10;
+        player1attribute.HP = 10;
+        player2attribute.HP = 10;
         player1.transform.position = player1InitPos;
         player2.transform.position = player2InitPos;
         groundTime = (int)totalTime;
         iterationStartTime = Time.time;
         player1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player2.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        p1m.ClearBullets();
-        p2m.ClearBullets();
-        p1a.isInvincible = false;
-        p2a.isInvincible = false;
+        player1FSM.ClearBullets();
+        player2FSM.ClearBullets();
+        player1attribute.isInvincible = false;
+        player2attribute.isInvincible = false;
         // p1m.canJump = true;
         // p2m.canJump = true;
         info1.infoCode = 0;

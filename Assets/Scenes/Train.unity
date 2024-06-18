@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 103139934}
   - component: {fileID: 103139933}
   - component: {fileID: 103139932}
-  - component: {fileID: 103139931}
+  - component: {fileID: 103139936}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -782,33 +782,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &103139931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 103139930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aab580dcc6f1b4e96ac151e09fcce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isControl: 0
-  canJump: 1
-  canShoot: 1
-  bullets: []
-  bulletPrefab: {fileID: 3213164476604897119, guid: 1bd7d20fbc9815f4db62e8263ae92848, type: 3}
-  bulletSpeed: 10
-  shootCooldown: 1
-  train1ManagerGameObject: {fileID: 1686127468}
-  train2ManagerGameObject: {fileID: 1020920576}
-  train2Manager: {fileID: 0}
-  train1Manager: {fileID: 0}
-  beShot: 0
-  isShot: 0
-  leftWall: {fileID: 1831153965}
-  rightWall: {fileID: 416163755}
 --- !u!114 &103139932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,6 +889,39 @@ Transform:
   - {fileID: 690012151}
   m_Father: {fileID: 1388435209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103139936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103139930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23ac580fe8cf41428426ed691b16643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    isControl: 0
+    canJump: 1
+    canShoot: 1
+    bullets: []
+    bulletPrefab: {fileID: 3213164476604897119, guid: 1bd7d20fbc9815f4db62e8263ae92848, type: 3}
+    bulletSpeed: 10
+    shootCoolDown: 0.5
+    train1ManagerGameObject: {fileID: 1686127468}
+    train2ManagerGameObject: {fileID: 1020920576}
+    train2Manager: {fileID: 0}
+    train1Manager: {fileID: 0}
+    beShot: 0
+    isShot: 0
+    leftWall: {fileID: 1831153965}
+    rightWall: {fileID: 416163755}
+    rb: {fileID: 0}
+    playerAttribute: {fileID: 0}
+    shootTimer: 0
+    moveKeyboardInput: {x: 0, y: 0}
+    playerAction: 000000000000000000000000
 --- !u!1 &111914832
 GameObject:
   m_ObjectHideFlags: 0
@@ -8471,10 +8477,10 @@ MonoBehaviour:
   timeSpeed: 1
   iterationStartTime: 0
   iteration: 1
-  p1m: {fileID: 0}
-  p2m: {fileID: 0}
-  p1a: {fileID: 0}
-  p2a: {fileID: 0}
+  player1FSM: {fileID: 0}
+  player2FSM: {fileID: 0}
+  player1attribute: {fileID: 0}
+  player2attribute: {fileID: 0}
   player1HP: 0
   player2HP: 0
   isStart: 0
@@ -9321,10 +9327,10 @@ MonoBehaviour:
   infer2: {fileID: 0}
   player1: {fileID: 1392345111}
   player2: {fileID: 103139930}
-  p1m: {fileID: 0}
-  p2m: {fileID: 0}
-  p1a: {fileID: 0}
-  p2a: {fileID: 0}
+  player1FSM: {fileID: 0}
+  player2FSM: {fileID: 0}
+  player1Attribute: {fileID: 0}
+  player2Attribute: {fileID: 0}
   path1: "D:\\Code\\Programs\\Python\\\u667A\u80FD\u4F53\u5BF9\u6218python\\gene.csv"
   path2: "D:\\Code\\Programs\\Python\\\u667A\u80FD\u4F53\u5BF9\u6218python\\gene.csv"
   UI: {fileID: 317806569}
@@ -10209,7 +10215,7 @@ GameObject:
   - component: {fileID: 1392345115}
   - component: {fileID: 1392345114}
   - component: {fileID: 1392345113}
-  - component: {fileID: 1392345112}
+  - component: {fileID: 1392345117}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -10217,33 +10223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1392345112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392345111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aab580dcc6f1b4e96ac151e09fcce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isControl: 0
-  canJump: 1
-  canShoot: 1
-  bullets: []
-  bulletPrefab: {fileID: 3213164476604897119, guid: c32f539680902594a97e9e3ce646c44d, type: 3}
-  bulletSpeed: 10
-  shootCooldown: 1
-  train1ManagerGameObject: {fileID: 1686127468}
-  train2ManagerGameObject: {fileID: 1020920576}
-  train2Manager: {fileID: 0}
-  train1Manager: {fileID: 0}
-  beShot: 0
-  isShot: 0
-  leftWall: {fileID: 1831153965}
-  rightWall: {fileID: 416163755}
 --- !u!114 &1392345113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10351,6 +10330,39 @@ Transform:
   - {fileID: 373613746}
   m_Father: {fileID: 1388435209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1392345117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392345111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23ac580fe8cf41428426ed691b16643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    isControl: 0
+    canJump: 1
+    canShoot: 1
+    bullets: []
+    bulletPrefab: {fileID: 3213164476604897119, guid: c32f539680902594a97e9e3ce646c44d, type: 3}
+    bulletSpeed: 10
+    shootCoolDown: 0.5
+    train1ManagerGameObject: {fileID: 1686127468}
+    train2ManagerGameObject: {fileID: 1020920576}
+    train2Manager: {fileID: 0}
+    train1Manager: {fileID: 0}
+    beShot: 0
+    isShot: 0
+    leftWall: {fileID: 1831153965}
+    rightWall: {fileID: 416163755}
+    rb: {fileID: 0}
+    playerAttribute: {fileID: 0}
+    shootTimer: 0
+    moveKeyboardInput: {x: 0, y: 0}
+    playerAction: 000000000000000000000000
 --- !u!1 &1392735473
 GameObject:
   m_ObjectHideFlags: 0
@@ -11563,10 +11575,10 @@ MonoBehaviour:
   timeSpeed: 1
   iterationStartTime: 0
   iteration: 1
-  p1m: {fileID: 0}
-  p2m: {fileID: 0}
-  p1a: {fileID: 0}
-  p2a: {fileID: 0}
+  player1FSM: {fileID: 0}
+  player2FSM: {fileID: 0}
+  player1attribute: {fileID: 0}
+  player2attribute: {fileID: 0}
   player1HP: 0
   player2HP: 0
   isStart: 0

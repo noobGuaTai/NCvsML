@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using UnityEngine;
+using PlayerEnum;
 
 public class Train1
 {
@@ -16,7 +17,7 @@ public class Train1
     public bool sendFlag = false;
     public int player;
 
-    private int[] action;
+    private PlayerActionType[] action;
     public EnvInfo info;// 环境信息
     public bool canRestart = false;
     public Socket RAShandler;
@@ -99,7 +100,7 @@ public class Train1
                 while (!recvFlag) ;
                 // if (!isRunning) break;
 
-                action = recvInt(RAShandler);
+                action = recvAction(RAShandler);
 
                 train1Manager.RunAction(action);// 接受到信息，就执行操作
                 // Debug.Log(player + "received.");
@@ -124,8 +125,8 @@ public class Train1
                     }
                     else
                     {
-                        info.infoCode = train1Manager.p1m.beShot == true ? -1f : 0f;// -1被击中
-                        info.infoCode = train1Manager.p1m.isShot == true ? 1f : info.infoCode;// 1击中对方
+                        info.infoCode = train1Manager.player1FSM.parameters.beShot == true ? -1f : 0f;// -1被击中
+                        info.infoCode = train1Manager.player1FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
                         // info.infoCode = train2Instance.p1m.isShot == true && train2Instance.p1m.beShot == true ? 5f : info.infoCode;
                         // if (info.infoCode == 3 || info.infoCode == 4)
                         // {
@@ -134,8 +135,8 @@ public class Train1
                         SendMessage(RAShandler, info);
                         // Debug.Log("send normal");
                         info.infoCode = 0f;
-                        train1Manager.p1m.beShot = false;
-                        train1Manager.p1m.isShot = false;
+                        train1Manager.player1FSM.parameters.beShot = false;
+                        train1Manager.player1FSM.parameters.isShot = false;
                     }
                 }
 
@@ -157,7 +158,7 @@ public class Train1
         }
     }
 
-    int[] recvInt(Socket handler)
+    PlayerActionType[] recvAction(Socket handler)
     {
         int len = 3;
         int[] intArray = new int[len];
@@ -170,7 +171,13 @@ public class Train1
 
         // 将字节转换为整数
         Buffer.BlockCopy(buffer, 0, intArray, 0, bytesRec);
-        return intArray;
+
+        PlayerActionType[] actionArray = new PlayerActionType[len];
+        actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
+        actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
+        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+
+        return actionArray;
     }
 
     public void SendMessage(Socket handler, EnvInfo info)

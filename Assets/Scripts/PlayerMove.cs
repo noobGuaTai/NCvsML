@@ -37,14 +37,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (isControl)
         {
-
             Move();
-
-            // if (Input.GetButtonUp("Horizontal"))
-            // {
-            //     Idle();
-            // }
-
             if (Input.GetButtonDown("Jump") && canJump)
             {
                 Jump();
@@ -55,10 +48,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-
         canShoot = shootTimer <= 0 && bullets.Count < 2;
-
-
 
         // 更新射击计时器
         if (shootTimer > 0)

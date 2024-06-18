@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System;
+using PlayerEnum;
 
 public class Infer : MonoBehaviour
 {
@@ -16,10 +17,10 @@ public class Infer : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
-    private PlayerMove p1m;
-    private PlayerMove p2m;
-    private PlayerAttribute p1a;
-    private PlayerAttribute p2a;
+    private PlayerFSM player1FSM;
+    private PlayerFSM player2FSM;
+    private PlayerAttribute player1Attribute;
+    private PlayerAttribute player2Attribute;
 
 
     // CSV文件的路径
@@ -36,14 +37,14 @@ public class Infer : MonoBehaviour
 
     public void StartInfer()
     {
-        p1m = player1.GetComponent<PlayerMove>();
-        p1a = player1.GetComponent<PlayerAttribute>();
-        p2m = player2.GetComponent<PlayerMove>();
-        p2a = player2.GetComponent<PlayerAttribute>();
-        p1a.isInvincible = false;
-        p2a.isInvincible = false;
+        player1FSM = player1.GetComponent<PlayerFSM>();
+        player1Attribute = player1.GetComponent<PlayerAttribute>();
+        player2FSM = player2.GetComponent<PlayerFSM>();
+        player2Attribute = player2.GetComponent<PlayerAttribute>();
+        player1Attribute.isInvincible = false;
+        player2Attribute.isInvincible = false;
 
-        if (!p1m.isControl)
+        if (!player1FSM.parameters.isControl)
         {
             geneData = ReadCSV(filePath);
             decoded = Decode(geneData.ToArray(), dims_list);
@@ -52,11 +53,11 @@ public class Infer : MonoBehaviour
 
     public void OnUpdate()
     {
-        if (!p1m.isControl && geneData != null)
+        if (!player1FSM.parameters.isControl && geneData != null)
         {
-            GetEnvInf(p1m, p2m, p1a, p2a, ref info);
-            int[] output1 = Forward(info, decoded.Item1, decoded.Item2);
-            p1m.RunAction(output1);
+            GetEnvInf(player1FSM, player2FSM, player1Attribute, player2Attribute, ref info);
+            PlayerActionType[] output1 = Forward(info, decoded.Item1, decoded.Item2);
+            player1FSM.parameters.playerAction = output1;
         }
     }
 
@@ -85,7 +86,7 @@ public class Infer : MonoBehaviour
             {
                 dims_list[i] = (int)float.Parse(dimsStrings[i]);
             }
-            
+
             info = new float[dims_list[dims_list.Length - 2]];
         }
         else
@@ -127,18 +128,23 @@ public class Infer : MonoBehaviour
         return (weightList, biasList);
     }
 
-    int[] Forward(float[] x, List<float[,]> weightList, List<float[,]> biasList)
+    PlayerActionType[] Forward(float[] x, List<float[,]> weightList, List<float[,]> biasList)
     {
         for (int i = 0; i < weightList.Count; i++)
         {
             x = Sigmoid(MatrixMultiply(weightList[i], x).Select((val, idx) => val + biasList[i][idx, 0]).ToArray());
         }
-        int[] action = new int[x.Length];
-        action[0] = x[0] > 0.5f ? 1 : 0;
-        action[1] = x[1] > 0.5f ? 1 : 0;
-        action[2] = (x[2] > 0.6f) ? 1 : ((x[2] < 0.4f) ? -1 : 0);
+        int[] intArray = new int[x.Length];
+        intArray[0] = x[0] > 0.5f ? 1 : 0;
+        intArray[1] = x[1] > 0.5f ? 1 : 0;
+        intArray[2] = (x[2] > 0.6f) ? 1 : ((x[2] < 0.4f) ? -1 : 0);
 
-        return action;
+        PlayerActionType[] actionArray = new PlayerActionType[x.Length];
+        actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
+        actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
+        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+
+        return actionArray;
     }
 
     float[] MatrixMultiply(float[,] matrix, float[] vector)
@@ -164,21 +170,21 @@ public class Infer : MonoBehaviour
         return x.Select(val => 1 / (1 + Mathf.Exp(-val))).ToArray();
     }
 
-    public void GetEnvInf(PlayerMove pm1, PlayerMove pm2, PlayerAttribute pa1, PlayerAttribute pa2, ref float[] info)
+    public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref float[] info)
     {
-        info[0] = pm1.transform.localScale.x;
-        info[1] = 2 - pm1.bullets.Count; // 有改动
-        info[2] = pm1.canJump ? 1 : 0;
-        info[3] = pm1.transform.position.x - pm1.leftWall.transform.position.x;
-        info[4] = pm1.rightWall.transform.position.x - pm1.transform.position.x;
-        info[5] = pm2.transform.position.x - pm1.transform.position.x;
-        info[6] = pm2.transform.position.y - pm1.transform.position.y;
-        info[7] = pm2.bullets.Count > 0 ? 1 : 0;
+        info[0] = playerFSM1.transform.localScale.x;
+        info[1] = 2 - playerFSM1.parameters.bullets.Count; // 有改动
+        info[2] = playerFSM1.parameters.canJump ? 1 : 0;
+        info[3] = playerFSM1.transform.position.x - playerFSM1.parameters.leftWall.transform.position.x;
+        info[4] = playerFSM1.parameters.rightWall.transform.position.x - playerFSM1.transform.position.x;
+        info[5] = playerFSM2.transform.position.x - playerFSM1.transform.position.x;
+        info[6] = playerFSM2.transform.position.y - playerFSM1.transform.position.y;
+        info[7] = playerFSM2.parameters.bullets.Count > 0 ? 1 : 0;
 
-        if (info[7] != 0 && pm2.bullets[0] != null)
+        if (info[7] != 0 && playerFSM2.parameters.bullets[0] != null)
         {
-            info[8] = pm2.bullets[0].transform.position.x;
-            info[9] = pm2.bullets[0].transform.position.y;
+            info[8] = playerFSM2.parameters.bullets[0].transform.position.x;
+            info[9] = playerFSM2.parameters.bullets[0].transform.position.y;
         }
         else
         {
@@ -186,19 +192,19 @@ public class Infer : MonoBehaviour
             info[9] = 0;
         }
 
-        info[10] = pm2.bullets.Count > 1 ? 1 : 0;
-        if (info[10] != 0 && pm2.bullets[1] != null)
+        info[10] = playerFSM2.parameters.bullets.Count > 1 ? 1 : 0;
+        if (info[10] != 0 && playerFSM2.parameters.bullets[1] != null)
         {
-            info[11] = pm2.bullets[1].transform.position.x;
-            info[12] = pm2.bullets[1].transform.position.y;
+            info[11] = playerFSM2.parameters.bullets[1].transform.position.x;
+            info[12] = playerFSM2.parameters.bullets[1].transform.position.y;
         }
         else
         {
             info[11] = 0;
             info[12] = 0;
         }
-        info[13] = pa1.isInvincible ? 1 : 0;
-        info[14] = pa2.isInvincible ? 1 : 0;
+        info[13] = playerAttribute1.isInvincible ? 1 : 0;
+        info[14] = playerAttribute2.isInvincible ? 1 : 0;
     }
 
 
