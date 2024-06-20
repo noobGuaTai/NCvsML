@@ -795,8 +795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  moveSpeed: 5
-  jumpSpeed: 11
+  moveSpeed: 6
+  jumpSpeed: 12
   hasWon: 0
   isInvincible: 0
   spriteRenderer: {fileID: 0}
@@ -908,7 +908,7 @@ MonoBehaviour:
     bullets: []
     bulletPrefab: {fileID: 3213164476604897119, guid: 1bd7d20fbc9815f4db62e8263ae92848, type: 3}
     bulletSpeed: 10
-    shootCoolDown: 0.5
+    shootCoolDown: 0.25
     train1ManagerGameObject: {fileID: 1686127468}
     train2ManagerGameObject: {fileID: 1020920576}
     train2Manager: {fileID: 0}
@@ -9336,6 +9336,8 @@ MonoBehaviour:
   UI: {fileID: 317806569}
   groundTime: 0
   groundStartTime: 0
+  player1InitPos: {x: -6.3, y: -3.5}
+  player2InitPos: {x: 6.3, y: -3.5}
 --- !u!1 &1142512412
 GameObject:
   m_ObjectHideFlags: 0
@@ -10236,8 +10238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  moveSpeed: 5
-  jumpSpeed: 11
+  moveSpeed: 6
+  jumpSpeed: 12
   hasWon: 0
   isInvincible: 0
   spriteRenderer: {fileID: 0}
@@ -10349,7 +10351,7 @@ MonoBehaviour:
     bullets: []
     bulletPrefab: {fileID: 3213164476604897119, guid: c32f539680902594a97e9e3ce646c44d, type: 3}
     bulletSpeed: 10
-    shootCoolDown: 0.5
+    shootCoolDown: 0.25
     train1ManagerGameObject: {fileID: 1686127468}
     train2ManagerGameObject: {fileID: 1020920576}
     train2Manager: {fileID: 0}

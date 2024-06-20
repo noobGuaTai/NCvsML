@@ -142,7 +142,7 @@ public class Infer : MonoBehaviour
         PlayerActionType[] actionArray = new PlayerActionType[x.Length];
         actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
         actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
-        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+        actionArray[2] = intArray[2] == 1 ? PlayerActionType.MoveRight : intArray[2] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
 
         return actionArray;
     }

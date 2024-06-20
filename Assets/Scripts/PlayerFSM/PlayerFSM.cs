@@ -14,7 +14,7 @@ public class PlayerParameters
     public List<GameObject> bullets = new List<GameObject>();
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
-    public float shootCoolDown = 0.5f;
+    public float shootCoolDown = 0.25f;
     public GameObject train1ManagerGameObject;
     public GameObject train2ManagerGameObject;
     public Train2Manager train2Manager;
@@ -70,7 +70,7 @@ public class PlayerFSM : MonoBehaviour
             parameters.train2Manager.socket1.SetRecvFlag(true);
             parameters.train2Manager.socket1.SetSendFlag(true);
         }
-        if (parameters.train2Manager.socket2 != null)
+        if (parameters.train2Manager.socket2 != null) 
         {
             parameters.train2Manager.socket2.SetRecvFlag(true);
             parameters.train2Manager.socket2.SetSendFlag(true);

@@ -76,10 +76,7 @@ public class Train2Manager : MonoBehaviour
         if (isStart == 2)
         {
             Reset();
-            iteration++;
 
-            socket1.SendMessage(socket1.RAShandler, socket1.info);
-            socket2.SendMessage(socket2.RAShandler, socket2.info);
             // print("restart");
         }
 
@@ -131,6 +128,8 @@ public class Train2Manager : MonoBehaviour
 
     public void Reset()
     {
+        isStart = 0;
+        // yield return new WaitForSeconds(0.1f);
         player1attribute.HP = 10;
         player2attribute.HP = 10;
         player1.transform.position = player1InitPos;
@@ -143,6 +142,12 @@ public class Train2Manager : MonoBehaviour
         player2FSM.ClearBullets();
         player1attribute.isInvincible = false;
         player2attribute.isInvincible = false;
+        player1.GetComponent<PlayerFSM>().parameters.beShot = false;
+        player1.GetComponent<PlayerFSM>().parameters.isShot = false;
+        player2.GetComponent<PlayerFSM>().parameters.beShot = false;
+        player2.GetComponent<PlayerFSM>().parameters.isShot = false;
+        player1.GetComponent<PlayerFSM>().currentState = player1.GetComponent<PlayerFSM>().state[PlayerStateType.Idle];
+        player2.GetComponent<PlayerFSM>().currentState = player2.GetComponent<PlayerFSM>().state[PlayerStateType.Idle];
         // p1m.canJump = true;
         // p2m.canJump = true;
         info1.infoCode = 0;
@@ -150,10 +155,13 @@ public class Train2Manager : MonoBehaviour
         player1.transform.localScale = new Vector3(1, 1, 1);
         player2.transform.localScale = new Vector3(-1, 1, 1);
         isEnd = false;
-        isStart = 0;
         socket1.hasSendEndInfo = false;
         socket2.hasSendEndInfo = false;
         // print("reset");
+        iteration++;
+
+        socket1.SendMessage(socket1.RAShandler, socket1.info);
+        socket2.SendMessage(socket2.RAShandler, socket2.info);
     }
 
 }

@@ -81,7 +81,7 @@ public class Train1Manager : MonoBehaviour
 
 
             socket1.SendMessage(socket1.RAShandler, socket1.info);
-            print("restart");
+            // print("restart");
             Time.timeScale = timeSpeed;
         }
 

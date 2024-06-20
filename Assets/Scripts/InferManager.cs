@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using System.Linq;
+using PlayerEnum;
 
 public class InferManager : MonoBehaviour
 {
@@ -22,8 +23,8 @@ public class InferManager : MonoBehaviour
     public float groundTime;
     public float groundStartTime;
     private int totalTime = 30;
-    private Vector2 player1InitPos;
-    private Vector2 player2InitPos;
+    public Vector2 player1InitPos;
+    public Vector2 player2InitPos;
 
     void Start()
     {
@@ -40,9 +41,6 @@ public class InferManager : MonoBehaviour
         infer2 = new Infer(player2, player1, path2);
         infer1.StartInfer();
         infer2.StartInfer();
-
-        player1InitPos = player1.transform.position;
-        player2InitPos = player2.transform.position;
     }
 
     void Update()

@@ -112,7 +112,7 @@ public class Train1
                 {
                     if (train1Manager.isEnd)
                     {
-                        Debug.Log("Ground" + (train1Manager.iteration - 1) + "End");
+                        // Debug.Log("Ground" + (train1Manager.iteration - 1) + "End");
                         // info.infoCode = (train2Instance.p1a.HP >= train2Instance.p2a.HP) && (player == 1) ? 1f : 2f;
 
                         info.infoCode = train1Manager.player1HP > train1Manager.player2HP ? 2f : -2f;
@@ -175,7 +175,7 @@ public class Train1
         PlayerActionType[] actionArray = new PlayerActionType[len];
         actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
         actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
-        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+        actionArray[2] = intArray[2] == 1 ? PlayerActionType.MoveRight : intArray[2] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
 
         return actionArray;
     }

@@ -151,8 +151,8 @@ public class Train2
                         }
                         if (player == PlayerType.player2)
                         {
-                            info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// 4被击中
-                            info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 3击中对方
+                            info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// -1被击中 3同时击中和被之际
+                            info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
                             // info.infoCode = train2Instance.p2m.isShot == true && train2Instance.p2m.beShot == true ? 5f : info.infoCode;
                             // if (info.infoCode == 3 || info.infoCode == 4)
                             // {
@@ -201,7 +201,7 @@ public class Train2
         PlayerActionType[] actionArray = new PlayerActionType[len];
         actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
         actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
-        actionArray[2] = intArray[0] == 1 ? PlayerActionType.MoveRight : intArray[0] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
+        actionArray[2] = intArray[2] == 1 ? PlayerActionType.MoveRight : intArray[2] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
 
         return actionArray;
     }
