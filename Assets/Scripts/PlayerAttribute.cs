@@ -10,7 +10,7 @@ public class PlayerAttribute : MonoBehaviour
     public bool hasWon = false;
 
     public bool isInvincible = false;
-    private float invincibilityDuration = 0.6f;
+    private float invincibilityDuration = 0.4f;
     private float flashInterval = 0.2f;
     private float knockbackForce = 3f;
 

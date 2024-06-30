@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerEnum;
+using System;
+using Unity.Mathematics;
 
 public class Train2Manager : MonoBehaviour
 {
@@ -43,8 +45,8 @@ public class Train2Manager : MonoBehaviour
         player2attribute = player2.GetComponent<PlayerAttribute>();
         player1FSM.parameters.isControl = false;
         player2FSM.parameters.isControl = false;
-        info1 = new EnvInfo();
-        info2 = new EnvInfo();
+        // info1 = new EnvInfo();
+        // info2 = new EnvInfo();
         // player1InitPos = player1.transform.position;
         // player2InitPos = player2.transform.position;
         UI.GetComponent<UI>().waitingConnect.SetActive(true);
@@ -55,13 +57,15 @@ public class Train2Manager : MonoBehaviour
     {
         Time.timeScale = timeSpeed;
         GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
-        GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);
+        GetEnvInf(player2FSM, player1FSM, player2attribute, player1attribute, ref info2);
+        // GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, test1);
+
         player1HP = player1attribute.HP;
         player2HP = player2attribute.HP;
-
         if (isStartTrain)
             groundTime = totalTime - (Time.time - iterationStartTime);
         UI.GetComponent<UI>().time = (int)groundTime;
+        UI.GetComponent<UI>().iteration = iteration;
 
         if (groundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
         {
@@ -85,24 +89,40 @@ public class Train2Manager : MonoBehaviour
     public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref EnvInfo info)
     {
         info.direction = playerFSM1.transform.localScale.x;
-        info.shootable = 2 - playerFSM1.parameters.bullets.Count;// 有改动
+        info.shootable = 2;
+        foreach (GameObject bullet in playerFSM1.parameters.bullets)
+        {
+            if (bullet != null)
+            {
+                info.shootable -= 1;
+            }
+        }
         info.jumpable = playerFSM1.parameters.canJump ? 1 : 0;
         info.leftWall_XD = playerFSM1.transform.position.x - playerFSM1.parameters.leftWall.transform.position.x;
         info.rightWall_XD = playerFSM1.parameters.rightWall.transform.position.x - playerFSM1.transform.position.x;
         info.E_XD = playerFSM2.transform.position.x - playerFSM1.transform.position.x;
         info.E_YD = playerFSM2.transform.position.y - playerFSM1.transform.position.y;
-        info.E_Bullet0 = playerFSM2.parameters.bullets.Count > 0 ? 1 : 0;
+        info.E_Bullet0 = playerFSM2.parameters.bullets[0] == null ? 0 : 1;
         if (info.E_Bullet0 != 0 && playerFSM2.parameters.bullets[0] != null)
         {
             info.E_Bullet0_XD = playerFSM2.parameters.bullets[0].transform.position.x - playerFSM1.transform.position.x;
             info.E_Bullet0_YD = playerFSM2.parameters.bullets[0].transform.position.y - playerFSM1.transform.position.y;
         }
-
-        info.E_Bullet1 = playerFSM2.parameters.bullets.Count > 1 ? 1 : 0;
+        else
+        {
+            info.E_Bullet0_XD = 0f;
+            info.E_Bullet0_YD = 0f;
+        }
+        info.E_Bullet1 = playerFSM2.parameters.bullets[1] == null ? 0 : 1;
         if (info.E_Bullet1 != 0 && playerFSM2.parameters.bullets[1] != null)
         {
             info.E_Bullet1_XD = playerFSM2.parameters.bullets[1].transform.position.x - playerFSM1.transform.position.x;
             info.E_Bullet1_YD = playerFSM2.parameters.bullets[1].transform.position.y - playerFSM1.transform.position.y;
+        }
+        else
+        {
+            info.E_Bullet1_XD = 0f;
+            info.E_Bullet1_YD = 0f;
         }
         info.self_Invincible = playerAttribute1.isInvincible ? 1 : 0;
         info.E_Invincible = playerAttribute2.isInvincible ? 1 : 0;
@@ -148,8 +168,8 @@ public class Train2Manager : MonoBehaviour
         player2.GetComponent<PlayerFSM>().parameters.isShot = false;
         player1.GetComponent<PlayerFSM>().currentState = player1.GetComponent<PlayerFSM>().state[PlayerStateType.Idle];
         player2.GetComponent<PlayerFSM>().currentState = player2.GetComponent<PlayerFSM>().state[PlayerStateType.Idle];
-        // p1m.canJump = true;
-        // p2m.canJump = true;
+        player1FSM.parameters.canJump = true;
+        player2FSM.parameters.canJump = true;
         info1.infoCode = 0;
         info2.infoCode = 0;
         player1.transform.localScale = new Vector3(1, 1, 1);
@@ -160,8 +180,10 @@ public class Train2Manager : MonoBehaviour
         // print("reset");
         iteration++;
 
-        socket1.SendMessage(socket1.RAShandler, socket1.info);
-        socket2.SendMessage(socket2.RAShandler, socket2.info);
+        GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
+        GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);
+        socket1.SendMessage(socket1.RAShandler, info1);
+        socket2.SendMessage(socket2.RAShandler, info2);
     }
 
 }

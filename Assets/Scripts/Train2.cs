@@ -135,35 +135,66 @@ public class Train2
                     {
                         if (player == PlayerType.player1)
                         {
-                            info.infoCode = train2Manager.player1FSM.parameters.beShot == true ? -1f : 0f;// -1被击中
-                            info.infoCode = train2Manager.player1FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
+                            if (train2Manager.player1FSM.parameters.beShot == true)
+                            {
+                                info.infoCode = -1f;
+                                SendMessage(RAShandler, info);
+                                info.infoCode = 0f;
+                                train2Manager.player1FSM.parameters.beShot = false;
+                            }
+                            else if (train2Manager.player1FSM.parameters.isShot == true)
+                            {
+                                info.infoCode = 1f;
+                                SendMessage(RAShandler, info);
+                                info.infoCode = 0f;
+                                train2Manager.player1FSM.parameters.isShot = false;
+                            }
+                            else
+                            {
+                                info.infoCode = 0f;
+                                SendMessage(RAShandler, info);
+                            }
+                            // info.infoCode = train2Manager.player1FSM.parameters.beShot == true ? -1f : 0f;// -1被击中
+                            // info.infoCode = train2Manager.player1FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
+                            // info.infoCode = train2Manager.player1FSM.parameters.beShot == true ? -1f : train2Manager.player1FSM.parameters.isShot == true ? 1f : 0f;
                             // info.infoCode = train2Instance.p1m.isShot == true && train2Instance.p1m.beShot == true ? 5f : info.infoCode;
                             // if (info.infoCode == 3 || info.infoCode == 4)
                             // {
                             //     Debug.Log("player:" + player + " infoCode:" + info.infoCode);
                             // }
-
-                            SendMessage(RAShandler, info);
-
-                            info.infoCode = 0f;
-                            train2Manager.player1FSM.parameters.beShot = false;
-                            train2Manager.player1FSM.parameters.isShot = false;
                         }
                         if (player == PlayerType.player2)
                         {
-                            info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// -1被击中 3同时击中和被之际
-                            info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
+                            if (train2Manager.player2FSM.parameters.beShot == true)
+                            {
+                                info.infoCode = -1f;
+                                SendMessage(RAShandler, info);
+                                info.infoCode = 0f;
+                                train2Manager.player2FSM.parameters.beShot = false;
+                            }
+                            else if (train2Manager.player2FSM.parameters.isShot == true)
+                            {
+                                info.infoCode = 1f;
+                                SendMessage(RAShandler, info);
+                                info.infoCode = 0f;
+                                train2Manager.player2FSM.parameters.isShot = false;
+                            }
+                            else
+                            {
+                                info.infoCode = 0f;
+                                SendMessage(RAShandler, info);
+                            }
+                            // info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// -1被击中 3同时击中和被之际
+                            // info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
+                            // info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : train2Manager.player2FSM.parameters.isShot == true ? 1f : 0f;
+
                             // info.infoCode = train2Instance.p2m.isShot == true && train2Instance.p2m.beShot == true ? 5f : info.infoCode;
                             // if (info.infoCode == 3 || info.infoCode == 4)
                             // {
                             //     Debug.Log("player:" + player + " infoCode:" + info.infoCode);
                             // }
 
-                            SendMessage(RAShandler, info);
 
-                            info.infoCode = 0f;
-                            train2Manager.player2FSM.parameters.beShot = false;
-                            train2Manager.player2FSM.parameters.isShot = false;
                         }
                     }
                 }
@@ -186,6 +217,8 @@ public class Train2
 
     PlayerActionType[] recvAction(Socket handler)
     {
+        IPEndPoint localEndPoint = (IPEndPoint)handler.LocalEndPoint;
+
         int len = 3;
         int[] intArray = new int[len];
         byte[] buffer = new byte[len * 4]; // 每个整数4个字节
@@ -202,13 +235,14 @@ public class Train2
         actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
         actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
         actionArray[2] = intArray[2] == 1 ? PlayerActionType.MoveRight : intArray[2] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
-
+    
         return actionArray;
     }
 
     public void SendMessage(Socket handler, EnvInfo info)
     {
         List<byte> byteStream = new List<byte>();
+        IPEndPoint localEndPoint = (IPEndPoint)handler.LocalEndPoint;
 
         byteStream.AddRange(BitConverter.GetBytes(info.direction));
         byteStream.AddRange(BitConverter.GetBytes(info.shootable));
@@ -217,30 +251,12 @@ public class Train2
         byteStream.AddRange(BitConverter.GetBytes(info.rightWall_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_YD));
-
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0));
-        if (info.E_Bullet0 > 0)
-        {
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_XD));
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_YD));
-        }
-        else
-        {
-            byteStream.AddRange(BitConverter.GetBytes(0));
-            byteStream.AddRange(BitConverter.GetBytes(0));
-        }
-
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1));
-        if (info.E_Bullet1 > 0)
-        {
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_XD));
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
-        }
-        else
-        {
-            byteStream.AddRange(BitConverter.GetBytes(0));
-            byteStream.AddRange(BitConverter.GetBytes(0));
-        }
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.self_Invincible));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Invincible));
         byteStream.AddRange(BitConverter.GetBytes(info.infoCode));
@@ -307,6 +323,7 @@ public class Train2
 
 }
 
+[Serializable]
 public struct EnvInfo// TODO：转成枚举类型
 {
     public float direction;

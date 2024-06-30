@@ -191,30 +191,12 @@ public class Train1
         byteStream.AddRange(BitConverter.GetBytes(info.rightWall_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_YD));
-
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0));
-        if (info.E_Bullet0 > 0)
-        {
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_XD));
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_YD));
-        }
-        else
-        {
-            byteStream.AddRange(BitConverter.GetBytes(0));
-            byteStream.AddRange(BitConverter.GetBytes(0));
-        }
-
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1));
-        if (info.E_Bullet1 > 0)
-        {
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_XD));
-            byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
-        }
-        else
-        {
-            byteStream.AddRange(BitConverter.GetBytes(0));
-            byteStream.AddRange(BitConverter.GetBytes(0));
-        }
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.self_Invincible));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Invincible));
         byteStream.AddRange(BitConverter.GetBytes(info.infoCode));

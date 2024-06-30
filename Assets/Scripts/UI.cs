@@ -12,6 +12,7 @@ public class UI : MonoBehaviour
     public GameObject Iteration;
     public GameObject Manager;
     public float time;
+    public int iteration;
     public GameObject gameOver;
     public GameObject waitingConnect;
 
@@ -25,7 +26,7 @@ public class UI : MonoBehaviour
         Player1HP.GetComponent<TextMeshProUGUI>().text = "Player1 HP:" + Player1.GetComponent<PlayerAttribute>().HP;
         Player2HP.GetComponent<TextMeshProUGUI>().text = "Player2 HP:" + Player2.GetComponent<PlayerAttribute>().HP;
         groundTime.GetComponent<TextMeshProUGUI>().text = time.ToString();
-        Iteration.GetComponent<TextMeshProUGUI>().text = "Iteration:" + (train.GetComponent<Train2Manager>().iteration - 1).ToString();
+        Iteration.GetComponent<TextMeshProUGUI>().text = "Iteration:" + iteration.ToString();
     }
 
     public void TrainUI()

@@ -59,6 +59,8 @@ public class Manager : MonoBehaviour
     public TrainpParameters trainInstance;
     public InferParameters inferInstance;
 
+    public TMP_InputField trainSpeed;
+
     void Start()
     {
         runModeDropDown.onValueChanged.AddListener(ChangeRunMode);
@@ -80,6 +82,11 @@ public class Manager : MonoBehaviour
             trainSettingsUI.SetActive(false);
             inferSettingsUI.SetActive(true);
         }
+    }
+
+    public void ChangeTrainSpeed()
+    {
+        train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainSpeed.text);
     }
 
     public void OpenSettings()
@@ -109,10 +116,17 @@ public class Manager : MonoBehaviour
         if (inferInstance.player1ControlModeDropdown.options[value].text == "You")
         {
             inferInstance.isControlPlayer1 = true;
+            inferManager.GetComponent<InferManager>().player1InferMode = InferMode.player;
         }
         if (inferInstance.player1ControlModeDropdown.options[value].text == "Agent")
         {
             inferInstance.isControlPlayer1 = false;
+            inferManager.GetComponent<InferManager>().player1InferMode = InferMode.agent;
+        }
+        if (inferInstance.player1ControlModeDropdown.options[value].text == "DecisionTree")
+        {
+            inferInstance.isControlPlayer1 = false;
+            inferManager.GetComponent<InferManager>().player1InferMode = InferMode.decisionTree;
         }
     }
 
@@ -121,10 +135,17 @@ public class Manager : MonoBehaviour
         if (inferInstance.player2ControlModeDropdown.options[value].text == "You")
         {
             inferInstance.isControlPlayer2 = true;
+            inferManager.GetComponent<InferManager>().player2InferMode = InferMode.player;
         }
         if (inferInstance.player2ControlModeDropdown.options[value].text == "Agent")
         {
             inferInstance.isControlPlayer2 = false;
+            inferManager.GetComponent<InferManager>().player2InferMode = InferMode.agent;
+        }
+        if (inferInstance.player2ControlModeDropdown.options[value].text == "DecisionTree")
+        {
+            inferInstance.isControlPlayer2 = false;
+            inferManager.GetComponent<InferManager>().player2InferMode = InferMode.decisionTree;
         }
     }
 
@@ -148,15 +169,15 @@ public class Manager : MonoBehaviour
     {
         if (trainInstance.chooseAgentDropdown.options[value].text == "Decision Tree")
         {
-
+            train1Manager.GetComponent<Train1Manager>().rivalType = RivalType.decisionTree;
         }
         if (trainInstance.chooseAgentDropdown.options[value].text == "Junior Agent(GA)")
         {
-
+            train1Manager.GetComponent<Train1Manager>().rivalType = RivalType.juniorGA;
         }
         if (trainInstance.chooseAgentDropdown.options[value].text == "Senior Agent(GA)")
         {
-
+            train1Manager.GetComponent<Train1Manager>().rivalType = RivalType.seniorGA;
         }
     }
 

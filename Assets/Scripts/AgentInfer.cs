@@ -6,58 +6,68 @@ using System.Text;
 using System.Linq;
 using System;
 using PlayerEnum;
+using Unity.Mathematics;
 
-public class Infer : MonoBehaviour
+public class AgentInfer : MonoBehaviour
 {
     // 存储CSV文件数据的列表
     private List<float> geneData = new List<float>();
     private int[] dims_list;
     (List<float[,]>, List<float[,]>) decoded;
-    private float[] info;
-    public GameObject player1;
-    public GameObject player2;
+    public float[] info;
+    public GameObject self;
+    public GameObject enemy;
 
-    private PlayerFSM player1FSM;
-    private PlayerFSM player2FSM;
-    private PlayerAttribute player1Attribute;
-    private PlayerAttribute player2Attribute;
+    private PlayerFSM selfFSM;
+    private PlayerFSM enemyFSM;
+    private PlayerAttribute selfAttribute;
+    private PlayerAttribute enemyAttribute;
+    private InferManager inferManager;
 
 
     // CSV文件的路径
     public string filePath = "/gene.csv";
     public string path = Application.streamingAssetsPath;
+    public bool ready = false;
 
 
-    public Infer(GameObject self, GameObject enemy, string filePath)
+    public AgentInfer(GameObject self, GameObject enemy, string filePath, InferManager inferManager)
     {
-        player1 = self;
-        player2 = enemy;
+        this.self = self;
+        this.enemy = enemy;
         this.filePath = path + filePath;
-    }
+        this.inferManager = inferManager;
+        info = new float[15];
 
-    public void StartInfer()
-    {
-        player1FSM = player1.GetComponent<PlayerFSM>();
-        player1Attribute = player1.GetComponent<PlayerAttribute>();
-        player2FSM = player2.GetComponent<PlayerFSM>();
-        player2Attribute = player2.GetComponent<PlayerAttribute>();
-        player1Attribute.isInvincible = false;
-        player2Attribute.isInvincible = false;
+        selfFSM = self.GetComponent<PlayerFSM>();
+        selfAttribute = self.GetComponent<PlayerAttribute>();
+        enemyFSM = enemy.GetComponent<PlayerFSM>();
+        enemyAttribute = enemy.GetComponent<PlayerAttribute>();
+        selfAttribute.isInvincible = false;
+        enemyAttribute.isInvincible = false;
 
-        if (!player1FSM.parameters.isControl)
+        if (!selfFSM.parameters.isControl)
         {
-            geneData = ReadCSV(filePath);
+            geneData = ReadCSV(this.filePath);
             decoded = Decode(geneData.ToArray(), dims_list);
         }
+        ready = true;
+    }
+
+    public AgentInfer(GameObject self, GameObject enemy, string filePath)
+    {
+        this.self = self;
+        this.enemy = enemy;
+        this.filePath = path + filePath;
+        info = new float[15];
     }
 
     public void OnUpdate()
     {
-        if (!player1FSM.parameters.isControl && geneData != null)
+        if (ready && !selfFSM.parameters.isControl)
         {
-            GetEnvInf(player1FSM, player2FSM, player1Attribute, player2Attribute, ref info);
             PlayerActionType[] output1 = Forward(info, decoded.Item1, decoded.Item2);
-            player1FSM.parameters.playerAction = output1;
+            selfFSM.parameters.playerAction = output1;
         }
     }
 
@@ -80,14 +90,12 @@ public class Infer : MonoBehaviour
                 }
             }
 
-            string[] dimsStrings = values.Skip(values.Length - 3).ToArray();
+            string[] dimsStrings = values.Skip(values.Length - 4).ToArray();
             dims_list = new int[dimsStrings.Length];
             for (int i = 0; i < dimsStrings.Length; i++)
             {
                 dims_list[i] = (int)float.Parse(dimsStrings[i]);
             }
-
-            info = new float[dims_list[dims_list.Length - 2]];
         }
         else
         {
@@ -170,42 +178,6 @@ public class Infer : MonoBehaviour
         return x.Select(val => 1 / (1 + Mathf.Exp(-val))).ToArray();
     }
 
-    public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref float[] info)
-    {
-        info[0] = playerFSM1.transform.localScale.x;
-        info[1] = 2 - playerFSM1.parameters.bullets.Count; // 有改动
-        info[2] = playerFSM1.parameters.canJump ? 1 : 0;
-        info[3] = playerFSM1.transform.position.x - playerFSM1.parameters.leftWall.transform.position.x;
-        info[4] = playerFSM1.parameters.rightWall.transform.position.x - playerFSM1.transform.position.x;
-        info[5] = playerFSM2.transform.position.x - playerFSM1.transform.position.x;
-        info[6] = playerFSM2.transform.position.y - playerFSM1.transform.position.y;
-        info[7] = playerFSM2.parameters.bullets.Count > 0 ? 1 : 0;
-
-        if (info[7] != 0 && playerFSM2.parameters.bullets[0] != null)
-        {
-            info[8] = playerFSM2.parameters.bullets[0].transform.position.x;
-            info[9] = playerFSM2.parameters.bullets[0].transform.position.y;
-        }
-        else
-        {
-            info[8] = 0;
-            info[9] = 0;
-        }
-
-        info[10] = playerFSM2.parameters.bullets.Count > 1 ? 1 : 0;
-        if (info[10] != 0 && playerFSM2.parameters.bullets[1] != null)
-        {
-            info[11] = playerFSM2.parameters.bullets[1].transform.position.x;
-            info[12] = playerFSM2.parameters.bullets[1].transform.position.y;
-        }
-        else
-        {
-            info[11] = 0;
-            info[12] = 0;
-        }
-        info[13] = playerAttribute1.isInvincible ? 1 : 0;
-        info[14] = playerAttribute2.isInvincible ? 1 : 0;
-    }
 
 
 }

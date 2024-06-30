@@ -11,10 +11,12 @@ public class PlayerParameters
     public bool isControl = false;// 判断玩家是否可以控制该角色
     public bool canJump = true;
     public bool canShoot = true;
-    public List<GameObject> bullets = new List<GameObject>();
+    public GameObject[] bullets;
+    public Vector2 bullet1Pos;
+    public Vector2 bullet2Pos;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
-    public float shootCoolDown = 0.25f;
+    public float shootCoolDown = 0.5f;
     public GameObject train1ManagerGameObject;
     public GameObject train2ManagerGameObject;
     public Train2Manager train2Manager;
@@ -46,6 +48,7 @@ public class PlayerFSM : MonoBehaviour
         parameters.playerAction[0] = PlayerActionType.None;
         parameters.playerAction[1] = PlayerActionType.None;
         parameters.playerAction[2] = PlayerActionType.None;
+        parameters.bullets = new GameObject[2];
 
         state.Add(PlayerStateType.Idle, new PlayerIdleState(this));
         state.Add(PlayerStateType.Move, new PlayerMoveState(this));
@@ -57,7 +60,7 @@ public class PlayerFSM : MonoBehaviour
     void Update()
     {
         // parameters.moveKeyboardInput.x = Input.GetAxisRaw("Horizontal");
-        parameters.canShoot = parameters.shootTimer <= 0 && parameters.bullets.Count < 2;
+        parameters.canShoot = parameters.shootTimer <= 0 && (parameters.bullets[0] == null || parameters.bullets[1] == null);
 
         if (parameters.shootTimer > 0)
         {
@@ -70,7 +73,7 @@ public class PlayerFSM : MonoBehaviour
             parameters.train2Manager.socket1.SetRecvFlag(true);
             parameters.train2Manager.socket1.SetSendFlag(true);
         }
-        if (parameters.train2Manager.socket2 != null) 
+        if (parameters.train2Manager.socket2 != null)
         {
             parameters.train2Manager.socket2.SetRecvFlag(true);
             parameters.train2Manager.socket2.SetSendFlag(true);
@@ -112,7 +115,15 @@ public class PlayerFSM : MonoBehaviour
 
     void UpdateBulletState()
     {
-        parameters.bullets.RemoveAll(bullet => bullet == null);
+        // parameters.bullets.RemoveAll(bullet => bullet == null);
+        if(parameters.bullets[0]!=null)
+        {
+            parameters.bullet1Pos = parameters.bullets[0].transform.position;
+        }
+        if(parameters.bullets[1]!=null)
+        {
+            parameters.bullet2Pos = parameters.bullets[1].transform.position;
+        }
     }
 
     public void ClearBullets()
@@ -124,7 +135,8 @@ public class PlayerFSM : MonoBehaviour
                 Destroy(bullet);
             }
         }
-        parameters.bullets.Clear();
+        parameters.bullets[0] = null;
+        parameters.bullets[1] = null;
         parameters.shootTimer = 0f;
         parameters.canShoot = true;
     }
@@ -134,21 +146,25 @@ public class PlayerFSM : MonoBehaviour
         if (parameters.bulletPrefab != null)
         {
             GameObject bullet = GameObject.Instantiate(parameters.bulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().SetFather(gameObject);
+            bullet.GetComponent<Bullet>().SetFather(gameObject, parameters.bullets[0] == null ? 0 : 1);
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             if (bulletRb != null)
             {
                 float direction = transform.localScale.x;
                 bulletRb.velocity = new Vector2(direction * parameters.bulletSpeed, 0);
             }
-            parameters.bullets.Add(bullet);
+            if (parameters.bullets[0] == null)
+                parameters.bullets[0] = bullet;
+            else if (parameters.bullets[1] == null)
+                parameters.bullets[1] = bullet;
         }
     }
 
     public void KeyboardMove()
     {
         parameters.rb.velocity = new Vector2(parameters.moveKeyboardInput.x * parameters.playerAttribute.moveSpeed, parameters.rb.velocity.y);
-        transform.localScale = new Vector3(Mathf.Sign(parameters.moveKeyboardInput.x) * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        if(parameters.moveKeyboardInput.x != 0)
+            transform.localScale = new Vector3(Mathf.Sign(parameters.moveKeyboardInput.x) * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
     public void MoveLeft()

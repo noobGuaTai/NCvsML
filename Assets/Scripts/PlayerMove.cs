@@ -158,7 +158,7 @@ public class PlayerMove : MonoBehaviour
         if (bulletPrefab != null)
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().SetFather(gameObject);
+            // bullet.GetComponent<Bullet>().SetFather(gameObject);
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             if (bulletRb != null)
             {
