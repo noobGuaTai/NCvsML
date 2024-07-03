@@ -80,7 +80,8 @@ public class Train2Manager : MonoBehaviour
         if (isStart == 2)
         {
             Reset();
-
+            socket1.SendMessage(socket1.RAShandler, info1);
+            socket2.SendMessage(socket2.RAShandler, info2);
             // print("restart");
         }
 
@@ -182,8 +183,6 @@ public class Train2Manager : MonoBehaviour
 
         GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
         GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);
-        socket1.SendMessage(socket1.RAShandler, info1);
-        socket2.SendMessage(socket2.RAShandler, info2);
     }
 
 }

@@ -79,7 +79,7 @@ public class InferManager : MonoBehaviour
     {
         GetEnvInf(player1FSM, player2FSM, player1Attribute, player2Attribute, ref info1);
         GetEnvInf(player2FSM, player1FSM, player2Attribute, player1Attribute, ref info2);
-        if (player1InferMode == InferMode.agent)
+        if (player1InferMode == InferMode.agent)// 为什么这里使用if agentInfer1 != null，会进不去，也就是agentInfer1为null
         {
             agentInfer1.info = info1;
             agentInfer1.OnUpdate();

@@ -86,7 +86,10 @@ public class Manager : MonoBehaviour
 
     public void ChangeTrainSpeed()
     {
-        train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainSpeed.text);
+        if (train2Manager != null)
+            train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainSpeed.text);
+        if (train1Manager != null)
+            train1Manager.GetComponent<Train1Manager>().timeSpeed = int.Parse(trainSpeed.text);
     }
 
     public void OpenSettings()

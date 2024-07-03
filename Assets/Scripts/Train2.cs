@@ -242,8 +242,7 @@ public class Train2
     public void SendMessage(Socket handler, EnvInfo info)
     {
         List<byte> byteStream = new List<byte>();
-        IPEndPoint localEndPoint = (IPEndPoint)handler.LocalEndPoint;
-
+        
         byteStream.AddRange(BitConverter.GetBytes(info.direction));
         byteStream.AddRange(BitConverter.GetBytes(info.shootable));
         byteStream.AddRange(BitConverter.GetBytes(info.jumpable));

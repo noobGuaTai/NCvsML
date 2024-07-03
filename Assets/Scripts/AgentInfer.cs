@@ -74,33 +74,61 @@ public class AgentInfer : MonoBehaviour
     List<float> ReadCSV(string path)
     {
         List<float> geneData = new List<float>();
+        dims_list = null;
+
         if (File.Exists(path))
         {
             string[] lines = File.ReadAllLines(path, Encoding.UTF8);
-            string[] values = lines[0].Split(',');
-            foreach (string value in values)
+            if (lines.Length > 0)
             {
-                if (float.TryParse(value, out float floatValue))
+                // 使用空数据（连续两个逗号）作为分界符
+                string[] parts = lines[0].Split(new string[] { ",," }, StringSplitOptions.None);
+                if (parts.Length == 2)
                 {
-                    geneData.Add(floatValue);
+                    // 处理空数据左侧的部分
+                    string[] values = parts[0].Split(',');
+                    foreach (string value in values)
+                    {
+                        if (float.TryParse(value, out float floatValue))
+                        {
+                            geneData.Add(floatValue);
+                        }
+                        else
+                        {
+                            Debug.LogError("Invalid float value in CSV: " + value);
+                        }
+                    }
+
+                    // 处理空数据右侧的部分
+                    string[] dimsStrings = parts[1].Split(',');
+                    dims_list = new int[dimsStrings.Length];
+                    for (int i = 0; i < dimsStrings.Length; i++)
+                    {
+                        if (int.TryParse(dimsStrings[i], out int dimValue))
+                        {
+                            dims_list[i] = dimValue;
+                        }
+                        else
+                        {
+                            Debug.LogError("Invalid integer value for dims in CSV: " + dimsStrings[i]);
+                        }
+                    }
                 }
                 else
                 {
-                    Debug.LogError("Invalid float value in CSV: " + value);
+                    Debug.LogError("CSV format error: Missing or incorrect ',,' delimiter");
                 }
             }
-
-            string[] dimsStrings = values.Skip(values.Length - 4).ToArray();
-            dims_list = new int[dimsStrings.Length];
-            for (int i = 0; i < dimsStrings.Length; i++)
+            else
             {
-                dims_list[i] = (int)float.Parse(dimsStrings[i]);
+                Debug.LogError("CSV file is empty");
             }
         }
         else
         {
             Debug.LogError("CSV file not found at path: " + path);
         }
+
         return geneData;
     }
 
