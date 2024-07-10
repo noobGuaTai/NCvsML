@@ -60,6 +60,7 @@ public class Manager : MonoBehaviour
     public InferParameters inferInstance;
 
     public TMP_InputField trainSpeed;
+    public GameObject notice;
 
     void Start()
     {
@@ -86,9 +87,9 @@ public class Manager : MonoBehaviour
 
     public void ChangeTrainSpeed()
     {
-        if (train2Manager != null)
+        if (trainSpeed.text != null && train2Manager != null)
             train2Manager.GetComponent<Train2Manager>().timeSpeed = int.Parse(trainSpeed.text);
-        if (train1Manager != null)
+        if (trainSpeed.text != null && train1Manager != null)
             train1Manager.GetComponent<Train1Manager>().timeSpeed = int.Parse(trainSpeed.text);
     }
 
@@ -244,6 +245,12 @@ public class Manager : MonoBehaviour
             inferManager.SetActive(false);
         }
     }
+
+    public void CloseNotice()
+    {
+        notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "";
+        notice.SetActive(false)
+;    }
 
     IEnumerator ResetTrainProcess()
     {

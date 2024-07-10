@@ -20,6 +20,7 @@ public class UI : MonoBehaviour
     public GameObject Player2HP;
     public GameObject Player1;
     public GameObject Player2;
+    public GameObject notice;
 
     void Update()
     {
@@ -41,4 +42,30 @@ public class UI : MonoBehaviour
         groundTime.SetActive(true);
     }
 
+    void OnEnable()
+    {
+        // 订阅日志回调
+        Application.logMessageReceived += HandleLog;
+    }
+
+    void OnDisable()
+    {
+        // 取消订阅日志回调
+        Application.logMessageReceived -= HandleLog;
+    }
+
+    void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        // 如果是错误日志，激活Notice对象并显示日志信息
+        if (type == LogType.Error || type == LogType.Exception)
+        {
+            if (notice != null)
+            {
+                notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = logString + "\n" + stackTrace;
+                notice.SetActive(true);
+            }
+        }
+    }
 }
+
+

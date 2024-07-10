@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerEnum;
 using Unity.Mathematics;
+using TMPro;
 
 public enum RivalType
 {
@@ -40,6 +41,7 @@ public class Train1Manager : MonoBehaviour
     public bool isStartTrain = false;
     public GameObject inferManager;
     public RivalType rivalType;
+    public GameObject notice;
 
     public void StartTrain()
     {
@@ -54,7 +56,7 @@ public class Train1Manager : MonoBehaviour
         player2FSM.parameters.isControl = false;
         UI.GetComponent<UI>().waitingConnect.SetActive(true);
         info2 = new float[15];
-        switch(rivalType)
+        switch (rivalType)
         {
             case RivalType.decisionTree:
                 decisionTree = new DecisionTree(player2, player1);
@@ -73,22 +75,22 @@ public class Train1Manager : MonoBehaviour
         Time.timeScale = timeSpeed;
         GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info);
         inferManager.GetComponent<InferManager>().GetEnvInf(player2FSM, player1FSM, player2attribute, player1attribute, ref info2);
-        
+
         player1HP = player1attribute.HP;
         player2HP = player2attribute.HP;
-        if(isStartTrain)
+        if (isStartTrain)
         {
-            if(rivalType == RivalType.decisionTree)
+            if (rivalType == RivalType.decisionTree)
             {
                 decisionTree.info = info2;
                 decisionTree.OnUpdate();
             }
-            else if(rivalType == RivalType.juniorGA)
+            else if (rivalType == RivalType.juniorGA)
             {
                 agentInfer.info = info2;
                 agentInfer.OnUpdate();
             }
-            else if(rivalType == RivalType.seniorGA)
+            else if (rivalType == RivalType.seniorGA)
             {
                 //seniorGA.OnUpdate();
             }
@@ -116,6 +118,15 @@ public class Train1Manager : MonoBehaviour
             socket1.SendMessage(socket1.RAShandler, socket1.info);
             // print("restart");
             Time.timeScale = timeSpeed;
+        }
+
+
+        if (groundTime < -5)
+        {
+            groundTime = 0;
+            isStartTrain = false;
+            notice.SetActive(true);
+            notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
         }
 
     }

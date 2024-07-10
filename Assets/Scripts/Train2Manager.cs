@@ -4,6 +4,7 @@ using UnityEngine;
 using PlayerEnum;
 using System;
 using Unity.Mathematics;
+using TMPro;
 
 public class Train2Manager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Train2Manager : MonoBehaviour
     public Vector3 player2InitPos;
     public GameObject UI;
     public bool isStartTrain = false;
+    public GameObject notice;
 
     public void StartTrain()
     {
@@ -83,6 +85,14 @@ public class Train2Manager : MonoBehaviour
             socket1.SendMessage(socket1.RAShandler, info1);
             socket2.SendMessage(socket2.RAShandler, info2);
             // print("restart");
+        }
+
+        if(groundTime < -5)
+        {
+            groundTime = 0;
+            isStartTrain = false;
+            notice.SetActive(true);
+            notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
         }
 
     }
