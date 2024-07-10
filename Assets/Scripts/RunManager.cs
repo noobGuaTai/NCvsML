@@ -5,13 +5,22 @@ using PlayerEnum;
 using System;
 using Unity.Mathematics;
 using TMPro;
-
-public class Train2Manager : MonoBehaviour
+public enum RunMode
 {
-    public Train2 socket1;
-    public Train2 socket2;
+    Socket,
+    DecisionTree,
+    JuniorGA,
+    Player
+}
+
+public class RunManager : MonoBehaviour
+{
+    public RunSocket socket1;
+    public RunSocket socket2;
     public GameObject player1;
     public GameObject player2;
+    public RunMode runMode1;
+    public RunMode runMode2;
     public bool isEnd = false;// 一场比赛结束标志
     public float groundTime;// 一场比赛剩余时间
     public float totalTime = 60f;// 一场比赛总时间
@@ -35,12 +44,28 @@ public class Train2Manager : MonoBehaviour
     public bool isStartTrain = false;
     public GameObject notice;
 
-    public void StartTrain()
+    public void StartGame()
     {
-        socket1 = new Train2(this, PlayerType.player1);
-        socket1.Start(socket1Port);
-        socket2 = new Train2(this, PlayerType.player2);
+        switch (runMode1)
+        {
+            case RunMode.Socket:
+                socket1 = new RunSocket(this, PlayerType.player1);
+                socket1.Start(socket1Port);
+                break;
+            case RunMode.Player:
+                player1FSM.parameters.isControl = true;
+                break;
+            case RunMode.DecisionTree:
+                
+                break;
+            case RunMode.JuniorGA:
+                
+                break;
+        }
+
+        socket2 = new RunSocket(this, PlayerType.player2);
         socket2.Start(socket2Port);
+
         player1FSM = player1.GetComponent<PlayerFSM>();
         player2FSM = player2.GetComponent<PlayerFSM>();
         player1attribute = player1.GetComponent<PlayerAttribute>();
@@ -76,12 +101,12 @@ public class Train2Manager : MonoBehaviour
 
         if (isStart == 2)
         {
-            Reset(); 
+            Reset();
             socket1.SendMessage(socket1.RAShandler, info1);
             socket2.SendMessage(socket2.RAShandler, info2);
         }
 
-        if(groundTime < -5)
+        if (groundTime < -5)
         {
             groundTime = 0;
             isStartTrain = false;
