@@ -57,20 +57,20 @@ public class InferManager : MonoBehaviour
         Time.timeScale = 1f;
         if (player1InferMode == InferMode.agent)
         {
-            agentInfer1 = new AgentInfer(player1, player2, path1, this);
+            agentInfer1 = new AgentInfer(player1, player2, path1);
         }
         if (player1InferMode == InferMode.decisionTree)
         {
-            decisionTree1 = new DecisionTree(player1, player2, this);
+            decisionTree1 = new DecisionTree(player1, player2);
         }
 
         if (player2InferMode == InferMode.agent)
         {
-            agentInfer2 = new AgentInfer(player2, player1, path2, this);
+            agentInfer2 = new AgentInfer(player2, player1, path2);
         }
         if (player2InferMode == InferMode.decisionTree)
         {
-            decisionTree2 = new DecisionTree(player2, player1, this);
+            decisionTree2 = new DecisionTree(player2, player1);
         }
 
     }

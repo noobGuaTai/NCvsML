@@ -10,7 +10,7 @@ using PlayerEnum;
 
 public class RunSocket
 {
-    public RunManager train2Manager;
+    public RunManager runManager;
     public Socket mainListener;
     public Socket accListener;
     public bool recvFlag = false;
@@ -25,9 +25,9 @@ public class RunSocket
     public bool isRunning = true;
 
 
-    public RunSocket(RunManager trainManager, PlayerType player)
+    public RunSocket(RunManager runManager, PlayerType player)
     {
-        train2Manager = trainManager;
+        this.runManager = runManager;
         this.player = player;
         threads = new List<Thread>();
     }
@@ -62,12 +62,12 @@ public class RunSocket
                 Socket accHandler = accListener.Accept();
                 Debug.Log("connected");
                 // train2Instance.timeSpeed = ;
-                train2Manager.isStartTrain = true;
+                runManager.isStartTrain = true;
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
-                    train2Manager.iterationStartTime = Time.time;
-                    Time.timeScale = train2Manager.timeSpeed;
-                    train2Manager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
+                    runManager.iterationStartTime = Time.time;
+                    Time.timeScale = runManager.timeSpeed;
+                    runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
                 });
                 SendMessage(accHandler, info);
 
@@ -101,7 +101,7 @@ public class RunSocket
 
                 action = recvAction(RAShandler);
 
-                train2Manager.RunAction(player, action);// 接受到信息，就执行操作
+                runManager.RunAction(player, action);// 接受到信息，就执行操作
                 // Debug.Log(player + "received.");
                 // Debug.Log("player: " + player.ToString() + " action[0]: " + action[0] + " action[1]: " + action[1] + " action[2]: " + action[2]);
                 recvFlag = false;
@@ -111,21 +111,21 @@ public class RunSocket
 
                 if (!hasSendEndInfo)// TODO:长时间不发，python没有发送开始下一场比赛的信息，报错
                 {
-                    if (train2Manager.isEnd)
+                    if (runManager.isEnd)
                     {
                         // Debug.Log("Ground" + (train2Manager.iteration - 1) + "End");
                         // info.infoCode = (train2Instance.p1a.HP >= train2Instance.p2a.HP) && (player == 1) ? 1f : 2f;
                         if (player == PlayerType.player1)
                         {
-                            info.infoCode = train2Manager.player1HP > train2Manager.player2HP ? 2f : -2f;
-                            info.infoCode = train2Manager.player1HP == train2Manager.player2HP ? -2f : info.infoCode;
+                            info.infoCode = runManager.player1HP > runManager.player2HP ? 2f : -2f;
+                            info.infoCode = runManager.player1HP == runManager.player2HP ? -2f : info.infoCode;
                             // Debug.Log("player:" + player + "train2Instance.p1a.HP:" + train2Instance.player1HP + "train2Instance.p2a.HP:" + train2Instance.player2HP + "info.infoCode:" + info.infoCode);
                         }
 
                         if (player == PlayerType.player2)
                         {
-                            info.infoCode = train2Manager.player1HP > train2Manager.player2HP ? -2f : 2f;
-                            info.infoCode = train2Manager.player1HP == train2Manager.player2HP ? -2f : info.infoCode;
+                            info.infoCode = runManager.player1HP > runManager.player2HP ? -2f : 2f;
+                            info.infoCode = runManager.player1HP == runManager.player2HP ? -2f : info.infoCode;
                             // Debug.Log("player:" + player + "train2Instance.p1a.HP:" + train2Instance.player1HP + "train2Instance.p2a.HP:" + train2Instance.player2HP + "info.infoCode:" + info.infoCode);
                         }
                         SendMessage(RAShandler, info);
@@ -135,19 +135,19 @@ public class RunSocket
                     {
                         if (player == PlayerType.player1)
                         {
-                            if (train2Manager.player1FSM.parameters.beShot == true)
+                            if (runManager.player1FSM.parameters.beShot == true)
                             {
                                 info.infoCode = -1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
-                                train2Manager.player1FSM.parameters.beShot = false;
+                                runManager.player1FSM.parameters.beShot = false;
                             }
-                            else if (train2Manager.player1FSM.parameters.isShot == true)
+                            else if (runManager.player1FSM.parameters.isShot == true)
                             {
                                 info.infoCode = 1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
-                                train2Manager.player1FSM.parameters.isShot = false;
+                                runManager.player1FSM.parameters.isShot = false;
                             }
                             else
                             {
@@ -165,19 +165,19 @@ public class RunSocket
                         }
                         if (player == PlayerType.player2)
                         {
-                            if (train2Manager.player2FSM.parameters.beShot == true)
+                            if (runManager.player2FSM.parameters.beShot == true)
                             {
                                 info.infoCode = -1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
-                                train2Manager.player2FSM.parameters.beShot = false;
+                                runManager.player2FSM.parameters.beShot = false;
                             }
-                            else if (train2Manager.player2FSM.parameters.isShot == true)
+                            else if (runManager.player2FSM.parameters.isShot == true)
                             {
                                 info.infoCode = 1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
-                                train2Manager.player2FSM.parameters.isShot = false;
+                                runManager.player2FSM.parameters.isShot = false;
                             }
                             else
                             {

@@ -9,7 +9,7 @@ using System;
 using PlayerEnum;
 
 [Serializable]
-public class TrainParameters
+public class TrainpParameters
 {
     public TMP_InputField socket1PortInputField;
     public TMP_InputField socket2PortInputField;
@@ -56,7 +56,7 @@ public class Manager : MonoBehaviour
     public GameObject trainUI;
     public GameObject inferUI;
 
-    public TrainParameters trainInstance;
+    public TrainpParameters trainInstance;
     public InferParameters inferInstance;
 
     public TMP_InputField trainSpeed;
@@ -64,7 +64,7 @@ public class Manager : MonoBehaviour
 
     void Start()
     {
-        // runModeDropDown.onValueChanged.AddListener(ChangeRunMode);
+        runModeDropDown.onValueChanged.AddListener(ChangeRunMode);
         inferInstance.player1ControlModeDropdown.onValueChanged.AddListener(ChangePlayer1Mode);
         inferInstance.player2ControlModeDropdown.onValueChanged.AddListener(ChangePlayer2Mode);
         trainInstance.agentNumDropdown.onValueChanged.AddListener(ChangeGAAgentNum);

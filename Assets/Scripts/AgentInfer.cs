@@ -17,12 +17,12 @@ public class AgentInfer : MonoBehaviour
     public float[] info;
     public GameObject self;
     public GameObject enemy;
+    public RunManager runManager;
 
     private PlayerFSM selfFSM;
     private PlayerFSM enemyFSM;
     private PlayerAttribute selfAttribute;
     private PlayerAttribute enemyAttribute;
-    private InferManager inferManager;
 
 
     // CSV文件的路径
@@ -31,35 +31,17 @@ public class AgentInfer : MonoBehaviour
     public bool ready = false;
 
 
-    public AgentInfer(GameObject self, GameObject enemy, string filePath, InferManager inferManager)
-    {
-        this.self = self;
-        this.enemy = enemy;
-        this.filePath = path + filePath;
-        this.inferManager = inferManager;
-        info = new float[15];
-
-        selfFSM = self.GetComponent<PlayerFSM>();
-        selfAttribute = self.GetComponent<PlayerAttribute>();
-        enemyFSM = enemy.GetComponent<PlayerFSM>();
-        enemyAttribute = enemy.GetComponent<PlayerAttribute>();
-        selfAttribute.isInvincible = false;
-        enemyAttribute.isInvincible = false;
-
-        if (!selfFSM.parameters.isControl)
-        {
-            geneData = ReadCSV(this.filePath);
-            decoded = Decode(geneData.ToArray(), dims_list);
-        }
-        ready = true;
-    }
-
     public AgentInfer(GameObject self, GameObject enemy, string filePath)
     {
         this.self = self;
         this.enemy = enemy;
         this.filePath = path + filePath;
         info = new float[15];
+    }
+
+    void Start()
+    {
+        runManager.runtime += OnUpdate;
     }
 
     public void OnUpdate()
