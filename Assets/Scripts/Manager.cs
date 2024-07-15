@@ -77,6 +77,16 @@ public class Manager : MonoBehaviour
         platformParaInstance.runSpeed.text = "1";
         platformParaInstance.groundNum.text = "10";
 
+        gameParaInstance.player1HP.text = "10";
+        gameParaInstance.player2HP.text = "10";
+        gameParaInstance.player1FireRate.text = "0.8";
+        gameParaInstance.player2FireRate.text = "0.8";
+        gameParaInstance.player1JumpSpeed.text = "16";
+        gameParaInstance.player2JumpSpeed.text = "16";
+        gameParaInstance.bulletSpeed.text = "9";
+        gameParaInstance.gravity.text = "4";
+        gameParaInstance.groundTime.text = "30";
+        gameParaInstance.configurePath.text = Application.streamingAssetsPath + "/cfg";
         player1InitPos = player1.transform.position;
         player2InitPos = player2.transform.position;
     }
@@ -132,6 +142,7 @@ public class Manager : MonoBehaviour
 
     public void StartGame()
     {
+        SetGameSettings();
         StartCoroutine(MovePlayerWithUI(new Vector3(-17.8f, 0f, 0f)));
         StartCoroutine(MoveUI(rightRectTransform));
         StartCoroutine(StartGameCoroutine());
@@ -139,6 +150,7 @@ public class Manager : MonoBehaviour
 
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         runManager.enabled = false;
         StartCoroutine(ResetTrainProcess());
         StartCoroutine(MovePlayerWithUI(new Vector3(0f, 0f, 0f)));
@@ -148,8 +160,8 @@ public class Manager : MonoBehaviour
     IEnumerator StartGameCoroutine()
     {
         yield return new WaitForSeconds(0.5f);
-        Time.timeScale = float.Parse(platformParaInstance.runSpeed.text);
-        runManager.groundNum = int.Parse(platformParaInstance.groundNum.text);
+        runManager.timeSpeed = float.Parse(platformParaInstance.runSpeed.text);
+        runManager.roundNum = int.Parse(platformParaInstance.groundNum.text);
 
         runManager.enabled = true;
         runManager.StartGame();
@@ -189,6 +201,21 @@ public class Manager : MonoBehaviour
         playerTransform.transform.position = target;
     }
 
+    public void SetGameSettings()
+    {
+        player1.GetComponent<PlayerAttribute>().HP = int.Parse(gameParaInstance.player1HP.text);
+        player2.GetComponent<PlayerAttribute>().HP = int.Parse(gameParaInstance.player2HP.text);
+        player1.GetComponent<PlayerFSM>().parameters.shootCoolDown = float.Parse(gameParaInstance.player1FireRate.text);
+        player2.GetComponent<PlayerFSM>().parameters.shootCoolDown = float.Parse(gameParaInstance.player2FireRate.text);
+        player1.GetComponent<PlayerAttribute>().jumpSpeed = int.Parse(gameParaInstance.player1JumpSpeed.text);
+        player2.GetComponent<PlayerAttribute>().jumpSpeed = int.Parse(gameParaInstance.player2JumpSpeed.text);
+        player1.GetComponent<PlayerFSM>().parameters.bulletSpeed = float.Parse(gameParaInstance.bulletSpeed.text);
+        player2.GetComponent<PlayerFSM>().parameters.bulletSpeed = float.Parse(gameParaInstance.bulletSpeed.text);
+        player1.GetComponent<Rigidbody2D>().gravityScale = float.Parse(gameParaInstance.gravity.text);
+        player2.GetComponent<Rigidbody2D>().gravityScale = float.Parse(gameParaInstance.gravity.text);
+        runManager.totalTime = float.Parse(gameParaInstance.groundTime.text);
+    }
+
     public void BackToMain()
     {
         StartCoroutine(MoveUI(new Vector3(0f, 0f, 0f)));
@@ -197,6 +224,11 @@ public class Manager : MonoBehaviour
     public void OpenPlatformSettings()
     {
         StartCoroutine(MoveUI(new Vector3(0f, -1080f, 0f)));
+    }
+
+    public void OpenGameSettings()
+    {
+        StartCoroutine(MoveUI(new Vector3(0f, 1080f, 0f)));
     }
 
     public void CloseNotice()
@@ -220,6 +252,8 @@ public class Manager : MonoBehaviour
         runManager.Reset();
         runManager.iteration = 1;
         runManager.isStartGame = false;
+        runManager.player1WinNum = 0;
+        runManager.player2WinNum = 0;
         player1.parameters.playerAction[0] = PlayerActionType.None;
         player1.parameters.playerAction[1] = PlayerActionType.None;
         player1.parameters.playerAction[2] = PlayerActionType.None;

@@ -63,12 +63,10 @@ public class RunSocket
                 Debug.Log("connected");
                 // train2Instance.timeSpeed = ;
                 runManager.isStartGame = true;
-                runManager.notice.gameObject.SetActive(false);
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
                     runManager.iterationStartTime = Time.time;
                     Time.timeScale = runManager.timeSpeed;
-                    // runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
                 });
                 SendMessage(accHandler, info);
 
@@ -138,6 +136,10 @@ public class RunSocket
                         {
                             if (runManager.player1FSM.parameters.beShot == true)
                             {
+                                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                                {
+                                    runManager.LogMessage("Hurt", "Player1 Hurt");
+                                });
                                 info.infoCode = -1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
@@ -168,6 +170,10 @@ public class RunSocket
                         {
                             if (runManager.player2FSM.parameters.beShot == true)
                             {
+                                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                                {
+                                    runManager.LogMessage("Hurt", "Player2 Hurt");
+                                });
                                 info.infoCode = -1f;
                                 SendMessage(RAShandler, info);
                                 info.infoCode = 0f;
@@ -236,14 +242,14 @@ public class RunSocket
         actionArray[0] = intArray[0] == 2 ? PlayerActionType.StartNextGround : intArray[0] == 1 ? PlayerActionType.Jump : PlayerActionType.None;
         actionArray[1] = intArray[1] == 1 ? PlayerActionType.Shoot : PlayerActionType.None;
         actionArray[2] = intArray[2] == 1 ? PlayerActionType.MoveRight : intArray[2] == -1 ? PlayerActionType.MoveLeft : PlayerActionType.None;
-    
+
         return actionArray;
     }
 
     public void SendMessage(Socket handler, EnvInfo info)
     {
         List<byte> byteStream = new List<byte>();
-        
+
         byteStream.AddRange(BitConverter.GetBytes(info.direction));
         byteStream.AddRange(BitConverter.GetBytes(info.shootable));
         byteStream.AddRange(BitConverter.GetBytes(info.jumpable));

@@ -5,6 +5,8 @@ using PlayerEnum;
 using System;
 using Unity.Mathematics;
 using TMPro;
+using Google.Protobuf.WellKnownTypes;
+using System.IO;
 public enum RunMode
 {
     Socket,
@@ -13,8 +15,28 @@ public enum RunMode
     Player
 }
 
+[Serializable]
+public class GameUI
+{
+    public TextMeshProUGUI player1HPUI;
+    public TextMeshProUGUI player2HPUI;
+    public TextMeshProUGUI roundNumUI;
+    public TextMeshProUGUI roundTimeUI;
+    public TextMeshProUGUI runLogUI;
+    public GameObject player1Jump;
+    public GameObject player1Shoot;
+    public GameObject player1MoveLeft;
+    public GameObject player1MoveRight;
+    public GameObject player2Jump;
+    public GameObject player2Shoot;
+    public GameObject player2MoveLeft;
+    public GameObject player2MoveRight;
+}
+
 public class RunManager : MonoBehaviour
 {
+    public Manager manager;
+    public GameUI gameUI;
     public RunSocket socket1;
     public RunSocket socket2;
     public DecisionTree decisionTree1;
@@ -26,12 +48,12 @@ public class RunManager : MonoBehaviour
     public RunMode runMode1;
     public RunMode runMode2;
     public bool isEnd = false;// 一场比赛结束标志
-    public float groundTime;// 一场比赛剩余时间
+    public float roundTime;// 一场比赛剩余时间
     public float totalTime = 60f;// 一场比赛总时间
     public float timeSpeed = 1f;// 时间流速
     public float iterationStartTime;// 每场比赛开始时间
     public int iteration = 1;
-    public int groundNum;
+    public int roundNum;
     public PlayerFSM player1FSM;
     public PlayerFSM player2FSM;
     public PlayerAttribute player1attribute;
@@ -39,26 +61,24 @@ public class RunManager : MonoBehaviour
     public int player1HP;
     public int player2HP;
     public int isRestart = 0;
+    public int player1WinNum = 0;
+    public int player2WinNum = 0;
     public EnvInfo info1;
     public EnvInfo info2;
     public int socket1Port = 12345;
     public int socket2Port = 22345;
     public Vector3 player1InitPos;
     public Vector3 player2InitPos;
-    public GameObject playerAll;
     public bool isStartGame = false;
-    public GameObject errorNotice;
-    public TextMeshProUGUI player1HPUI;
-    public TextMeshProUGUI player2HPUI;
-    public TextMeshProUGUI groundNumUI;
-    public TextMeshProUGUI groundTimeUI;
-    public TextMeshProUGUI notice;
-    
+    public List<string> runLog;
+    public List<string> allLog;
+    public Dictionary<string, bool> logContent = new Dictionary<string, bool>();// 打印哪些日志
+
 
     public delegate void RunTime();
     public RunTime runtime;
 
-    void Start()
+    void Awake()
     {
         player1FSM = player1.GetComponent<PlayerFSM>();
         player2FSM = player2.GetComponent<PlayerFSM>();
@@ -66,7 +86,11 @@ public class RunManager : MonoBehaviour
         player2attribute = player2.GetComponent<PlayerAttribute>();
         player1FSM.parameters.isControl = false;
         player2FSM.parameters.isControl = false;
-        // UI.GetComponent<UI>().waitingConnect.SetActive(true);
+        logContent.Add("Log", true);
+        logContent.Add("Error", true);
+        logContent.Add("Score", true);
+        logContent.Add("Hurt", true);
+        logContent.Add("Action", true);
     }
 
     public void StartGame()
@@ -77,8 +101,7 @@ public class RunManager : MonoBehaviour
                 socket1 = new RunSocket(this, PlayerType.player1);
                 socket1.Start(socket1Port);
                 Time.timeScale = 0f;
-                notice.gameObject.SetActive(true);
-                notice.text = "Waiting Connect...";
+                LogMessage("Log", "Player1 Waiting Connect...");
                 break;
             case RunMode.Player:
                 player1FSM.parameters.isControl = true;
@@ -97,8 +120,7 @@ public class RunManager : MonoBehaviour
                 socket2 = new RunSocket(this, PlayerType.player2);
                 socket2.Start(socket2Port);
                 Time.timeScale = 0f;
-                notice.gameObject.SetActive(true);
-                notice.text = "Waiting Connect...";
+                LogMessage("Log", "Player2 Waiting Connect...");
                 break;
             case RunMode.Player:
                 player2FSM.parameters.isControl = true;
@@ -110,9 +132,7 @@ public class RunManager : MonoBehaviour
                 agentInfer2 = new AgentInfer(player2, player1, "/172.csv", this);
                 break;
         }
-
-        // socket2 = new RunSocket(this, PlayerType.player2);
-        // socket2.Start(socket2Port);
+        LogMessage("Log", "Game Start");
     }
 
     void SocketUpdate()
@@ -123,9 +143,14 @@ public class RunManager : MonoBehaviour
         player1HP = player1attribute.HP;
         player2HP = player2attribute.HP;
 
-        if (groundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
+        if (!isEnd && (roundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0))
         {
             isEnd = true;
+            if (player1attribute.HP > player2attribute.HP)
+                player1WinNum++;
+            else
+                player2WinNum++;
+            LogMessage("Score", "Score:" + player1WinNum + ":" + player2WinNum);
         }
         else
         {
@@ -135,6 +160,7 @@ public class RunManager : MonoBehaviour
 
         if (isRestart == 2)
         {
+            LogMessage("Log", "Round Restart");
             Reset();
             player1.transform.position = player1InitPos;
             player2.transform.position = player2InitPos;
@@ -150,31 +176,33 @@ public class RunManager : MonoBehaviour
 
     void Update()
     {
-        player1HP = player1attribute.HP;
-        player2HP = player2attribute.HP;
+        // Time.timeScale = timeSpeed;
         if (isStartGame)
-            groundTime = totalTime - (Time.time - iterationStartTime);
-        player1HPUI.text = "Player1HP:" + player1HP.ToString();
-        player2HPUI.text = "Player2HP:" + player2HP.ToString();
-        groundTimeUI.text = "Time:" + ((int)groundTime).ToString();
-        groundNumUI.text = "Ground:" + iteration.ToString();
+            roundTime = totalTime - (Time.time - iterationStartTime);
+        gameUI.player1HPUI.text = "Player1HP:" + player1HP.ToString();
+        gameUI.player2HPUI.text = "Player2HP:" + player2HP.ToString();
+        gameUI.roundTimeUI.text = "Time:" + ((int)roundTime).ToString();
+        gameUI.roundNumUI.text = "Ground:" + iteration.ToString();
 
         SocketUpdate();
         AgentUpdate();
 
-        if (iteration >= groundNum)
+        if (iteration >= roundNum)
         {
             Time.timeScale = 0f;
-            notice.gameObject.SetActive(true);
-            notice.text = "Game Over";
+            // notice.gameObject.SetActive(true);
+            // notice.text = "Game Over";
+            LogMessage("Log", "Game Over");
+
         }
 
-        if (groundTime < -5)
+        if (roundTime < -5)
         {
-            groundTime = 0;
+            roundTime = 0;
             isStartGame = false;
-            errorNotice.SetActive(true);
-            errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
+            // errorNotice.SetActive(true);
+            // errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
+            LogMessage("Error", "Error:Connection Timeout with Socket.");
         }
 
     }
@@ -219,7 +247,7 @@ public class RunManager : MonoBehaviour
         }
         info.self_Invincible = playerAttribute1.isInvincible ? 1 : 0;
         info.E_Invincible = playerAttribute2.isInvincible ? 1 : 0;
-        info.time = groundTime;
+        info.time = roundTime;
     }
 
     public float[] GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2)
@@ -281,7 +309,81 @@ public class RunManager : MonoBehaviour
                 return;
 
             playerFSM.parameters.playerAction = action;
+            ShowActionUI();
         });
+    }
+
+    public void LogMessage(string type, string message)
+    {
+        if (logContent[type])
+        {
+            runLog.Add("[" + type + "]: " + "Time " + (int)roundTime + ":" + message);
+            allLog.Add("[" + type + "]: " + "Time " + (int)roundTime + ":" + message);
+            if (runLog.Count > 10)
+            {
+                runLog.RemoveAt(0);
+            }
+            gameUI.runLogUI.text = string.Join("\n", runLog);
+        }
+    }
+
+    public void ClearLog()
+    {
+        runLog.Clear();
+        gameUI.runLogUI.text = "";
+    }
+
+    public void SaveLog()
+    {
+        string path = Application.streamingAssetsPath + "/log.txt";
+        // if (!File.Exists(path))
+        // {
+        //     File.CreateText(path);
+        // }
+        File.WriteAllLines(path, allLog);
+    }
+
+    public void ShowActionUI()
+    {
+        if(player1FSM.parameters.playerAction[0] == PlayerActionType.Jump)
+            gameUI.player1Jump.SetActive(true);
+        else
+           gameUI.player1Jump.SetActive(false);
+        
+        if(player1FSM.parameters.playerAction[1] == PlayerActionType.Shoot)
+            gameUI.player1Shoot.SetActive(true);
+        else
+           gameUI.player1Shoot.SetActive(false);
+        
+        if(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft)
+            gameUI.player1MoveLeft.SetActive(true);
+        else
+           gameUI.player1MoveLeft.SetActive(false);
+
+        if(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveRight)
+            gameUI.player1MoveRight.SetActive(true);
+        else
+           gameUI.player1MoveRight.SetActive(false);
+        
+        if(player2FSM.parameters.playerAction[0] == PlayerActionType.Jump)
+            gameUI.player2Jump.SetActive(true);
+        else
+           gameUI.player2Jump.SetActive(false);
+        
+        if(player2FSM.parameters.playerAction[1] == PlayerActionType.Shoot)
+            gameUI.player2Shoot.SetActive(true);
+        else
+           gameUI.player2Shoot.SetActive(false);
+        
+        if(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft)
+            gameUI.player2MoveLeft.SetActive(true);
+        else
+           gameUI.player2MoveLeft.SetActive(false);
+
+        if(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveRight)
+            gameUI.player2MoveRight.SetActive(true);
+        else
+           gameUI.player2MoveRight.SetActive(false);
     }
 
     public void Reset()
@@ -290,7 +392,7 @@ public class RunManager : MonoBehaviour
         // yield return new WaitForSeconds(0.1f);
         player1attribute.HP = 10;
         player2attribute.HP = 10;
-        groundTime = (int)totalTime;
+        roundTime = (int)totalTime;
         iterationStartTime = Time.time;
         player1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player2.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -316,7 +418,6 @@ public class RunManager : MonoBehaviour
         if (socket2 != null)
             socket2.hasSendEndInfo = false;
         iteration++;
-        notice.gameObject.SetActive(false);
 
         decisionTree1 = null;
         decisionTree2 = null;
