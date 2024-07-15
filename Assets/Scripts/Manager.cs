@@ -231,6 +231,11 @@ public class Manager : MonoBehaviour
         StartCoroutine(MoveUI(new Vector3(0f, 1080f, 0f)));
     }
 
+    public void OpenHelpSettings()
+    {
+        StartCoroutine(MoveUI(new Vector3(1920f, 0f, 0f)));
+    }
+
     public void CloseNotice()
     {
         errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "";
