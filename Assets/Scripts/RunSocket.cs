@@ -66,8 +66,8 @@ public class RunSocket
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
                     runManager.iterationStartTime = Time.time;
-                    Time.timeScale = runManager.timeSpeed;
-                    runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
+                    // Time.timeScale = runManager.timeSpeed;
+                    // runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
                 });
                 SendMessage(accHandler, info);
 
