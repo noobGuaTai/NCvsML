@@ -38,19 +38,22 @@ public class RunManager : MonoBehaviour
     public PlayerAttribute player2attribute;
     public int player1HP;
     public int player2HP;
-    public int isReStart = 0;
+    public int isRestart = 0;
     public EnvInfo info1;
     public EnvInfo info2;
-    public float[] info1_float;
-    public float[] info2_float;
     public int socket1Port = 12345;
     public int socket2Port = 22345;
     public Vector3 player1InitPos;
     public Vector3 player2InitPos;
     public GameObject playerAll;
-    public GameObject UI;
     public bool isStartGame = false;
-    public GameObject notice;
+    public GameObject errorNotice;
+    public TextMeshProUGUI player1HPUI;
+    public TextMeshProUGUI player2HPUI;
+    public TextMeshProUGUI groundNumUI;
+    public TextMeshProUGUI groundTimeUI;
+    public TextMeshProUGUI notice;
+    
 
     public delegate void RunTime();
     public RunTime runtime;
@@ -64,9 +67,6 @@ public class RunManager : MonoBehaviour
         player1FSM.parameters.isControl = false;
         player2FSM.parameters.isControl = false;
         // UI.GetComponent<UI>().waitingConnect.SetActive(true);
-
-        info1_float = new float[15];
-        info2_float = new float[15];
     }
 
     public void StartGame()
@@ -77,6 +77,8 @@ public class RunManager : MonoBehaviour
                 socket1 = new RunSocket(this, PlayerType.player1);
                 socket1.Start(socket1Port);
                 Time.timeScale = 0f;
+                notice.gameObject.SetActive(true);
+                notice.text = "Waiting Connect...";
                 break;
             case RunMode.Player:
                 player1FSM.parameters.isControl = true;
@@ -95,6 +97,8 @@ public class RunManager : MonoBehaviour
                 socket2 = new RunSocket(this, PlayerType.player2);
                 socket2.Start(socket2Port);
                 Time.timeScale = 0f;
+                notice.gameObject.SetActive(true);
+                notice.text = "Waiting Connect...";
                 break;
             case RunMode.Player:
                 player2FSM.parameters.isControl = true;
@@ -129,7 +133,7 @@ public class RunManager : MonoBehaviour
             socket2?.SetEnvInfo(info2);
         }
 
-        if (isReStart == 2)
+        if (isRestart == 2)
         {
             Reset();
             player1.transform.position = player1InitPos;
@@ -150,8 +154,10 @@ public class RunManager : MonoBehaviour
         player2HP = player2attribute.HP;
         if (isStartGame)
             groundTime = totalTime - (Time.time - iterationStartTime);
-        // UI.GetComponent<UI>().time = (int)groundTime;
-        // UI.GetComponent<UI>().iteration = iteration;
+        player1HPUI.text = "Player1HP:" + player1HP.ToString();
+        player2HPUI.text = "Player2HP:" + player2HP.ToString();
+        groundTimeUI.text = "Time:" + ((int)groundTime).ToString();
+        groundNumUI.text = "Ground:" + iteration.ToString();
 
         SocketUpdate();
         AgentUpdate();
@@ -159,14 +165,16 @@ public class RunManager : MonoBehaviour
         if (iteration >= groundNum)
         {
             Time.timeScale = 0f;
+            notice.gameObject.SetActive(true);
+            notice.text = "Game Over";
         }
 
         if (groundTime < -5)
         {
             groundTime = 0;
             isStartGame = false;
-            notice.SetActive(true);
-            notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
+            errorNotice.SetActive(true);
+            errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
         }
 
     }
@@ -267,7 +275,7 @@ public class RunManager : MonoBehaviour
         {
             if (action[0] == PlayerActionType.StartNextGround)
             {
-                isReStart += 1;
+                isRestart += 1;
             }
             if (playerFSM.parameters.isControl)
                 return;
@@ -278,7 +286,7 @@ public class RunManager : MonoBehaviour
 
     public void Reset()
     {
-        isReStart = 0;
+        isRestart = 0;
         // yield return new WaitForSeconds(0.1f);
         player1attribute.HP = 10;
         player2attribute.HP = 10;
@@ -303,11 +311,12 @@ public class RunManager : MonoBehaviour
         player1.transform.localScale = new Vector3(1, 1, 1);
         player2.transform.localScale = new Vector3(-1, 1, 1);
         isEnd = false;
-        if(socket1 != null)
+        if (socket1 != null)
             socket1.hasSendEndInfo = false;
-        if(socket2 != null)
+        if (socket2 != null)
             socket2.hasSendEndInfo = false;
         iteration++;
+        notice.gameObject.SetActive(false);
 
         decisionTree1 = null;
         decisionTree2 = null;

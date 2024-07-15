@@ -63,6 +63,7 @@ public class RunSocket
                 Debug.Log("connected");
                 // train2Instance.timeSpeed = ;
                 runManager.isStartGame = true;
+                runManager.notice.gameObject.SetActive(false);
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
                     runManager.iterationStartTime = Time.time;

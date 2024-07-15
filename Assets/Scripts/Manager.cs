@@ -62,7 +62,7 @@ public class Manager : MonoBehaviour
     public PlatformParameters platformParaInstance;
     public GameParameters gameParaInstance;
 
-    public GameObject notice;
+    public GameObject errorNotice;
     public GameObject waitingConnect;
 
     private Vector3 player1InitPos;
@@ -201,8 +201,8 @@ public class Manager : MonoBehaviour
 
     public void CloseNotice()
     {
-        notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "";
-        notice.SetActive(false);
+        errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "";
+        errorNotice.SetActive(false);
     }
 
     IEnumerator ResetTrainProcess()
