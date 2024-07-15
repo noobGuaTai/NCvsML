@@ -62,12 +62,12 @@ public class RunSocket
                 Socket accHandler = accListener.Accept();
                 Debug.Log("connected");
                 // train2Instance.timeSpeed = ;
-                runManager.isStartTrain = true;
+                runManager.isStartGame = true;
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
                     runManager.iterationStartTime = Time.time;
                     Time.timeScale = runManager.timeSpeed;
-                    runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
+                    // runManager.UI.GetComponent<UI>().waitingConnect.SetActive(false);
                 });
                 SendMessage(accHandler, info);
 

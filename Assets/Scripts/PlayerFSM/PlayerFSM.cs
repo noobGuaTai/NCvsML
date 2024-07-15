@@ -17,10 +17,7 @@ public class PlayerParameters
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
     public float shootCoolDown = 0.5f;
-    public GameObject train1ManagerGameObject;
-    public GameObject train2ManagerGameObject;
-    public Train2Manager train2Manager;
-    public Train1Manager train1Manager;
+    public RunManager runManager;
     public bool beShot = false;// 被击中
     public bool isShot = false;// 是否击中
     public GameObject leftWall;
@@ -43,8 +40,6 @@ public class PlayerFSM : MonoBehaviour
     {
         parameters.rb = GetComponent<Rigidbody2D>();
         parameters.playerAttribute = GetComponent<PlayerAttribute>();
-        parameters.train2Manager = parameters.train2ManagerGameObject.GetComponent<Train2Manager>();
-        parameters.train1Manager = parameters.train1ManagerGameObject.GetComponent<Train1Manager>();
         parameters.playerAction[0] = PlayerActionType.None;
         parameters.playerAction[1] = PlayerActionType.None;
         parameters.playerAction[2] = PlayerActionType.None;
@@ -68,20 +63,15 @@ public class PlayerFSM : MonoBehaviour
         }
         UpdateBulletState();
 
-        if (parameters.train2Manager.socket1 != null)
+        if (parameters.runManager.socket1 != null)
         {
-            parameters.train2Manager.socket1.SetRecvFlag(true);
-            parameters.train2Manager.socket1.SetSendFlag(true);
+            parameters.runManager.socket1.SetRecvFlag(true);
+            parameters.runManager.socket1.SetSendFlag(true);
         }
-        if (parameters.train2Manager.socket2 != null)
+        if (parameters.runManager.socket2 != null)
         {
-            parameters.train2Manager.socket2.SetRecvFlag(true);
-            parameters.train2Manager.socket2.SetSendFlag(true);
-        }
-        if (parameters.train1Manager.socket1 != null)
-        {
-            parameters.train1Manager.socket1.SetRecvFlag(true);
-            parameters.train1Manager.socket1.SetSendFlag(true);
+            parameters.runManager.socket2.SetRecvFlag(true);
+            parameters.runManager.socket2.SetSendFlag(true);
         }
 
         parameters.moveKeyboardInput.x = Input.GetAxisRaw("Horizontal");

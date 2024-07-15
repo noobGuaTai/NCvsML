@@ -22,10 +22,11 @@ public class DecisionTree : MonoBehaviour
     public PlayerActionType[] actionArray;
 
 
-    public DecisionTree(GameObject self, GameObject enemy)
+    public DecisionTree(GameObject self, GameObject enemy, RunManager runManager)
     {
         this.self = self;
         this.enemy = enemy;
+        this.runManager = runManager;
         info = new float[15];
 
         selfFSM = self.GetComponent<PlayerFSM>();
@@ -35,15 +36,13 @@ public class DecisionTree : MonoBehaviour
         selfAttribute.isInvincible = false;
         enemyAttribute.isInvincible = false;
         actionArray = new PlayerActionType[3];
-    }
 
-    void Start()
-    {
         runManager.runtime += OnUpdate;
     }
 
     public void OnUpdate()
     {
+        info = runManager.GetEnvInf(selfFSM, enemyFSM, selfAttribute, enemyAttribute);
         actionArray[0] = PlayerActionType.None;
         if ((math.abs(info[8]) < 1f && math.abs(info[9]) < 0.6f) || (math.abs(info[11]) < 1f && math.abs(info[12]) < 0.6f))
         {

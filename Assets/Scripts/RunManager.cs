@@ -31,13 +31,14 @@ public class RunManager : MonoBehaviour
     public float timeSpeed = 1f;// 时间流速
     public float iterationStartTime;// 每场比赛开始时间
     public int iteration = 1;
+    public int groundNum;
     public PlayerFSM player1FSM;
     public PlayerFSM player2FSM;
     public PlayerAttribute player1attribute;
     public PlayerAttribute player2attribute;
     public int player1HP;
     public int player2HP;
-    public int isStart = 0;
+    public int isReStart = 0;
     public EnvInfo info1;
     public EnvInfo info2;
     public float[] info1_float;
@@ -46,12 +47,27 @@ public class RunManager : MonoBehaviour
     public int socket2Port = 22345;
     public Vector3 player1InitPos;
     public Vector3 player2InitPos;
+    public GameObject playerAll;
     public GameObject UI;
-    public bool isStartTrain = false;
+    public bool isStartGame = false;
     public GameObject notice;
 
     public delegate void RunTime();
     public RunTime runtime;
+
+    void Start()
+    {
+        player1FSM = player1.GetComponent<PlayerFSM>();
+        player2FSM = player2.GetComponent<PlayerFSM>();
+        player1attribute = player1.GetComponent<PlayerAttribute>();
+        player2attribute = player2.GetComponent<PlayerAttribute>();
+        player1FSM.parameters.isControl = false;
+        player2FSM.parameters.isControl = false;
+        // UI.GetComponent<UI>().waitingConnect.SetActive(true);
+
+        info1_float = new float[15];
+        info2_float = new float[15];
+    }
 
     public void StartGame()
     {
@@ -60,18 +76,16 @@ public class RunManager : MonoBehaviour
             case RunMode.Socket:
                 socket1 = new RunSocket(this, PlayerType.player1);
                 socket1.Start(socket1Port);
-                StartCoroutine(SocketUpdate());
+                Time.timeScale = 0f;
                 break;
             case RunMode.Player:
                 player1FSM.parameters.isControl = true;
                 break;
             case RunMode.DecisionTree:
-                decisionTree1 = new DecisionTree(player1, player2);
-                StartCoroutine(AgentUpdate());
+                decisionTree1 = new DecisionTree(player1, player2, this);
                 break;
             case RunMode.JuniorGA:
-                agentInfer1 = new AgentInfer(player1, player2, "/172.csv");
-                StartCoroutine(AgentUpdate());
+                agentInfer1 = new AgentInfer(player1, player2, "/172.csv", this);
                 break;
         }
 
@@ -79,87 +93,78 @@ public class RunManager : MonoBehaviour
         {
             case RunMode.Socket:
                 socket2 = new RunSocket(this, PlayerType.player2);
-                socket2.Start(socket1Port);
+                socket2.Start(socket2Port);
+                Time.timeScale = 0f;
                 break;
             case RunMode.Player:
                 player2FSM.parameters.isControl = true;
                 break;
             case RunMode.DecisionTree:
-                decisionTree2 = new DecisionTree(player2, player1);
+                decisionTree2 = new DecisionTree(player2, player1, this);
                 break;
             case RunMode.JuniorGA:
-                agentInfer2 = new AgentInfer(player2, player1, "/172.csv");
+                agentInfer2 = new AgentInfer(player2, player1, "/172.csv", this);
                 break;
         }
 
         // socket2 = new RunSocket(this, PlayerType.player2);
         // socket2.Start(socket2Port);
-
-        player1FSM = player1.GetComponent<PlayerFSM>();
-        player2FSM = player2.GetComponent<PlayerFSM>();
-        player1attribute = player1.GetComponent<PlayerAttribute>();
-        player2attribute = player2.GetComponent<PlayerAttribute>();
-        player1FSM.parameters.isControl = false;
-        player2FSM.parameters.isControl = false;
-        UI.GetComponent<UI>().waitingConnect.SetActive(true);
-
     }
 
-    IEnumerator SocketUpdate()
+    void SocketUpdate()
     {
-        yield return null;
-        while (true)
+        GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
+        GetEnvInf(player2FSM, player1FSM, player2attribute, player1attribute, ref info2);
+
+        player1HP = player1attribute.HP;
+        player2HP = player2attribute.HP;
+
+        if (groundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
         {
-            GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
-            GetEnvInf(player2FSM, player1FSM, player2attribute, player1attribute, ref info2);
-
-            player1HP = player1attribute.HP;
-            player2HP = player2attribute.HP;
-
-            if (groundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
-            {
-                isEnd = true;
-            }
-            else
-            {
-                socket1.SetEnvInfo(info1);// 结束了就不再更新环境信息
-                socket2.SetEnvInfo(info2);
-            }
-
-            if (isStart == 2)
-            {
-                Reset();
-                socket1.SendMessage(socket1.RAShandler, info1);
-                socket2.SendMessage(socket2.RAShandler, info2);
-            }
+            isEnd = true;
+        }
+        else
+        {
+            socket1?.SetEnvInfo(info1);// 结束了就不再更新环境信息
+            socket2?.SetEnvInfo(info2);
         }
 
+        if (isReStart == 2)
+        {
+            Reset();
+            player1.transform.position = player1InitPos;
+            player2.transform.position = player2InitPos;
+            socket1?.SendMessage(socket1.RAShandler, info1);
+            socket2?.SendMessage(socket2.RAShandler, info2);
+        }
     }
 
-    IEnumerator AgentUpdate()
+    void AgentUpdate()
     {
-        yield return null;
-        while (true)
-        {
-            GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1_float);
-            GetEnvInf(player2FSM, player1FSM, player2attribute, player1attribute, ref info2_float);
-            runtime.Invoke();
-        }
+        runtime?.Invoke();
     }
 
     void Update()
     {
         player1HP = player1attribute.HP;
         player2HP = player2attribute.HP;
-        if (isStartTrain)
+        if (isStartGame)
             groundTime = totalTime - (Time.time - iterationStartTime);
-        UI.GetComponent<UI>().time = (int)groundTime;
-        UI.GetComponent<UI>().iteration = iteration;
+        // UI.GetComponent<UI>().time = (int)groundTime;
+        // UI.GetComponent<UI>().iteration = iteration;
+
+        SocketUpdate();
+        AgentUpdate();
+
+        if (iteration >= groundNum)
+        {
+            Time.timeScale = 0f;
+        }
 
         if (groundTime < -5)
         {
             groundTime = 0;
-            isStartTrain = false;
+            isStartGame = false;
             notice.SetActive(true);
             notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
         }
@@ -209,8 +214,9 @@ public class RunManager : MonoBehaviour
         info.time = groundTime;
     }
 
-    public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref float[] info)
+    public float[] GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2)
     {
+        float[] info = new float[15];
         info[0] = playerFSM1.transform.localScale.x;
         info[1] = 2f;
         foreach (GameObject bullet in playerFSM1.parameters.bullets)
@@ -250,6 +256,7 @@ public class RunManager : MonoBehaviour
         }
         info[13] = playerAttribute1.isInvincible ? 1 : 0;
         info[14] = playerAttribute2.isInvincible ? 1 : 0;
+        return info;
     }
 
     public void RunAction(PlayerType player, PlayerActionType[] action)
@@ -260,7 +267,7 @@ public class RunManager : MonoBehaviour
         {
             if (action[0] == PlayerActionType.StartNextGround)
             {
-                isStart += 1;
+                isReStart += 1;
             }
             if (playerFSM.parameters.isControl)
                 return;
@@ -271,12 +278,10 @@ public class RunManager : MonoBehaviour
 
     public void Reset()
     {
-        isStart = 0;
+        isReStart = 0;
         // yield return new WaitForSeconds(0.1f);
         player1attribute.HP = 10;
         player2attribute.HP = 10;
-        player1.transform.position = player1InitPos;
-        player2.transform.position = player2InitPos;
         groundTime = (int)totalTime;
         iterationStartTime = Time.time;
         player1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -298,10 +303,17 @@ public class RunManager : MonoBehaviour
         player1.transform.localScale = new Vector3(1, 1, 1);
         player2.transform.localScale = new Vector3(-1, 1, 1);
         isEnd = false;
-        socket1.hasSendEndInfo = false;
-        socket2.hasSendEndInfo = false;
-        // print("reset");
+        if(socket1 != null)
+            socket1.hasSendEndInfo = false;
+        if(socket2 != null)
+            socket2.hasSendEndInfo = false;
         iteration++;
+
+        decisionTree1 = null;
+        decisionTree2 = null;
+        agentInfer1 = null;
+        agentInfer2 = null;
+        runtime = null;
 
         GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
         GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);
