@@ -31,21 +31,28 @@ public class AgentInfer : MonoBehaviour
     public bool ready = false;
 
 
-    public AgentInfer(GameObject self, GameObject enemy, string filePath)
+    public AgentInfer(GameObject self, GameObject enemy, string filePath, RunManager runManager)
     {
         this.self = self;
         this.enemy = enemy;
         this.filePath = path + filePath;
+        this.runManager = runManager;
+        selfFSM = self.GetComponent<PlayerFSM>();
+        selfAttribute = self.GetComponent<PlayerAttribute>();
+        enemyFSM = enemy.GetComponent<PlayerFSM>();
+        enemyAttribute = enemy.GetComponent<PlayerAttribute>();
+        selfAttribute.isInvincible = false;
+        enemyAttribute.isInvincible = false;
         info = new float[15];
-    }
-
-    void Start()
-    {
+        geneData = ReadCSV(this.filePath);
+        decoded = Decode(geneData.ToArray(), dims_list);
         runManager.runtime += OnUpdate;
+        ready = true;
     }
 
     public void OnUpdate()
     {
+        info = runManager.GetEnvInf(selfFSM, enemyFSM, selfAttribute, enemyAttribute);
         if (ready && !selfFSM.parameters.isControl)
         {
             PlayerActionType[] output1 = Forward(info, decoded.Item1, decoded.Item2);

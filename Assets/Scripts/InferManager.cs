@@ -55,23 +55,23 @@ public class InferManager : MonoBehaviour
     public void StartInfer()
     {
         Time.timeScale = 1f;
-        if (player1InferMode == InferMode.agent)
-        {
-            agentInfer1 = new AgentInfer(player1, player2, path1);
-        }
-        if (player1InferMode == InferMode.decisionTree)
-        {
-            decisionTree1 = new DecisionTree(player1, player2);
-        }
+        // if (player1InferMode == InferMode.agent)
+        // {
+        //     agentInfer1 = new AgentInfer(player1, player2, path1);
+        // }
+        // if (player1InferMode == InferMode.decisionTree)
+        // {
+        //     decisionTree1 = new DecisionTree(player1, player2);
+        // }
 
-        if (player2InferMode == InferMode.agent)
-        {
-            agentInfer2 = new AgentInfer(player2, player1, path2);
-        }
-        if (player2InferMode == InferMode.decisionTree)
-        {
-            decisionTree2 = new DecisionTree(player2, player1);
-        }
+        // if (player2InferMode == InferMode.agent)
+        // {
+        //     agentInfer2 = new AgentInfer(player2, player1, path2);
+        // }
+        // if (player2InferMode == InferMode.decisionTree)
+        // {
+        //     decisionTree2 = new DecisionTree(player2, player1);
+        // }
 
     }
 

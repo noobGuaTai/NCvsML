@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using PlayerEnum;
+using System.Net.Sockets;
 
 [Serializable]
 public class MainParameters
@@ -64,15 +65,25 @@ public class Manager : MonoBehaviour
     public GameObject notice;
     public GameObject waitingConnect;
 
+    private Vector3 player1InitPos;
+    private Vector3 player2InitPos;
+
     void Start()
     {
-        mainParaInstance.player1SelectDropdown.onValueChanged.AddListener(ChangePlayer1Mode);
-        mainParaInstance.player2SelectDropdown.onValueChanged.AddListener(ChangePlayer2Mode);
+        mainParaInstance.socket1PortInputField.text = "12345";
+        mainParaInstance.socket2PortInputField.text = "22345";
+
+        platformParaInstance.recordSavePath.text = Application.streamingAssetsPath + "/Record";
+        platformParaInstance.runSpeed.text = "1";
+        platformParaInstance.groundNum.text = "10";
+
+        player1InitPos = player1.transform.position;
+        player2InitPos = player2.transform.position;
     }
 
     void Update()
     {
-        
+
     }
 
     // public void ChangeTrainSpeed()
@@ -85,58 +96,68 @@ public class Manager : MonoBehaviour
 
     public void ChangePlayer1Mode(int value)
     {
-        if (mainParaInstance.player1SelectDropdown.options[value].text == "Socket")
-        {
-
-        }
+        runManager.runMode1 = mainParaInstance.player1SelectDropdown.options[value].text == "Socket" ? RunMode.Socket : mainParaInstance.player1SelectDropdown.options[value].text == "Robot" ? RunMode.DecisionTree : RunMode.Player;
         if (mainParaInstance.player1SelectDropdown.options[value].text == "Robot")
         {
-
+            mainParaInstance.player1RobotSelectDropdown.gameObject.SetActive(true);
         }
-        if (mainParaInstance.player1SelectDropdown.options[value].text == "You")
+        else
         {
-
+            mainParaInstance.player1RobotSelectDropdown.gameObject.SetActive(false);
         }
     }
 
     public void ChangePlayer2Mode(int value)
     {
-        if (mainParaInstance.player2SelectDropdown.options[value].text == "Socket")
-        {
-
-        }
+        runManager.runMode2 = mainParaInstance.player2SelectDropdown.options[value].text == "Socket" ? RunMode.Socket : mainParaInstance.player2SelectDropdown.options[value].text == "Robot" ? RunMode.DecisionTree : RunMode.Player;
         if (mainParaInstance.player2SelectDropdown.options[value].text == "Robot")
         {
-
+            mainParaInstance.player2RobotSelectDropdown.gameObject.SetActive(true);
         }
-        if (mainParaInstance.player2SelectDropdown.options[value].text == "You")
+        else
         {
-
+            mainParaInstance.player2RobotSelectDropdown.gameObject.SetActive(false);
         }
+    }
+
+    public void ChangeRobot1Mode(int value)
+    {
+        runManager.runMode1 = mainParaInstance.player1RobotSelectDropdown.options[value].text == "DecisionTree" ? RunMode.DecisionTree : RunMode.JuniorGA;
+    }
+
+    public void ChangeRobot2Mode(int value)
+    {
+        runManager.runMode2 = mainParaInstance.player2RobotSelectDropdown.options[value].text == "DecisionTree" ? RunMode.DecisionTree : RunMode.JuniorGA;
     }
 
     public void StartGame()
     {
-        StartCoroutine(MovePlayerWithUI(new Vector3(-17.5f, 0f, 0f)));
+        StartCoroutine(MovePlayerWithUI(new Vector3(-17.8f, 0f, 0f)));
         StartCoroutine(MoveUI(rightRectTransform));
+        StartCoroutine(StartGameCoroutine());
+    }
+
+    public void QuitGame()
+    {
+        runManager.enabled = false;
+        StartCoroutine(ResetTrainProcess());
+        StartCoroutine(MovePlayerWithUI(new Vector3(0f, 0f, 0f)));
+        BackToMain();
+    }
+
+    IEnumerator StartGameCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = float.Parse(platformParaInstance.runSpeed.text);
+        runManager.groundNum = int.Parse(platformParaInstance.groundNum.text);
+
         runManager.enabled = true;
         runManager.StartGame();
     }
 
-    public void ResetGame()
-    {
-        player1.parameters.playerAction[0] = PlayerActionType.None;
-        player1.parameters.playerAction[1] = PlayerActionType.None;
-        player1.parameters.playerAction[2] = PlayerActionType.None;
-        player2.parameters.playerAction[0] = PlayerActionType.None;
-        player2.parameters.playerAction[1] = PlayerActionType.None;
-        player2.parameters.playerAction[2] = PlayerActionType.None;
-        StartCoroutine(ResetTrainProcess());
-    }
-
     IEnumerator MoveUI(Vector3 target)
     {
-        float duration = 1.0f;
+        float duration = 0.5f;
         float elapsedTime = 0.0f;
         Vector3 startPosition = rectTransformAll.anchoredPosition;
 
@@ -152,7 +173,7 @@ public class Manager : MonoBehaviour
 
     IEnumerator MovePlayerWithUI(Vector3 target)
     {
-        float duration = 1.0f;
+        float duration = 0.5f;
         float elapsedTime = 0.0f;
         Vector3 startPosition = envTransform.transform.position;
 
@@ -168,6 +189,16 @@ public class Manager : MonoBehaviour
         playerTransform.transform.position = target;
     }
 
+    public void BackToMain()
+    {
+        StartCoroutine(MoveUI(new Vector3(0f, 0f, 0f)));
+    }
+
+    public void OpenPlatformSettings()
+    {
+        StartCoroutine(MoveUI(new Vector3(0f, -1080f, 0f)));
+    }
+
     public void CloseNotice()
     {
         notice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "";
@@ -176,15 +207,29 @@ public class Manager : MonoBehaviour
 
     IEnumerator ResetTrainProcess()
     {
-        waitingConnect.SetActive(false);
-        runManager.GetComponent<Train2Manager>().socket1.isRunning = false;
-        runManager.GetComponent<Train2Manager>().socket2.isRunning = false;
+        // waitingConnect.SetActive(false);
+        RunSocket socket1 = runManager.socket1;
+        RunSocket socket2 = runManager.socket2;
+        if (socket1 != null)
+            socket1.isRunning = false;
+        if (socket2 != null)
+            socket2.isRunning = false;
         yield return new WaitForSeconds(1f);
-        runManager.GetComponent<Train2Manager>().socket1.Shutdown();
-        runManager.GetComponent<Train2Manager>().socket2.Shutdown();
-        runManager.GetComponent<Train2Manager>().Reset();
-        runManager.GetComponent<Train2Manager>().iteration = 1;
-        runManager.GetComponent<Train2Manager>().isStartTrain = false;
+        socket1?.Shutdown();
+        socket2?.Shutdown();
+        runManager.Reset();
+        runManager.iteration = 1;
+        runManager.isStartGame = false;
+        player1.parameters.playerAction[0] = PlayerActionType.None;
+        player1.parameters.playerAction[1] = PlayerActionType.None;
+        player1.parameters.playerAction[2] = PlayerActionType.None;
+        player2.parameters.playerAction[0] = PlayerActionType.None;
+        player2.parameters.playerAction[1] = PlayerActionType.None;
+        player2.parameters.playerAction[2] = PlayerActionType.None;
+        player1.transform.position = player1InitPos;
+        player2.transform.position = player2InitPos;
+        player1.transform.localScale = new Vector3(1f, 1f, 1f);
+        player2.transform.localScale = new Vector3(-1f, 1f, 1f);
     }
 
 }

@@ -56,17 +56,17 @@ public class Train1Manager : MonoBehaviour
         player2FSM.parameters.isControl = false;
         UI.GetComponent<UI>().waitingConnect.SetActive(true);
         info2 = new float[15];
-        switch (rivalType)
-        {
-            case RivalType.decisionTree:
-                decisionTree = new DecisionTree(player2, player1);
-                break;
-            case RivalType.juniorGA:
-                agentInfer = new AgentInfer(player2, player1, "/7.csv");
-                break;
-            case RivalType.seniorGA:
-                break;
-        }
+        // switch (rivalType)
+        // {
+        //     case RivalType.decisionTree:
+        //         decisionTree = new DecisionTree(player2, player1);
+        //         break;
+        //     case RivalType.juniorGA:
+        //         agentInfer = new AgentInfer(player2, player1, "/7.csv");
+        //         break;
+        //     case RivalType.seniorGA:
+        //         break;
+        // }
         Time.timeScale = 0f;
     }
 
