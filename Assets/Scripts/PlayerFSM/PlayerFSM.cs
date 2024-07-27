@@ -24,6 +24,7 @@ public class PlayerParameters
     public GameObject rightWall;
 
     public Rigidbody2D rb;
+    public Collider2D collider2D;
     public PlayerAttribute playerAttribute;
     public float shootTimer = 0f;
     public Vector2 moveKeyboardInput;// 键盘输入
@@ -40,6 +41,7 @@ public class PlayerFSM : MonoBehaviour
     {
         parameters.rb = GetComponent<Rigidbody2D>();
         parameters.playerAttribute = GetComponent<PlayerAttribute>();
+        parameters.collider2D = GetComponent<Collider2D>();
         parameters.playerAction[0] = PlayerActionType.None;
         parameters.playerAction[1] = PlayerActionType.None;
         parameters.playerAction[2] = PlayerActionType.None;
@@ -76,6 +78,9 @@ public class PlayerFSM : MonoBehaviour
 
         parameters.moveKeyboardInput.x = Input.GetAxisRaw("Horizontal");
 
+        if (parameters.isControl)
+            PlayerInput();
+
         currentState.OnUpdate();
     }
 
@@ -106,11 +111,11 @@ public class PlayerFSM : MonoBehaviour
     void UpdateBulletState()
     {
         // parameters.bullets.RemoveAll(bullet => bullet == null);
-        if(parameters.bullets[0]!=null)
+        if (parameters.bullets[0] != null)
         {
             parameters.bullet1Pos = parameters.bullets[0].transform.position;
         }
-        if(parameters.bullets[1]!=null)
+        if (parameters.bullets[1] != null)
         {
             parameters.bullet2Pos = parameters.bullets[1].transform.position;
         }
@@ -153,7 +158,7 @@ public class PlayerFSM : MonoBehaviour
     public void KeyboardMove()
     {
         parameters.rb.velocity = new Vector2(parameters.moveKeyboardInput.x * parameters.playerAttribute.moveSpeed, parameters.rb.velocity.y);
-        if(parameters.moveKeyboardInput.x != 0)
+        if (parameters.moveKeyboardInput.x != 0)
             transform.localScale = new Vector3(Mathf.Sign(parameters.moveKeyboardInput.x) * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
@@ -167,6 +172,40 @@ public class PlayerFSM : MonoBehaviour
     {
         parameters.rb.velocity = new Vector2(parameters.playerAttribute.moveSpeed, parameters.rb.velocity.y);
         transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void PlayerInput()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            parameters.playerAction[0] = PlayerActionType.Jump;
+        }
+        else
+        {
+            parameters.playerAction[0] = PlayerActionType.None;
+        }
+
+        if (Input.GetButton("Fire1"))
+        {
+            parameters.playerAction[1] = PlayerActionType.Shoot;
+        }
+        else
+        {
+            parameters.playerAction[1] = PlayerActionType.None;
+        }
+
+        if (parameters.moveKeyboardInput.x > 0)
+        {
+            parameters.playerAction[2] = PlayerActionType.MoveRight;
+        }
+        else if (parameters.moveKeyboardInput.x < 0)
+        {
+            parameters.playerAction[2] = PlayerActionType.MoveLeft;
+        }
+        else
+        {
+            parameters.playerAction[2] = PlayerActionType.None;
+        }
     }
 
 

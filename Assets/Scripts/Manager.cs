@@ -18,14 +18,24 @@ public class MainParameters
     public TMP_InputField socket2PortInputField;
     public TMP_Dropdown player1RobotSelectDropdown;
     public TMP_Dropdown player2RobotSelectDropdown;
+    public GameObject none1;
+    public GameObject none2;
+    public GameObject gameMode;
 }
 
 [Serializable]
 public class PlatformParameters
 {
     public TMP_InputField recordSavePath;
+    public TMP_InputField recordSaveNum;
     public TMP_InputField runSpeed;
     public TMP_InputField groundNum;
+    public GameObject GameLogButton;
+    public GameObject ScoreButton;
+    public GameObject ErrorButton;
+    public GameObject HurtButton;
+    public GameObject ActionButton;
+
 }
 
 [Serializable]
@@ -40,7 +50,7 @@ public class GameParameters
     public TMP_InputField bulletSpeed;
     public TMP_InputField gravity;
     public TMP_InputField groundTime;
-    public TMP_InputField configurePath;
+    public TMP_InputField logSavePath;
 }
 
 
@@ -73,7 +83,8 @@ public class Manager : MonoBehaviour
         mainParaInstance.socket1PortInputField.text = "12345";
         mainParaInstance.socket2PortInputField.text = "22345";
 
-        platformParaInstance.recordSavePath.text = Application.streamingAssetsPath + "/Record";
+        platformParaInstance.recordSavePath.text = Application.streamingAssetsPath + "/Record/record.json";
+        platformParaInstance.recordSaveNum.text = "50";
         platformParaInstance.runSpeed.text = "1";
         platformParaInstance.groundNum.text = "10";
 
@@ -86,7 +97,7 @@ public class Manager : MonoBehaviour
         gameParaInstance.bulletSpeed.text = "9";
         gameParaInstance.gravity.text = "4";
         gameParaInstance.groundTime.text = "30";
-        gameParaInstance.configurePath.text = Application.streamingAssetsPath + "/cfg";
+        gameParaInstance.logSavePath.text = Application.streamingAssetsPath + "/log/log.txt";
         player1InitPos = player1.transform.position;
         player2InitPos = player2.transform.position;
     }
@@ -115,6 +126,11 @@ public class Manager : MonoBehaviour
         {
             mainParaInstance.player1RobotSelectDropdown.gameObject.SetActive(false);
         }
+
+        if (mainParaInstance.player1SelectDropdown.options[value].text == "You")
+            mainParaInstance.none1.SetActive(true);
+        else
+            mainParaInstance.none1.SetActive(false);
     }
 
     public void ChangePlayer2Mode(int value)
@@ -128,6 +144,10 @@ public class Manager : MonoBehaviour
         {
             mainParaInstance.player2RobotSelectDropdown.gameObject.SetActive(false);
         }
+        if (mainParaInstance.player2SelectDropdown.options[value].text == "You")
+            mainParaInstance.none2.SetActive(true);
+        else
+            mainParaInstance.none2.SetActive(false);
     }
 
     public void ChangeRobot1Mode(int value)
@@ -151,6 +171,8 @@ public class Manager : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
+        runManager.recordDataList.Clear();
+        runManager.replayByState?.StopReplay();
         runManager.enabled = false;
         StartCoroutine(ResetTrainProcess());
         StartCoroutine(MovePlayerWithUI(new Vector3(0f, 0f, 0f)));
@@ -162,6 +184,7 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         runManager.timeSpeed = float.Parse(platformParaInstance.runSpeed.text);
         runManager.roundNum = int.Parse(platformParaInstance.groundNum.text);
+        runManager.recordNum = int.Parse(platformParaInstance.recordSaveNum.text);
 
         runManager.enabled = true;
         runManager.StartGame();
@@ -242,6 +265,60 @@ public class Manager : MonoBehaviour
         errorNotice.SetActive(false);
     }
 
+    public void GameLogOnClick()
+    {
+        runManager.logContent["Log"] = !runManager.logContent["Log"];
+    }
+    public void ScoreOnClick()
+    {
+        runManager.logContent["Score"] = !runManager.logContent["Score"];
+    }
+
+    public void ErrorOnClick()
+    {
+        runManager.logContent["Error"] = !runManager.logContent["Error"];
+    }
+
+    public void HurtOnClick()
+    {
+        runManager.logContent["Hurt"] = !runManager.logContent["Hurt"];
+    }
+
+    public void ActionOnClick()
+    {
+        runManager.logContent["Action"] = !runManager.logContent["Action"];
+    }
+
+    public void ChangeGameMode()
+    {
+        if (runManager.gameMode == GameMode.Live)
+        {
+            runManager.gameMode = GameMode.Replay;
+            mainParaInstance.gameMode.GetComponentInChildren<TextMeshProUGUI>().text = "Replay";
+            mainParaInstance.gameMode.GetComponent<ui_2_color_image>().color = new Color32(212, 48, 48, 255);
+        }
+        else
+        {
+            runManager.gameMode = GameMode.Live;
+            mainParaInstance.gameMode.GetComponentInChildren<TextMeshProUGUI>().text = "Live";
+            mainParaInstance.gameMode.GetComponent<ui_2_color_image>().color = new Color32(40, 125, 218, 255);
+        }
+
+    }
+
+    public void ResetGameSettings()
+    {
+        gameParaInstance.player1HP.text = "10";
+        gameParaInstance.player2HP.text = "10";
+        gameParaInstance.player1FireRate.text = "0.8";
+        gameParaInstance.player2FireRate.text = "0.8";
+        gameParaInstance.player1JumpSpeed.text = "16";
+        gameParaInstance.player2JumpSpeed.text = "16";
+        gameParaInstance.bulletSpeed.text = "9";
+        gameParaInstance.gravity.text = "4";
+        gameParaInstance.groundTime.text = "30";
+    }
+
     IEnumerator ResetTrainProcess()
     {
         // waitingConnect.SetActive(false);
@@ -254,11 +331,16 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         socket1?.Shutdown();
         socket2?.Shutdown();
+        if (runManager.socket1 != null)
+            runManager.socket1 = null;
+        if (runManager.socket2 != null)
+            runManager.socket2 = null;
         runManager.Reset();
         runManager.iteration = 1;
         runManager.isStartGame = false;
         runManager.player1WinNum = 0;
         runManager.player2WinNum = 0;
+        runManager.recorder.ClearList();
         player1.parameters.playerAction[0] = PlayerActionType.None;
         player1.parameters.playerAction[1] = PlayerActionType.None;
         player1.parameters.playerAction[2] = PlayerActionType.None;

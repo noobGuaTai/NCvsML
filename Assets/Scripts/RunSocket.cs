@@ -20,7 +20,7 @@ public class RunSocket
     private PlayerActionType[] action;
     public EnvInfo info;// 环境信息
     public bool hasSendEndInfo = false;
-    public Socket RAShandler;
+    public Socket runHandler;
     private List<Thread> threads;
     public bool isRunning = true;
 
@@ -89,7 +89,7 @@ public class RunSocket
 
     public void RecvAndSend(object obj)// TODO：收发超时会在UI提醒，并重置游戏
     {
-        RAShandler = (Socket)obj;
+        runHandler = (Socket)obj;
         // action = recvInt(RAShandler);
         while (isRunning)
         {
@@ -98,7 +98,7 @@ public class RunSocket
                 while (!recvFlag) ;
                 // if (!isRunning) break;
 
-                action = recvAction(RAShandler);
+                action = recvAction(runHandler);
 
                 runManager.RunAction(player, action);// 接受到信息，就执行操作
                 // Debug.Log(player + "received.");
@@ -127,7 +127,7 @@ public class RunSocket
                             info.infoCode = runManager.player1HP == runManager.player2HP ? -2f : info.infoCode;
                             // Debug.Log("player:" + player + "train2Instance.p1a.HP:" + train2Instance.player1HP + "train2Instance.p2a.HP:" + train2Instance.player2HP + "info.infoCode:" + info.infoCode);
                         }
-                        SendMessage(RAShandler, info);
+                        SendMessage(runHandler, info);
                         hasSendEndInfo = true;
                     }
                     else
@@ -141,21 +141,21 @@ public class RunSocket
                                     runManager.LogMessage("Hurt", "Player1 Hurt");
                                 });
                                 info.infoCode = -1f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                                 info.infoCode = 0f;
                                 runManager.player1FSM.parameters.beShot = false;
                             }
                             else if (runManager.player1FSM.parameters.isShot == true)
                             {
                                 info.infoCode = 1f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                                 info.infoCode = 0f;
                                 runManager.player1FSM.parameters.isShot = false;
                             }
                             else
                             {
                                 info.infoCode = 0f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                             }
                             // info.infoCode = train2Manager.player1FSM.parameters.beShot == true ? -1f : 0f;// -1被击中
                             // info.infoCode = train2Manager.player1FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
@@ -175,21 +175,21 @@ public class RunSocket
                                     runManager.LogMessage("Hurt", "Player2 Hurt");
                                 });
                                 info.infoCode = -1f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                                 info.infoCode = 0f;
                                 runManager.player2FSM.parameters.beShot = false;
                             }
                             else if (runManager.player2FSM.parameters.isShot == true)
                             {
                                 info.infoCode = 1f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                                 info.infoCode = 0f;
                                 runManager.player2FSM.parameters.isShot = false;
                             }
                             else
                             {
                                 info.infoCode = 0f;
-                                SendMessage(RAShandler, info);
+                                SendMessage(runHandler, info);
                             }
                             // info.infoCode = train2Manager.player2FSM.parameters.beShot == true ? -1f : 0f;// -1被击中 3同时击中和被之际
                             // info.infoCode = train2Manager.player2FSM.parameters.isShot == true ? 1f : info.infoCode;// 1击中对方
@@ -215,10 +215,10 @@ public class RunSocket
                 break;
             }
         }
-        if (RAShandler != null)
+        if (runHandler != null)
         {
-            RAShandler.Shutdown(SocketShutdown.Both);
-            RAShandler.Close();
+            runHandler.Shutdown(SocketShutdown.Both);
+            runHandler.Close();
         }
     }
 

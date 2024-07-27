@@ -7,12 +7,23 @@ using Unity.Mathematics;
 using TMPro;
 using Google.Protobuf.WellKnownTypes;
 using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Unity.VisualScripting;
+
 public enum RunMode
 {
     Socket,
     DecisionTree,
     JuniorGA,
-    Player
+    Player,
+}
+
+public enum GameMode
+{
+    Live,
+    Replay
 }
 
 [Serializable]
@@ -23,6 +34,7 @@ public class GameUI
     public TextMeshProUGUI roundNumUI;
     public TextMeshProUGUI roundTimeUI;
     public TextMeshProUGUI runLogUI;
+    public GameObject saveLog;
     public GameObject player1Jump;
     public GameObject player1Shoot;
     public GameObject player1MoveLeft;
@@ -31,6 +43,8 @@ public class GameUI
     public GameObject player2Shoot;
     public GameObject player2MoveLeft;
     public GameObject player2MoveRight;
+    public TMP_InputField replayRound;
+    public GameObject replayButton;
 }
 
 public class RunManager : MonoBehaviour
@@ -43,10 +57,12 @@ public class RunManager : MonoBehaviour
     public DecisionTree decisionTree2;
     public AgentInfer agentInfer1;
     public AgentInfer agentInfer2;
+    public ReplayByState replayByState;
     public GameObject player1;
     public GameObject player2;
     public RunMode runMode1;
     public RunMode runMode2;
+    public GameMode gameMode;
     public bool isEnd = false;// 一场比赛结束标志
     public float roundTime;// 一场比赛剩余时间
     public float totalTime = 60f;// 一场比赛总时间
@@ -61,6 +77,7 @@ public class RunManager : MonoBehaviour
     public int player1HP;
     public int player2HP;
     public int isRestart = 0;
+    public int isRestartThreshold = 0;
     public int player1WinNum = 0;
     public int player2WinNum = 0;
     public EnvInfo info1;
@@ -73,7 +90,11 @@ public class RunManager : MonoBehaviour
     public List<string> runLog;
     public List<string> allLog;
     public Dictionary<string, bool> logContent = new Dictionary<string, bool>();// 打印哪些日志
+    public bool isRoundStart = false;
+    public Recorder recorder;
+    public int recordNum = 50;// 保存最后50场
 
+    public List<string> recordDataList = new List<string>();
 
     public delegate void RunTime();
     public RunTime runtime;
@@ -91,48 +112,85 @@ public class RunManager : MonoBehaviour
         logContent.Add("Score", true);
         logContent.Add("Hurt", true);
         logContent.Add("Action", true);
+
+        recorder = new Recorder();
+
+        // QualitySettings.vSyncCount = 0;
+        // Application.targetFrameRate = 50;
     }
 
     public void StartGame()
     {
-        switch (runMode1)
-        {
-            case RunMode.Socket:
-                socket1 = new RunSocket(this, PlayerType.player1);
-                socket1.Start(socket1Port);
-                Time.timeScale = 0f;
-                LogMessage("Log", "Player1 Waiting Connect...");
-                break;
-            case RunMode.Player:
-                player1FSM.parameters.isControl = true;
-                break;
-            case RunMode.DecisionTree:
-                decisionTree1 = new DecisionTree(player1, player2, this);
-                break;
-            case RunMode.JuniorGA:
-                agentInfer1 = new AgentInfer(player1, player2, "/172.csv", this);
-                break;
-        }
-
-        switch (runMode2)
-        {
-            case RunMode.Socket:
-                socket2 = new RunSocket(this, PlayerType.player2);
-                socket2.Start(socket2Port);
-                Time.timeScale = 0f;
-                LogMessage("Log", "Player2 Waiting Connect...");
-                break;
-            case RunMode.Player:
-                player2FSM.parameters.isControl = true;
-                break;
-            case RunMode.DecisionTree:
-                decisionTree2 = new DecisionTree(player2, player1, this);
-                break;
-            case RunMode.JuniorGA:
-                agentInfer2 = new AgentInfer(player2, player1, "/172.csv", this);
-                break;
-        }
+        isRestartThreshold = 0;
+        decisionTree1 = null;
+        decisionTree2 = null;
+        agentInfer1 = null;
+        agentInfer2 = null;
+        runtime = null;
         LogMessage("Log", "Game Start");
+        if (gameMode == GameMode.Live)
+        {
+            gameUI.replayRound.gameObject.SetActive(false);
+            gameUI.replayButton.SetActive(false);
+            switch (runMode1)
+            {
+                case RunMode.Socket:
+                    player1FSM.parameters.isControl = false;
+                    socket1 = new RunSocket(this, PlayerType.player1);
+                    socket1.Start(socket1Port);
+                    Time.timeScale = 0f;
+                    isRestartThreshold++;
+                    LogMessage("Log", "Player1 Waiting Connect...");
+                    break;
+                case RunMode.Player:
+                    player1FSM.parameters.isControl = true;
+                    break;
+                case RunMode.DecisionTree:
+                    player1FSM.parameters.isControl = false;
+                    decisionTree1 = new DecisionTree(player1, player2, this);
+                    break;
+                case RunMode.JuniorGA:
+                    player1FSM.parameters.isControl = false;
+                    agentInfer1 = new AgentInfer(player1, player2, "/172.csv", this);
+                    break;
+            }
+
+            switch (runMode2)
+            {
+                case RunMode.Socket:
+                    player2FSM.parameters.isControl = false;
+                    socket2 = new RunSocket(this, PlayerType.player2);
+                    socket2.Start(socket2Port);
+                    Time.timeScale = 0f;
+                    isRestartThreshold++;
+                    LogMessage("Log", "Player2 Waiting Connect...");
+                    break;
+                case RunMode.Player:
+                    player2FSM.parameters.isControl = true;
+                    break;
+                case RunMode.DecisionTree:
+                    player2FSM.parameters.isControl = false;
+                    decisionTree2 = new DecisionTree(player2, player1, this);
+                    break;
+                case RunMode.JuniorGA:
+                    player2FSM.parameters.isControl = false;
+                    agentInfer2 = new AgentInfer(player2, player1, "/172.csv", this);
+                    break;
+            }
+            if (runMode1 != RunMode.Socket && runMode2 != RunMode.Socket)
+            {
+                isStartGame = true;
+                Time.timeScale = timeSpeed;
+            }
+        }
+        else
+        {
+            gameUI.replayRound.gameObject.SetActive(true);
+            gameUI.replayButton.SetActive(true);
+            replayByState = new ReplayByState(this, manager.platformParaInstance.recordSavePath.text);
+            replayByState.OnStart();
+        }
+        iteration = 0;
     }
 
     void SocketUpdate()
@@ -146,6 +204,7 @@ public class RunManager : MonoBehaviour
         if (!isEnd && (roundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0))
         {
             isEnd = true;
+            isRoundStart = false;
             if (player1attribute.HP > player2attribute.HP)
                 player1WinNum++;
             else
@@ -158,53 +217,98 @@ public class RunManager : MonoBehaviour
             socket2?.SetEnvInfo(info2);
         }
 
-        if (isRestart == 2)
+        if (isRestart == isRestartThreshold && isRestartThreshold != 0)
         {
-            LogMessage("Log", "Round Restart");
+            StartCoroutine(AddRecord());
             Reset();
             player1.transform.position = player1InitPos;
             player2.transform.position = player2InitPos;
-            socket1?.SendMessage(socket1.RAShandler, info1);
-            socket2?.SendMessage(socket2.RAShandler, info2);
+
+            socket1?.SendMessage(socket1.runHandler, info1);
+            socket2?.SendMessage(socket2.runHandler, info2);
+
+            roundTime = (int)totalTime;
+            iterationStartTime = Time.time;
+
+            LogMessage("Log", "Round Restart");
+            isRoundStart = true;
         }
     }
 
     void AgentUpdate()
     {
+        if (runMode1 != RunMode.Socket && runMode2 != RunMode.Socket)
+        {
+            if (player1FSM.parameters.beShot == true)
+            {
+                LogMessage("Hurt", "Player1 Hurt");
+                player1FSM.parameters.beShot = false;
+            }
+            if (player2FSM.parameters.beShot == true)
+            {
+                LogMessage("Hurt", "Player2 Hurt");
+                player2FSM.parameters.beShot = false;
+            }
+
+            if (roundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
+            {
+                LogMessage("Log", "Round Restart");
+                Reset();
+                player1.transform.position = player1InitPos;
+                player2.transform.position = player2InitPos;
+                isRoundStart = true;
+            }
+
+            if (isRestartThreshold == 0)
+            {
+                StartCoroutine(AddRecord());
+            }
+        }
         runtime?.Invoke();
     }
 
     void Update()
     {
         // Time.timeScale = timeSpeed;
+
         if (isStartGame)
             roundTime = totalTime - (Time.time - iterationStartTime);
+
         gameUI.player1HPUI.text = "Player1HP:" + player1HP.ToString();
         gameUI.player2HPUI.text = "Player2HP:" + player2HP.ToString();
         gameUI.roundTimeUI.text = "Time:" + ((int)roundTime).ToString();
-        gameUI.roundNumUI.text = "Ground:" + iteration.ToString();
+        if (gameMode == GameMode.Live)
+            gameUI.roundNumUI.text = "Round:" + iteration.ToString();
 
         SocketUpdate();
         AgentUpdate();
+        ShowActionUI();
 
-        if (iteration >= roundNum)
+        if (iteration >= roundNum && isStartGame)
         {
             Time.timeScale = 0f;
-            // notice.gameObject.SetActive(true);
-            // notice.text = "Game Over";
+            socket1?.Shutdown();
+            socket2?.Shutdown();
             LogMessage("Log", "Game Over");
+            isStartGame = false;
 
         }
 
-        if (roundTime < -5)
+        if (roundTime < -10)
         {
             roundTime = 0;
             isStartGame = false;
-            // errorNotice.SetActive(true);
-            // errorNotice.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Error:Connection Timeout with Socket.";
             LogMessage("Error", "Error:Connection Timeout with Socket.");
         }
 
+    }
+
+    void FixedUpdate()
+    {
+        if (isRoundStart)
+        {
+            recorder.AddState(player1FSM, player2FSM);
+        }
     }
 
     public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref EnvInfo info)
@@ -309,7 +413,6 @@ public class RunManager : MonoBehaviour
                 return;
 
             playerFSM.parameters.playerAction = action;
-            ShowActionUI();
         });
     }
 
@@ -319,7 +422,7 @@ public class RunManager : MonoBehaviour
         {
             runLog.Add("[" + type + "]: " + "Time " + (int)roundTime + ":" + message);
             allLog.Add("[" + type + "]: " + "Time " + (int)roundTime + ":" + message);
-            if (runLog.Count > 10)
+            if (runLog.Count > 15)
             {
                 runLog.RemoveAt(0);
             }
@@ -335,55 +438,94 @@ public class RunManager : MonoBehaviour
 
     public void SaveLog()
     {
-        string path = Application.streamingAssetsPath + "/log.txt";
-        // if (!File.Exists(path))
-        // {
-        //     File.CreateText(path);
-        // }
-        File.WriteAllLines(path, allLog);
+        if (!Directory.Exists(Path.GetDirectoryName(manager.gameParaInstance.logSavePath.text)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(manager.gameParaInstance.logSavePath.text));
+        }
+        File.WriteAllLines(manager.gameParaInstance.logSavePath.text, allLog);
+        if (gameMode == GameMode.Live)
+            StartCoroutine(SaveRecord());
     }
 
     public void ShowActionUI()
     {
-        if(player1FSM.parameters.playerAction[0] == PlayerActionType.Jump)
-            gameUI.player1Jump.SetActive(true);
-        else
-           gameUI.player1Jump.SetActive(false);
-        
-        if(player1FSM.parameters.playerAction[1] == PlayerActionType.Shoot)
-            gameUI.player1Shoot.SetActive(true);
-        else
-           gameUI.player1Shoot.SetActive(false);
-        
-        if(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft)
-            gameUI.player1MoveLeft.SetActive(true);
-        else
-           gameUI.player1MoveLeft.SetActive(false);
+        gameUI.player1Jump.SetActive(player1FSM.parameters.playerAction[0] == PlayerActionType.Jump);
+        gameUI.player1Shoot.SetActive(player1FSM.parameters.playerAction[1] == PlayerActionType.Shoot);
+        gameUI.player1MoveLeft.SetActive(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft);
+        gameUI.player1MoveRight.SetActive(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveRight);
 
-        if(player1FSM.parameters.playerAction[2] == PlayerActionType.MoveRight)
-            gameUI.player1MoveRight.SetActive(true);
-        else
-           gameUI.player1MoveRight.SetActive(false);
-        
-        if(player2FSM.parameters.playerAction[0] == PlayerActionType.Jump)
-            gameUI.player2Jump.SetActive(true);
-        else
-           gameUI.player2Jump.SetActive(false);
-        
-        if(player2FSM.parameters.playerAction[1] == PlayerActionType.Shoot)
-            gameUI.player2Shoot.SetActive(true);
-        else
-           gameUI.player2Shoot.SetActive(false);
-        
-        if(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft)
-            gameUI.player2MoveLeft.SetActive(true);
-        else
-           gameUI.player2MoveLeft.SetActive(false);
+        gameUI.player2Jump.SetActive(player2FSM.parameters.playerAction[0] == PlayerActionType.Jump);
+        gameUI.player2Shoot.SetActive(player2FSM.parameters.playerAction[1] == PlayerActionType.Shoot);
+        gameUI.player2MoveLeft.SetActive(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveLeft);
+        gameUI.player2MoveRight.SetActive(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveRight);
+    }
 
-        if(player2FSM.parameters.playerAction[2] == PlayerActionType.MoveRight)
-            gameUI.player2MoveRight.SetActive(true);
-        else
-           gameUI.player2MoveRight.SetActive(false);
+    IEnumerator AddRecord()
+    {
+        yield return null;
+        var data = new
+        {
+            Round = iteration,
+            TimeSpeed = timeSpeed,
+            Count = recorder.count,
+            Player1Pos = recorder.player1Pos,
+            Player2Pos = recorder.player2Pos,
+            Player1Bullet1Pos = recorder.player1Bullet1Pos,
+            Player1Bullet2Pos = recorder.player1Bullet2Pos,
+            Player2Bullet1Pos = recorder.player2Bullet1Pos,
+            Player2Bullet2Pos = recorder.player2Bullet2Pos,
+            Player1HP = recorder.player1HP,
+            Player2HP = recorder.player2HP,
+            Player1LocalScaleX = recorder.player1LocalScaleX,
+            Player2LocalScaleX = recorder.player2LocalScaleX,
+        };
+        string save = JsonConvert.SerializeObject(data, Formatting.Indented);
+        recordDataList.Add(save);
+        if (recordDataList.Count > recordNum)
+        {
+            recordDataList.RemoveAt(0);
+        }
+        recorder.ClearList();
+    }
+
+    IEnumerator SaveRecord()
+    {
+        yield return null;
+        if (!Directory.Exists(Path.GetDirectoryName(manager.platformParaInstance.recordSavePath.text)))
+            Directory.CreateDirectory(Path.GetDirectoryName(manager.platformParaInstance.recordSavePath.text));
+        SaveJsonArray(manager.platformParaInstance.recordSavePath.text, recordDataList);
+    }
+
+    void SaveJsonArray(string filePath, List<string> jsonString)
+    {
+        JArray jsonArray;
+        jsonArray = new JArray();
+
+        foreach (string json in jsonString)
+        {
+            JObject newObject = JObject.Parse(json);
+            jsonArray.Add(newObject);
+        }
+        File.WriteAllText(filePath, jsonArray.ToString(Formatting.Indented));
+    }
+
+    string[] ConvertPlayerAction(PlayerActionType[] actions)
+    {
+        string[] array = new string[3];
+
+        array[0] = actions[0] == PlayerActionType.Jump ? "1" : "0";
+        array[1] = actions[1] == PlayerActionType.Shoot ? "1" : "0";
+        array[2] = actions[2] == PlayerActionType.MoveRight ? "1" : actions[2] == PlayerActionType.MoveLeft ? "-1" : "0";
+
+        return array;
+    }
+
+    public void Replay()
+    {
+        Reset();
+        player1.transform.position = player1InitPos;
+        player2.transform.position = player2InitPos;
+        replayByState.Replay(int.Parse(gameUI.replayRound.text));
     }
 
     public void Reset()
@@ -418,12 +560,7 @@ public class RunManager : MonoBehaviour
         if (socket2 != null)
             socket2.hasSendEndInfo = false;
         iteration++;
-
-        decisionTree1 = null;
-        decisionTree2 = null;
-        agentInfer1 = null;
-        agentInfer2 = null;
-        runtime = null;
+        isRoundStart = false;
 
         GetEnvInf(player1FSM, player2FSM, player1attribute, player2attribute, ref info1);
         GetEnvInf(player2FSM, player1FSM, player1attribute, player2attribute, ref info2);

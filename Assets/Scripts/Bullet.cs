@@ -7,27 +7,27 @@ public class Bullet : MonoBehaviour
     public GameObject father;
     public int index = 0;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player" && collision.gameObject != father && !collision.GetComponent<PlayerAttribute>().isInvincible)
         {
-            Vector2 knockBackDirection = (collision.transform.position - father.transform.position).normalized;
-            knockBackDirection.y = 0;
-            knockBackDirection = knockBackDirection.normalized;
-            collision.GetComponent<PlayerAttribute>().ChangeHP(-1, knockBackDirection);
-            collision.GetComponent<PlayerFSM>().parameters.beShot = true;
-            father.GetComponent<PlayerFSM>().parameters.isShot = true;
-            Destroy(gameObject);
-            father.GetComponent<PlayerFSM>().parameters.bullets[index] = null;
+            if (father.GetComponent<PlayerFSM>().parameters.runManager.gameMode == GameMode.Live)
+            {
+                Vector2 knockBackDirection = (collision.transform.position - father.transform.position).normalized;
+                knockBackDirection.y = 0;
+                knockBackDirection = knockBackDirection.normalized;
+                collision.GetComponent<PlayerAttribute>().ChangeHP(-1, knockBackDirection);
+                collision.GetComponent<PlayerFSM>().parameters.beShot = true;
+                father.GetComponent<PlayerFSM>().parameters.isShot = true;
+                Destroy(gameObject);
+                father.GetComponent<PlayerFSM>().parameters.bullets[index] = null;
+            }
+            if (father.GetComponent<PlayerFSM>().parameters.runManager.gameMode == GameMode.Replay)
+            {
+                Destroy(gameObject);
+                father.GetComponent<PlayerFSM>().parameters.bullets[index] = null;
+            }
+
         }
         if (collision.tag == "Wall")
         {
