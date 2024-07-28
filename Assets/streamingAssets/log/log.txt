@@ -1,0 +1,1247 @@
+[Log]: Time 30:Game Start
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player2 Hurt
+[Hurt]: Time 7:Player2 Hurt
+[Hurt]: Time 6:Player2 Hurt
+[Hurt]: Time 1:Player2 Hurt
+[Score]: Time 0:Score:1:0
+[Log]: Time 0:Round 1 start
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 9:Player2 Hurt
+[Hurt]: Time 6:Player2 Hurt
+[Score]: Time 0:Score:2:0
+[Hurt]: Time 0:Player1 Hurt
+[Log]: Time 0:Round 2 start
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Score]: Time 0:Score:2:1
+[Log]: Time 0:Round 3 start
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 4:Player1 Hurt
+[Score]: Time 0:Score:2:2
+[Log]: Time 0:Round 4 start
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 1:Player1 Hurt
+[Score]: Time -1:Score:2:3
+[Log]: Time -1:Round 5 start
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Score]: Time -1:Score:2:4
+[Hurt]: Time -1:Player1 Hurt
+[Log]: Time -1:Round 6 start
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 10:Player2 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Hurt]: Time 6:Player1 Hurt
+[Hurt]: Time 6:Player2 Hurt
+[Score]: Time 2:Score:2:5
+[Hurt]: Time 2:Player1 Hurt
+[Log]: Time 2:Round 7 start
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Score]: Time 12:Score:2:6
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 8 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Score]: Time 15:Score:2:7
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 9 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Hurt]: Time 6:Player1 Hurt
+[Score]: Time 5:Score:2:8
+[Hurt]: Time 5:Player1 Hurt
+[Log]: Time 5:Round 10 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:9
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 11 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 11:Score:2:10
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 12 start
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 10:Player2 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Score]: Time 7:Score:2:11
+[Hurt]: Time 7:Player1 Hurt
+[Log]: Time 7:Round 13 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 11:Score:2:12
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 14 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 18:Score:2:13
+[Hurt]: Time 18:Player1 Hurt
+[Log]: Time 18:Round 15 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Score]: Time 12:Score:2:14
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 16 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 18:Score:2:15
+[Hurt]: Time 18:Player1 Hurt
+[Log]: Time 18:Round 17 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Score]: Time 12:Score:2:16
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 18 start
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Score]: Time 11:Score:2:17
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 19 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Score]: Time 18:Score:2:18
+[Hurt]: Time 18:Player1 Hurt
+[Log]: Time 18:Round 20 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Score]: Time 12:Score:2:19
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 21 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:20
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 22 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 10:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Score]: Time 7:Score:2:21
+[Hurt]: Time 7:Player1 Hurt
+[Log]: Time 7:Round 23 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Score]: Time 15:Score:2:22
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 24 start
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:23
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 25 start
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Score]: Time 16:Score:2:24
+[Hurt]: Time 16:Player1 Hurt
+[Log]: Time 16:Round 26 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Score]: Time 15:Score:2:25
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 27 start
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 11:Score:2:26
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 28 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Score]: Time 19:Score:2:27
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 29 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Score]: Time 14:Score:2:28
+[Hurt]: Time 14:Player1 Hurt
+[Log]: Time 14:Round 30 start
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:29
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 31 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:30
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 32 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 18:Score:2:31
+[Hurt]: Time 18:Player1 Hurt
+[Log]: Time 18:Round 33 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 18:Score:2:32
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Log]: Time 18:Round 34 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Score]: Time 15:Score:2:33
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 35 start
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Score]: Time 6:Score:2:34
+[Hurt]: Time 6:Player1 Hurt
+[Log]: Time 6:Round 36 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Score]: Time 15:Score:2:35
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 37 start
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Score]: Time 10:Score:2:36
+[Hurt]: Time 10:Player1 Hurt
+[Log]: Time 10:Round 38 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:37
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Log]: Time 17:Round 39 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 19:Score:2:38
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 40 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:39
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 41 start
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 12:Score:2:40
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 42 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:41
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 43 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 6:Player1 Hurt
+[Hurt]: Time 6:Player2 Hurt
+[Score]: Time 5:Score:2:42
+[Hurt]: Time 5:Player1 Hurt
+[Hurt]: Time 5:Player2 Hurt
+[Log]: Time 5:Round 44 start
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:43
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 45 start
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 9:Player2 Hurt
+[Score]: Time 9:Score:2:44
+[Hurt]: Time 9:Player1 Hurt
+[Log]: Time 9:Round 46 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Score]: Time 16:Score:2:45
+[Hurt]: Time 16:Player1 Hurt
+[Log]: Time 16:Round 47 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Score]: Time 16:Score:2:46
+[Hurt]: Time 16:Player1 Hurt
+[Log]: Time 16:Round 48 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Score]: Time 7:Score:2:47
+[Hurt]: Time 7:Player1 Hurt
+[Log]: Time 7:Round 49 start
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 11:Score:2:48
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 50 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 10:Player2 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Score]: Time 6:Score:2:49
+[Hurt]: Time 6:Player1 Hurt
+[Log]: Time 6:Round 51 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 18:Score:2:50
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Log]: Time 18:Round 52 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Score]: Time 15:Score:2:51
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 53 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Score]: Time 16:Score:2:52
+[Hurt]: Time 16:Player1 Hurt
+[Log]: Time 16:Round 54 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:53
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 55 start
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Score]: Time 15:Score:2:54
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 56 start
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Score]: Time 11:Score:2:55
+[Hurt]: Time 11:Player1 Hurt
+[Log]: Time 11:Round 57 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Score]: Time 19:Score:2:56
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 58 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Score]: Time 16:Score:2:57
+[Hurt]: Time 16:Player1 Hurt
+[Log]: Time 16:Round 59 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Score]: Time 10:Score:2:58
+[Hurt]: Time 10:Player1 Hurt
+[Log]: Time 10:Round 60 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:59
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 61 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 15:Score:2:60
+[Hurt]: Time 15:Player1 Hurt
+[Log]: Time 15:Round 62 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Score]: Time 14:Score:2:61
+[Hurt]: Time 14:Player1 Hurt
+[Log]: Time 14:Round 63 start
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Score]: Time 12:Score:2:62
+[Hurt]: Time 12:Player1 Hurt
+[Log]: Time 12:Round 64 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player2 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Score]: Time 8:Score:2:63
+[Hurt]: Time 8:Player1 Hurt
+[Log]: Time 8:Round 65 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:64
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 66 start
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Score]: Time 13:Score:2:65
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 67 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Score]: Time 19:Score:2:66
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 68 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Score]: Time 13:Score:2:67
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 69 start
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Score]: Time 13:Score:2:68
+[Hurt]: Time 13:Player1 Hurt
+[Log]: Time 13:Round 70 start
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 15:Player2 Hurt
+[Hurt]: Time 14:Player1 Hurt
+[Hurt]: Time 13:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 11:Player1 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Score]: Time 8:Score:2:69
+[Hurt]: Time 8:Player1 Hurt
+[Log]: Time 8:Round 71 start
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player2 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Score]: Time 6:Score:2:70
+[Hurt]: Time 6:Player1 Hurt
+[Log]: Time 6:Round 72 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Score]: Time 17:Score:2:71
+[Hurt]: Time 17:Player1 Hurt
+[Log]: Time 17:Round 73 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 12:Player1 Hurt
+[Hurt]: Time 8:Player1 Hurt
+[Hurt]: Time 7:Player2 Hurt
+[Hurt]: Time 7:Player1 Hurt
+[Hurt]: Time 4:Player1 Hurt
+[Hurt]: Time 3:Player2 Hurt
+[Score]: Time 2:Score:2:72
+[Hurt]: Time 2:Player1 Hurt
+[Log]: Time 2:Round 74 start
+[Hurt]: Time 25:Player2 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 18:Player1 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 15:Player1 Hurt
+[Hurt]: Time 14:Player2 Hurt
+[Hurt]: Time 11:Player2 Hurt
+[Hurt]: Time 8:Player2 Hurt
+[Score]: Time 6:Score:2:73
+[Hurt]: Time 6:Player1 Hurt
+[Log]: Time 6:Round 75 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Score]: Time 19:Score:2:74
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 76 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 28:Player1 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 22:Player2 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 21:Player2 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 20:Player2 Hurt
+[Score]: Time 19:Score:2:75
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Log]: Time 19:Round 77 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 19:Player2 Hurt
+[Hurt]: Time 17:Player2 Hurt
+[Hurt]: Time 13:Player2 Hurt
+[Hurt]: Time 10:Player1 Hurt
+[Hurt]: Time 9:Player2 Hurt
+[Hurt]: Time 9:Player1 Hurt
+[Score]: Time 8:Score:2:76
+[Hurt]: Time 8:Player1 Hurt
+[Log]: Time 8:Round 78 start
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player2 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 24:Player2 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Hurt]: Time 19:Player1 Hurt
+[Hurt]: Time 18:Player2 Hurt
+[Hurt]: Time 17:Player1 Hurt
+[Score]: Time 16:Score:2:77
+[Hurt]: Time 16:Player1 Hurt
+[Hurt]: Time 16:Player2 Hurt
+[Log]: Time 16:Round 79 start
+[Hurt]: Time 28:Player2 Hurt
+[Hurt]: Time 27:Player1 Hurt
+[Hurt]: Time 26:Player1 Hurt
+[Hurt]: Time 25:Player1 Hurt
+[Hurt]: Time 24:Player1 Hurt
+[Hurt]: Time 23:Player1 Hurt
+[Hurt]: Time 23:Player2 Hurt
+[Hurt]: Time 22:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 21:Player1 Hurt
+[Hurt]: Time 20:Player1 Hurt
+[Score]: Time 19:Score:2:78
+[Hurt]: Time 19:Player1 Hurt
+[Log]: Time 19:Round 80 start
+[Log]: Time 30:Game Over
