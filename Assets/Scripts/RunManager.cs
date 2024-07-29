@@ -546,7 +546,7 @@ public class RunManager : MonoBehaviour
         Reset();
         player1.transform.position = player1InitPos;
         player2.transform.position = player2InitPos;
-        replayByState.Replay(int.Parse(gameUI.replayRound.text));
+        replayByState.Replay(int.Parse(gameUI.replayRound.text) - 1);
     }
 
     public void Reset()

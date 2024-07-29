@@ -106,6 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_hover: 0
   isActive: 1
+  isActiveButton: 0
+  maxColorValue: 1
+  maxFontSizeValue: 150
   on_click:
     m_PersistentCalls:
       m_Calls: []
@@ -121,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a32e4961885b24fb6aedd9c0787cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 9dad456f0ee0b0d4fbbf94cc2fc2bf9b, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 0.2396226, g: 0.9331879, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

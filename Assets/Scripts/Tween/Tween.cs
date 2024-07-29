@@ -68,7 +68,7 @@ public class Tween : MonoBehaviour
     List<TweeNodeBase> tweenNodeList = new List<TweeNodeBase>();
     int tweenIndex = 0;
     float tweenTime = 0;
-    TweenState _tweenState;
+    public TweenState _tweenState;
     PlayMode _playMode = PlayMode.NORMAL;
 
     public PlayMode playMode {

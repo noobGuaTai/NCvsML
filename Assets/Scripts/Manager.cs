@@ -85,10 +85,10 @@ public class Manager : MonoBehaviour
     {
         mainParaInstance.socket1PortInputField.text = "12345";
         mainParaInstance.socket2PortInputField.text = "22345";
-        mainParaInstance.player1RobotSelectDropdown.options[0].text = "<size=100>Mr.Tree</size><size=40>(DecisionTree)</size>";
-        mainParaInstance.player1RobotSelectDropdown.options[1].text = "<size=100>JuniorAgent</size><size=40>(Genetic Algorithm)</size>";
-        mainParaInstance.player2RobotSelectDropdown.options[0].text = "<size=100>Mr.Tree</size><size=40>(DecisionTree)</size>";
-        mainParaInstance.player2RobotSelectDropdown.options[1].text = "<size=100>JuniorAgent</size><size=40>(Genetic Algorithm)</size>";
+        mainParaInstance.player1RobotSelectDropdown.options[0].text = "<size=100>Mr.Tree</size><size=40>(Made by BehaviorTree)</size>";
+        mainParaInstance.player1RobotSelectDropdown.options[1].text = "<size=100>Darwin</size><size=40>(Made by Genetic Algorithm)</size>";
+        mainParaInstance.player2RobotSelectDropdown.options[0].text = "<size=100>Mr.Tree</size><size=40>(Made by BehaviorTree)</size>";
+        mainParaInstance.player2RobotSelectDropdown.options[1].text = "<size=100>Darwin</size><size=40>(Made by Genetic Algorithm)</size>";
 
         platformParaInstance.recordSavePath.text = Application.streamingAssetsPath + "/Record/record.json";
         platformParaInstance.recordSaveNum.text = "50";
@@ -170,20 +170,24 @@ public class Manager : MonoBehaviour
     public void StartGame()
     {
         SetGameSettings();
-        MovePlayerWithUI(new Vector3(-17.8f, 0f, 0f));
+        if(MovePlayerWithUI(new Vector3(-17.8f, 0f, 0f)) == 0)
+            return;
         MoveUI(rightRectTransform);
         StartCoroutine(StartGameCoroutine());
     }
 
     public void QuitRound()
     {
+        if(MovePlayerWithUI(new Vector3(0f, 0f, 0f)) == 0)
+            return;
+        BackToMain();  
         Time.timeScale = 1f;
         runManager.recordDataList.Clear();
         runManager.replayByState?.StopReplay();
         runManager.enabled = false;
         StartCoroutine(ResetTrainProcess());
-        MovePlayerWithUI(new Vector3(0f, 0f, 0f));
-        BackToMain();
+        
+        
     }
 
     public void QuitGame()
@@ -209,22 +213,31 @@ public class Manager : MonoBehaviour
     void MoveUI(Vector3 target)
     {
         Vector3 startPosition = rectTransformAll.anchoredPosition;
-        tween1.AddTween((Vector3 a) =>
+        if (tween1._tweenState == Tween.TweenState.STOP)
+        {
+            tween1.AddTween((Vector3 a) =>
             {
                 rectTransformAll.anchoredPosition = a;
             }, startPosition, target, 0.5f, Tween.TransitionType.QUART, Tween.EaseType.OUT);
-        tween1.Play();
+            tween1.Play();
+        }
     }
 
-    void MovePlayerWithUI(Vector3 target)
+    int MovePlayerWithUI(Vector3 target)
     {
         Vector3 startPosition = envTransform.transform.position;
-        tween2.AddTween((Vector3 a) =>
+        if (tween1._tweenState == Tween.TweenState.STOP)
+        {
+            tween2.AddTween((Vector3 a) =>
             {
                 playerTransform.transform.position = a;
                 envTransform.transform.position = a;
             }, startPosition, target, 0.5f, Tween.TransitionType.QUART, Tween.EaseType.OUT);
-        tween2.Play();
+            tween2.Play();
+            return 1;// 正常
+        }
+        else
+            return 0;// 有tween在运行，终止
     }
 
     public void SetGameSettings()
