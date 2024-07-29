@@ -11,6 +11,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Unity.VisualScripting;
+using System.Threading;
 
 public enum RunMode
 {
@@ -231,7 +232,7 @@ public class RunManager : MonoBehaviour
             roundTime = (int)totalTime;
             iterationStartTime = Time.time;
 
-            LogMessage("Log", "Round " + iteration + " start");
+            LogMessage("Log", "Round " + iteration + " end");
             isRoundStart = true;
         }
     }
@@ -253,7 +254,7 @@ public class RunManager : MonoBehaviour
 
             if (roundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
             {
-                LogMessage("Log", "Round " + iteration + " start");
+                LogMessage("Log", "Round " + iteration + " end");
                 Reset();
                 player1.transform.position = player1InitPos;
                 player2.transform.position = player2InitPos;
@@ -446,7 +447,7 @@ public class RunManager : MonoBehaviour
         }
         File.WriteAllLines(manager.gameParaInstance.logSavePath.text, allLog);
         if (gameMode == GameMode.Live)
-            StartCoroutine(SaveRecord());
+            SaveRecord();
     }
 
     public void ShowActionUI()
@@ -490,25 +491,43 @@ public class RunManager : MonoBehaviour
         recorder.ClearList();
     }
 
-    IEnumerator SaveRecord()
+    void SaveRecord()
     {
-        yield return null;
         if (!Directory.Exists(Path.GetDirectoryName(manager.platformParaInstance.recordSavePath.text)))
             Directory.CreateDirectory(Path.GetDirectoryName(manager.platformParaInstance.recordSavePath.text));
-        SaveJsonArray(manager.platformParaInstance.recordSavePath.text, recordDataList);
+        List<string> save = new List<string>(recordDataList);// 深拷贝 防止在保存时被修改
+        SaveJsonArray(manager.platformParaInstance.recordSavePath.text, save);
     }
 
     void SaveJsonArray(string filePath, List<string> jsonString)
     {
-        JArray jsonArray;
-        jsonArray = new JArray();
-
-        foreach (string json in jsonString)
+        Thread fileWriteThread = new Thread(() =>
         {
-            JObject newObject = JObject.Parse(json);
-            jsonArray.Add(newObject);
-        }
-        File.WriteAllText(filePath, jsonArray.ToString(Formatting.Indented));
+            try
+            {
+                JArray jsonArray = new JArray();
+
+                foreach (string json in jsonString)
+                {
+                    JObject newObject = JObject.Parse(json);
+                    jsonArray.Add(newObject);
+                }
+
+                File.WriteAllText(filePath, jsonArray.ToString(Formatting.Indented));
+
+                // // 完成后回调主线程
+                // if (onComplete != null)
+                // {
+                //     // 使用Unity的MainThreadDispatcher来在主线程中执行回调
+                //     MainThreadDispatcher.Instance().Enqueue(onComplete);
+                // }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Error writing file: " + e.Message);
+            }
+        });
+        fileWriteThread.Start();
     }
 
     string[] ConvertPlayerAction(PlayerActionType[] actions)
