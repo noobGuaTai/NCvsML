@@ -46,6 +46,7 @@ public class GameUI
     public GameObject player2MoveRight;
     public TMP_InputField replayRound;
     public GameObject replayButton;
+    public GameObject playerControlTips;
 }
 
 public class RunManager : MonoBehaviour
@@ -116,6 +117,8 @@ public class RunManager : MonoBehaviour
 
         recorder = new Recorder();
 
+        gameUI.playerControlTips.SetActive(false);
+
         // QualitySettings.vSyncCount = 0;
         // Application.targetFrameRate = 50;
     }
@@ -183,7 +186,16 @@ public class RunManager : MonoBehaviour
                 isStartGame = true;
                 isRoundStart = true;
                 Time.timeScale = timeSpeed;
+                iteration = 1;
             }
+            else
+            {
+                iteration = 0;
+            }
+            // if(runMode1 == RunMode.Player || runMode2 == RunMode.Player)
+            //     gameUI.playerControlTips.SetActive(true);
+            // else
+            //     gameUI.playerControlTips.SetActive(false);
         }
         else
         {
@@ -192,7 +204,7 @@ public class RunManager : MonoBehaviour
             replayByState = new ReplayByState(this, manager.platformParaInstance.recordSavePath.text);
             replayByState.OnStart();
         }
-        iteration = 1;
+        
     }
 
     void SocketUpdate()
@@ -212,6 +224,7 @@ public class RunManager : MonoBehaviour
             else
                 player2WinNum++;
             LogMessage("Score", "Score:" + player1WinNum + ":" + player2WinNum);
+            Time.timeScale = 0f;
         }
         else
         {
@@ -232,8 +245,11 @@ public class RunManager : MonoBehaviour
             roundTime = (int)totalTime;
             iterationStartTime = Time.time;
 
-            LogMessage("Log", "Round " + iteration + " end");
+            LogMessage("Log", "Round " + iteration + " start");
             isRoundStart = true;
+
+            Time.timeScale = timeSpeed;
+            isStartGame = true;
         }
     }
 
@@ -468,7 +484,7 @@ public class RunManager : MonoBehaviour
         yield return null;
         var data = new
         {
-            Round = iteration - 1,
+            Round = iteration,
             TimeSpeed = timeSpeed,
             Count = recorder.count,
             Player1Pos = recorder.player1Pos,
@@ -546,7 +562,7 @@ public class RunManager : MonoBehaviour
         Reset();
         player1.transform.position = player1InitPos;
         player2.transform.position = player2InitPos;
-        replayByState.Replay(int.Parse(gameUI.replayRound.text) - 1);
+        replayByState.Replay(int.Parse(gameUI.replayRound.text));
     }
 
     public void Reset()

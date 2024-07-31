@@ -29,7 +29,7 @@ public class PlatformParameters
     public TMP_InputField recordSavePath;
     public TMP_InputField recordSaveNum;
     public TMP_InputField runSpeed;
-    public TMP_InputField groundNum;
+    public TMP_InputField roundNum;
     public GameObject GameLogButton;
     public GameObject ScoreButton;
     public GameObject ErrorButton;
@@ -93,7 +93,7 @@ public class Manager : MonoBehaviour
         platformParaInstance.recordSavePath.text = Application.streamingAssetsPath + "/Record/record.json";
         platformParaInstance.recordSaveNum.text = "50";
         platformParaInstance.runSpeed.text = "1";
-        platformParaInstance.groundNum.text = "10";
+        platformParaInstance.roundNum.text = "10";
 
         gameParaInstance.player1HP.text = "10";
         gameParaInstance.player2HP.text = "10";
@@ -203,7 +203,7 @@ public class Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         runManager.timeSpeed = float.Parse(platformParaInstance.runSpeed.text);
-        runManager.roundNum = int.Parse(platformParaInstance.groundNum.text);
+        runManager.roundNum = int.Parse(platformParaInstance.roundNum.text);
         runManager.recordNum = int.Parse(platformParaInstance.recordSaveNum.text);
 
         runManager.enabled = true;

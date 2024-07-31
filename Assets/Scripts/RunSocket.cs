@@ -36,13 +36,13 @@ public class RunSocket
     {
         info = new EnvInfo();
         mainListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        CreateConnection("127.0.0.1", port, mainListener);
+        CreateConnection("", port, mainListener);
     }
 
     void CreateConnection(string ip, int port, Socket listener)
     {
-        IPAddress ipAddress = IPAddress.Parse(ip);
-        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+        // IPAddress ipAddress = IPAddress.Parse(ip);
+        IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, port);
         listener.Bind(localEndPoint);
         Debug.Log("Waiting for a connection...");
         listener.Listen(10);
@@ -62,12 +62,12 @@ public class RunSocket
                 Socket accHandler = accListener.Accept();
                 Debug.Log("connected");
                 // train2Instance.timeSpeed = ;
-                runManager.isStartGame = true;
-                UnityMainThreadDispatcher.RunOnMainThread(() =>
-                {
-                    runManager.iterationStartTime = Time.time;
-                    Time.timeScale = runManager.timeSpeed;
-                });
+                // runManager.isStartGame = true;
+                // UnityMainThreadDispatcher.RunOnMainThread(() =>
+                // {
+                //     runManager.iterationStartTime = Time.time;
+                //     Time.timeScale = runManager.timeSpeed;
+                // });
                 SendMessage(accHandler, info);
 
                 Thread sendNrecvThread = new Thread(RecvAndSend);
