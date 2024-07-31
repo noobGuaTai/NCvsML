@@ -224,7 +224,7 @@ public class RunManager : MonoBehaviour
             else
                 player2WinNum++;
             LogMessage("Score", "Score:" + player1WinNum + ":" + player2WinNum);
-            Time.timeScale = 0f;
+            // Time.timeScale = 0f;
         }
         else
         {

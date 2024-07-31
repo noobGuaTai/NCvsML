@@ -5048,31 +5048,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_text
-      value: "\u73A9\u5BB61\u64CD\u4F5C\uFF1AAD\u5DE6\u53F3\u79FB\u52A8\uFF0CSpace\u6216W\u8DF3\u8DC3\uFF0CG\u5C04\u51FB"
+      value: 'Player Control:
+
+        Move: A D Jump: Space or W  Shoot: G'
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontSize
-      value: 50
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 977e7c608d96ce4478030f02bc8901f2, type: 2}
+      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontSizeBase
-      value: 50
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -363856797891103021, guid: 977e7c608d96ce4478030f02bc8901f2, type: 2}
+      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_VerticalAlignment
-      value: 512
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -11827,31 +11829,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_text
-      value: "\u73A9\u5BB61\u64CD\u4F5C\uFF1AAD\u5DE6\u53F3\u79FB\u52A8\uFF0CSpace\u6216W\u8DF3\u8DC3\uFF0CG\u5C04\u51FB"
+      value: "Player Control:\nMove: \u2190 \u2192   Jump: , or \u2191   Shoot: ."
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontSize
-      value: 50
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 977e7c608d96ce4478030f02bc8901f2, type: 2}
+      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_fontSizeBase
-      value: 50
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -363856797891103021, guid: 977e7c608d96ce4478030f02bc8901f2, type: 2}
+      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_VerticalAlignment
-      value: 512
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6548485133149635391, guid: 88173d94e0abfd742b5a3cafdfa29d80, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -14763,7 +14765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7255288458643119956, guid: a76e5f5320b5bc74dba4194e7fef6c32, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8989334701220997428, guid: a76e5f5320b5bc74dba4194e7fef6c32, type: 3}
       propertyPath: m_Pivot.x
@@ -15011,7 +15013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7255288458643119956, guid: a76e5f5320b5bc74dba4194e7fef6c32, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8989334701220997428, guid: a76e5f5320b5bc74dba4194e7fef6c32, type: 3}
       propertyPath: m_Pivot.x
