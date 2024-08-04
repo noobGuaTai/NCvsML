@@ -205,6 +205,8 @@ public class Manager : MonoBehaviour
         runManager.timeSpeed = float.Parse(platformParaInstance.runSpeed.text);
         runManager.roundNum = int.Parse(platformParaInstance.roundNum.text);
         runManager.recordNum = int.Parse(platformParaInstance.recordSaveNum.text);
+        runManager.socket1Port = int.Parse(mainParaInstance.socket1PortInputField.text);
+        runManager.socket2Port = int.Parse(mainParaInstance.socket2PortInputField.text);
 
         runManager.enabled = true;
         runManager.StartGame();

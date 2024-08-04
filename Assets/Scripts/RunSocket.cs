@@ -230,10 +230,13 @@ public class RunSocket
         int[] intArray = new int[len];
         byte[] buffer = new byte[len * 4]; // 每个整数4个字节
         int bytesRec = handler.Receive(buffer);
+        
         if (bytesRec != len * 4)
         {
+            Debug.Log(bytesRec);
             throw new Exception("Received data length mismatch.");
         }
+
 
         // 将字节转换为整数
         Buffer.BlockCopy(buffer, 0, intArray, 0, bytesRec);

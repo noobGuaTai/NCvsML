@@ -224,7 +224,8 @@ public class RunManager : MonoBehaviour
             else
                 player2WinNum++;
             LogMessage("Score", "Score:" + player1WinNum + ":" + player2WinNum);
-            // Time.timeScale = 0f;
+            
+            Time.timeScale = 0f;
         }
         else
         {
@@ -255,19 +256,24 @@ public class RunManager : MonoBehaviour
 
     void AgentUpdate()
     {
-        if (runMode1 != RunMode.Socket && runMode2 != RunMode.Socket)
+        if (runMode1 != RunMode.Socket)
         {
             if (player1FSM.parameters.beShot == true)
             {
                 LogMessage("Hurt", "Player1 Hurt");
                 player1FSM.parameters.beShot = false;
             }
+        }
+        if (runMode2 != RunMode.Socket)
+        {
             if (player2FSM.parameters.beShot == true)
             {
                 LogMessage("Hurt", "Player2 Hurt");
                 player2FSM.parameters.beShot = false;
             }
-
+        }
+        if (runMode1 != RunMode.Socket && runMode2 != RunMode.Socket)
+        {
             if (roundTime <= 0 || player1attribute.HP <= 0 || player2attribute.HP <= 0)
             {
                 LogMessage("Log", "Round " + iteration + " end");
@@ -280,8 +286,6 @@ public class RunManager : MonoBehaviour
                     StartCoroutine(AddRecord());
                 }
             }
-
-
         }
         runtime?.Invoke();
     }
