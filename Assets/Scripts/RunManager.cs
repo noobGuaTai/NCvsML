@@ -131,6 +131,8 @@ public class RunManager : MonoBehaviour
         agentInfer1 = null;
         agentInfer2 = null;
         runtime = null;
+        roundTime = (int)totalTime;
+        iterationStartTime = Time.time;
         LogMessage("Log", "Game Start");
         if (gameMode == GameMode.Live)
         {
@@ -204,7 +206,7 @@ public class RunManager : MonoBehaviour
             replayByState = new ReplayByState(this, manager.platformParaInstance.recordSavePath.text);
             replayByState.OnStart();
         }
-        
+
     }
 
     void SocketUpdate()
@@ -224,7 +226,7 @@ public class RunManager : MonoBehaviour
             else
                 player2WinNum++;
             LogMessage("Score", "Score:" + player1WinNum + ":" + player2WinNum);
-            
+
             Time.timeScale = 0f;
         }
         else
@@ -374,6 +376,27 @@ public class RunManager : MonoBehaviour
         }
         info.self_Invincible = playerAttribute1.isInvincible ? 1 : 0;
         info.E_Invincible = playerAttribute2.isInvincible ? 1 : 0;
+
+        if (playerFSM1.parameters.bullets[0] != null)
+        {
+            info.self_Bullet0_XD = playerFSM1.parameters.bullets[0].transform.position.x - playerFSM1.transform.position.x;
+            info.self_Bullet0_YD = playerFSM1.parameters.bullets[0].transform.position.y - playerFSM1.transform.position.y;
+        }
+        else
+        {
+            info.self_Bullet0_XD = 0f;
+            info.self_Bullet0_YD = 0f;
+        }
+        if (playerFSM1.parameters.bullets[1] != null)
+        {
+            info.self_Bullet1_XD = playerFSM1.parameters.bullets[1].transform.position.x - playerFSM1.transform.position.x;
+            info.self_Bullet1_YD = playerFSM1.parameters.bullets[1].transform.position.y - playerFSM1.transform.position.y;
+        }
+        else
+        {
+            info.self_Bullet1_XD = 0f;
+            info.self_Bullet1_YD = 0f;
+        }
         info.time = roundTime;
     }
 

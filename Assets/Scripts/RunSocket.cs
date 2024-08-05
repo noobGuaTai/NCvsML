@@ -24,7 +24,6 @@ public class RunSocket
     private List<Thread> threads;
     public bool isRunning = true;
 
-
     public RunSocket(RunManager runManager, PlayerType player)
     {
         this.runManager = runManager;
@@ -268,6 +267,10 @@ public class RunSocket
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.self_Invincible));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Invincible));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_YD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.infoCode));
         byteStream.AddRange(BitConverter.GetBytes(info.time));
 
