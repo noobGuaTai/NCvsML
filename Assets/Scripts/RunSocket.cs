@@ -253,18 +253,18 @@ public class RunSocket
         List<byte> byteStream = new List<byte>();
 
         byteStream.AddRange(BitConverter.GetBytes(info.Face_E));
-        byteStream.AddRange(BitConverter.GetBytes(info.leftWall_XD));
-        byteStream.AddRange(BitConverter.GetBytes(info.rightWall_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_YD));
-        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_XD));
-        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_YD));
-        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_XD));
-        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet0_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_XD));
         byteStream.AddRange(BitConverter.GetBytes(info.E_Bullet1_YD));
+        byteStream.AddRange(BitConverter.GetBytes(info.leftWall_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.rightWall_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet0_YD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_XD));
+        byteStream.AddRange(BitConverter.GetBytes(info.self_Bullet1_YD));
         byteStream.AddRange(BitConverter.GetBytes(info.infoCode));
         byteStream.AddRange(BitConverter.GetBytes(info.time));
 
