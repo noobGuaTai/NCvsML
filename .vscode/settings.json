@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "2D横板对战.sln"
+    "dotnet.defaultSolution": "NCvsML.sln",
+    "dotnet.preferCSharpExtension": true
 }

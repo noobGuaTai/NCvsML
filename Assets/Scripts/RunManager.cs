@@ -337,65 +337,51 @@ public class RunManager : MonoBehaviour
     }
 
     public void GetEnvInf(PlayerFSM playerFSM1, PlayerFSM playerFSM2, PlayerAttribute playerAttribute1, PlayerAttribute playerAttribute2, ref EnvInfo info)
-    {
-        info.direction = playerFSM1.transform.localScale.x;
-        info.shootable = 2;
-        foreach (GameObject bullet in playerFSM1.parameters.bullets)
-        {
-            if (bullet != null)
-            {
-                info.shootable -= 1;
-            }
-        }
-        info.jumpable = playerFSM1.parameters.canJump ? 1 : 0;
+    {   
+        info.Face_E = playerFSM1.transform.localScale.x * (playerFSM2.transform.position.x - playerFSM1.transform.position.x) / Math.Abs(playerFSM2.transform.position.x - playerFSM1.transform.position.x);
         info.leftWall_XD = playerFSM1.transform.position.x - playerFSM1.parameters.leftWall.transform.position.x;
         info.rightWall_XD = playerFSM1.parameters.rightWall.transform.position.x - playerFSM1.transform.position.x;
         info.E_XD = playerFSM2.transform.position.x - playerFSM1.transform.position.x;
         info.E_YD = playerFSM2.transform.position.y - playerFSM1.transform.position.y;
-        info.E_Bullet0 = playerFSM2.parameters.bullets[0] == null ? 0 : 1;
-        if (info.E_Bullet0 != 0 && playerFSM2.parameters.bullets[0] != null)
+        if (playerFSM1.parameters.bullets[0] != null)
+        {
+            info.self_Bullet0_XD = playerFSM1.parameters.bullets[0].transform.position.x - playerFSM2.transform.position.x;
+            info.self_Bullet0_YD = playerFSM1.parameters.bullets[0].transform.position.y - playerFSM2.transform.position.y;
+        }
+        else
+        {
+            info.self_Bullet0_XD = 13.7f;
+            info.self_Bullet0_YD = 3.5f;
+        }
+        if (playerFSM1.parameters.bullets[1] != null)
+        {
+            info.self_Bullet1_XD = playerFSM1.parameters.bullets[1].transform.position.x - playerFSM2.transform.position.x;
+            info.self_Bullet1_YD = playerFSM1.parameters.bullets[1].transform.position.y - playerFSM2.transform.position.y;
+        }
+        else
+        {
+            info.self_Bullet1_XD = 13.7f;
+            info.self_Bullet1_YD = 3.5f;
+        }
+        if (playerFSM2.parameters.bullets[0] != null)
         {
             info.E_Bullet0_XD = playerFSM2.parameters.bullets[0].transform.position.x - playerFSM1.transform.position.x;
             info.E_Bullet0_YD = playerFSM2.parameters.bullets[0].transform.position.y - playerFSM1.transform.position.y;
         }
         else
         {
-            info.E_Bullet0_XD = 0f;
-            info.E_Bullet0_YD = 0f;
+            info.E_Bullet0_XD = 13.7f;
+            info.E_Bullet0_YD = 3.5f;
         }
-        info.E_Bullet1 = playerFSM2.parameters.bullets[1] == null ? 0 : 1;
-        if (info.E_Bullet1 != 0 && playerFSM2.parameters.bullets[1] != null)
+        if (playerFSM2.parameters.bullets[1] != null)
         {
             info.E_Bullet1_XD = playerFSM2.parameters.bullets[1].transform.position.x - playerFSM1.transform.position.x;
             info.E_Bullet1_YD = playerFSM2.parameters.bullets[1].transform.position.y - playerFSM1.transform.position.y;
         }
         else
         {
-            info.E_Bullet1_XD = 0f;
-            info.E_Bullet1_YD = 0f;
-        }
-        info.self_Invincible = playerAttribute1.isInvincible ? 1 : 0;
-        info.E_Invincible = playerAttribute2.isInvincible ? 1 : 0;
-
-        if (playerFSM1.parameters.bullets[0] != null)
-        {
-            info.self_Bullet0_XD = playerFSM1.parameters.bullets[0].transform.position.x - playerFSM1.transform.position.x;
-            info.self_Bullet0_YD = playerFSM1.parameters.bullets[0].transform.position.y - playerFSM1.transform.position.y;
-        }
-        else
-        {
-            info.self_Bullet0_XD = 0f;
-            info.self_Bullet0_YD = 0f;
-        }
-        if (playerFSM1.parameters.bullets[1] != null)
-        {
-            info.self_Bullet1_XD = playerFSM1.parameters.bullets[1].transform.position.x - playerFSM1.transform.position.x;
-            info.self_Bullet1_YD = playerFSM1.parameters.bullets[1].transform.position.y - playerFSM1.transform.position.y;
-        }
-        else
-        {
-            info.self_Bullet1_XD = 0f;
-            info.self_Bullet1_YD = 0f;
+            info.E_Bullet1_XD = 13.7f;
+            info.E_Bullet1_YD = 3.5f;
         }
         info.time = roundTime;
     }
